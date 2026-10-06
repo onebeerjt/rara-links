@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0505">
+<title>RARA — Producer / DJ — Miami</title>
+<meta name="description" content="RARA — Miami producer/DJ. Afro-leaning dance music, extended sets. Machina Records.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0505;
+  --bg2: #140a08;
+  --card: #181010;
+  --ink: #f5ede6;
+  --muted: rgba(245,237,230,0.6);
+  --faint: rgba(245,237,230,0.36);
+  --lava: #ff4d1c;
+  --lava-deep: #b32a08;
+  --ember: #ff9a3c;
+  --line: rgba(255,77,28,0.16);
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { background: var(--bg); scroll-behavior: smooth; }
+body {
+  font-family: "Archivo", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg); color: var(--ink);
+  min-height: 100dvh; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+.grain {
+  position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.embers { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.ember {
+  position: absolute; bottom: -20px; border-radius: 50%;
+  background: radial-gradient(circle, var(--ember) 0%, var(--lava) 40%, transparent 70%);
+  opacity: 0; animation: rise linear infinite;
+}
+@keyframes rise {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  8% { opacity: 0.85; }
+  100% { transform: translateY(-105vh) translateX(var(--drift, 30px)) scale(0.3); opacity: 0; }
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+.display { font-family: "Bebas Neue", "Arial Narrow", sans-serif; letter-spacing: 0.03em; line-height: 0.92; font-weight: 400; }
+.hero { padding: calc(var(--sat) + 44px) 0 10px; text-align: center; }
+.avatar-ring {
+  width: 118px; height: 118px; margin: 0 auto 18px; border-radius: 50%; padding: 3px;
+  background: conic-gradient(from 0deg, var(--lava), var(--ember), var(--lava-deep), var(--lava));
+  animation: spin 7s linear infinite;
+  box-shadow: 0 0 44px rgba(255,77,28,0.35);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.avatar-ring img {
+  width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;
+  border: 4px solid var(--bg); animation: spinback 7s linear infinite;
+}
+@keyframes spinback { to { transform: rotate(-360deg); } }
+.hero h1 { font-size: 74px; margin-bottom: 2px; }
+.hero h1 .volc { color: var(--lava); }
+.hero .role {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--ember); margin-bottom: 12px;
+}
+.hero p.tag { font-size: 14.5px; line-height: 1.6; color: var(--muted); max-width: 34ch; margin: 0 auto; }
+.hero p.tag strong { color: var(--ink); }
+.marquee {
+  margin: 26px -20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  overflow: hidden; white-space: nowrap; padding: 11px 0; background: var(--bg2);
+}
+.marquee .track { display: inline-block; animation: mq 26s linear infinite; }
+.marquee span {
+  font-family: "Bebas Neue", sans-serif; font-size: 17px; letter-spacing: 0.16em;
+  color: var(--faint); margin: 0 22px; text-transform: uppercase;
+}
+.marquee span b { color: var(--lava); font-weight: 400; }
+@keyframes mq { to { transform: translateX(-50%); } }
+section { padding: 34px 0 4px; }
+.eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--lava); margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.links { display: grid; gap: 12px; }
+.link-btn {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 16px 18px; text-decoration: none; color: var(--ink);
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.link-btn:active { transform: scale(0.97); }
+.link-btn:hover { border-color: rgba(255,77,28,0.45); box-shadow: 0 6px 28px rgba(255,77,28,0.12); }
+.link-btn .ic {
+  flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+  background: linear-gradient(135deg, rgba(255,77,28,0.22), rgba(255,154,60,0.1));
+  border: 1px solid rgba(255,77,28,0.3);
+}
+.link-btn .ic svg { width: 22px; height: 22px; color: var(--ember); }
+.link-btn .tx { flex: 1; min-width: 0; }
+.link-btn .tx b { display: block; font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; }
+.link-btn .tx span { font-size: 12.5px; color: var(--faint); font-weight: 500; }
+.link-btn .go { flex: none; color: var(--faint); }
+.link-btn .go svg { width: 18px; height: 18px; display: block; }
+.link-btn.featured {
+  background: linear-gradient(135deg, rgba(255,77,28,0.16), rgba(179,42,8,0.08));
+  border-color: rgba(255,77,28,0.5);
+  box-shadow: 0 8px 32px rgba(255,77,28,0.18);
+}
+.link-btn.featured .tx b { color: var(--ember); }
+.event {
+  display: grid; grid-template-columns: 64px 1fr; gap: 16px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 16px; margin-bottom: 12px; align-items: center;
+}
+.event .date {
+  text-align: center; border: 1px solid rgba(255,77,28,0.35); border-radius: 14px;
+  padding: 10px 4px; background: rgba(255,77,28,0.07);
+}
+.event .date b { display: block; font-family: "Bebas Neue", sans-serif; font-size: 30px; color: var(--ember); line-height: 1; }
+.event .date span { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.event h3 { font-size: 16.5px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 3px; }
+.event p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.event .tag {
+  display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ember); border: 1px solid rgba(255,154,60,0.4); padding: 3px 9px; border-radius: 999px; margin-top: 8px;
+}
+.book {
+  border-radius: 22px; padding: 34px 26px; text-align: center;
+  background: linear-gradient(160deg, #241009 0%, var(--card) 65%);
+  border: 1px solid rgba(255,77,28,0.3); position: relative; overflow: hidden;
+}
+.book::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(70% 55% at 50% 0%, rgba(255,77,28,0.2), transparent 70%);
+}
+.book h2 { font-size: 46px; margin-bottom: 8px; position: relative; }
+.book p { color: var(--muted); font-size: 14px; margin-bottom: 20px; position: relative; }
+.book a.mail {
+  display: inline-flex; align-items: center; gap: 10px; position: relative;
+  background: linear-gradient(135deg, var(--lava), var(--lava-deep)); color: #fff;
+  font-weight: 800; font-size: 15px; text-decoration: none;
+  padding: 15px 30px; border-radius: 999px;
+  box-shadow: 0 8px 30px rgba(255,77,28,0.4);
+  transition: transform 0.15s ease;
+}
+.book a.mail:active { transform: scale(0.95); }
+.book a.mail svg { width: 17px; height: 17px; }
+footer { padding: 40px 0 calc(var(--sab) + 36px); text-align: center; }
+footer .sig { font-family: "Bebas Neue", sans-serif; font-size: 22px; letter-spacing: 0.06em; color: var(--faint); }
+footer .sig b { color: var(--lava); font-weight: 400; }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="embers" id="embers"></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="avatar-ring"><img id="avatar" src="" alt="RARA"></div>
+    <h1 class="display">RARA <span class="volc">.</span></h1>
+    <div class="role" id="role">Producer / DJ — Miami</div>
+    <p class="tag" id="tagline"></p>
+  </header>
+</div>
+
+<div class="marquee" aria-hidden="true"><div class="track" id="mqTrack"></div></div>
+
+<div class="wrap">
+  <section id="sec-upcoming">
+    <div class="eyebrow">Upcoming</div>
+    <div id="events"></div>
+  </section>
+
+  <section id="sec-music">
+    <div class="eyebrow">Music</div>
+    <div class="links" id="musicLinks"></div>
+  </section>
+
+  <section id="sec-social">
+    <div class="eyebrow">Follow</div>
+    <div class="links" id="socialLinks"></div>
+  </section>
+
+  <section id="sec-book">
+    <div class="book">
+      <h2 class="display">BOOK RARA</h2>
+      <p id="bookNote">Extended sets. Afro-leaning dance music. Vinyl deep cuts.</p>
+      <a class="mail" id="bookMail" href="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 6 10-6"/></svg>
+        <span id="bookEmail"></span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="sig">RARA <b>/</b> MACHINA RECS</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   CONFIG — clone this file for the next artist, edit ONLY this
+   block. Everything below renders from it.
+   ============================================================ */
+const CONFIG = {
+  name: "RARA",
+  role: "Producer / DJ — Miami",
+  tagline: "Afro-leaning dance music, <strong>extended sets</strong>, deep cuts. Running <strong>Machina Records</strong> + Omnisound out of the 305.",
+  avatar: "https://scontent.cdninstagram.com/v/t51.82787-19/651508537_18569649331031557_6609701620947410187_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=103&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=14wiqz5cVmgQ7kNvwH_8pri&_nc_oc=AdoITyy18YCgGG-nACBqOa6WZyeNaeWp6rgu55ojopzVobeC8ONMzkb74olSTf78GYTxfCUG74Dsmoc4vNXuwmE9&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_gid=ne6RDgSWWnKGaJ3W3oryjA&oh=00_AQO6Qx7pkN7heN-pZpWNBxNiBToZiuz6REwotpkbSUyuuw&oe=6ACB08C8",
+  marquee: ["Machina Records", "Circuit", "Extended sets", "Deep cuts", "Miami", "Vinyl culture"],
+  events: [
+    { day: "—", mon: "TBA", title: "CIRCUIT", note: "Machina Records' Miami label party. Dates announced on IG.", tag: "Label party" },
+    { day: "—", mon: "TBA", title: "DJ sets", note: "Jolene Sound Room + more. Watch the feed for the next date.", tag: "On the decks" }
+  ],
+  music: [
+    { title: "MOVIMIENTO CRIMINAL", sub: "RARA — on Bandcamp", url: "https://machinarecords.bandcamp.com/track/movimiento-criminal", icon: "disc", featured: true },
+    { title: "Machina Records", sub: "The label — Bandcamp", url: "https://machinarecords.bandcamp.com", icon: "label" },
+    { title: "Afro-Centraxx DJ Set", sub: "Miami Community Radio — YouTube", url: "https://www.youtube.com/watch?v=Cv6b3C2QPJo", icon: "play" }
+  ],
+  socials: [
+    { title: "@raravulcain", sub: "Instagram", url: "https://www.instagram.com/raravulcain", icon: "ig" },
+    { title: "@machinarecs", sub: "Machina Records — Instagram", url: "https://www.instagram.com/machinarecs", icon: "ig" },
+    { title: "@omnisoundspace", sub: "Omnisound — Instagram", url: "https://www.instagram.com/omnisoundspace", icon: "ig" }
+  ],
+  bookings: {
+    email: "omnisoundslabel@gmail.com",
+    note: "Extended sets. Afro-leaning dance music. Vinyl deep cuts."
+  }
+};
+/* ============================================================
+   END CONFIG — rendering logic below (don't touch per artist)
+   ============================================================ */
+
+const ICONS = {
+  disc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg>',
+  label: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L11 3.8A2 2 0 009.6 3.2H4a1 1 0 00-1 1v5.6c0 .5.2 1 .6 1.4l9.6 9.6a2 2 0 002.8 0l4.6-4.6a2 2 0 000-2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor"/></svg>',
+  ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" stroke="none"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>'
+};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+// hero
+document.getElementById("avatar").src = CONFIG.avatar;
+document.getElementById("avatar").alt = CONFIG.name;
+document.getElementById("role").textContent = CONFIG.role;
+document.getElementById("tagline").innerHTML = CONFIG.tagline;
+document.title = CONFIG.name + " — " + CONFIG.role;
+
+// marquee
+const seq = CONFIG.marquee.map(w => `<span>${esc(w)} <b>/</b></span>`).join("");
+document.getElementById("mqTrack").innerHTML = seq + seq;
+
+// events
+document.getElementById("events").innerHTML = CONFIG.events.map(e => `
+  <div class="event">
+    <div class="date"><b>${esc(e.day)}</b><span>${esc(e.mon)}</span></div>
+    <div>
+      <h3>${esc(e.title)}</h3>
+      <p>${esc(e.note)}</p>
+      <span class="tag">${esc(e.tag)}</span>
+    </div>
+  </div>`).join("");
+
+// link buttons
+const btn = l => `
+  <a class="link-btn${l.featured ? " featured" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <span class="ic">${ICONS[l.icon] || ICONS.disc}</span>
+    <span class="tx"><b>${esc(l.title)}</b><span>${esc(l.sub)}</span></span>
+    <span class="go">${ICONS.arrow}</span>
+  </a>`;
+document.getElementById("musicLinks").innerHTML = CONFIG.music.map(btn).join("");
+document.getElementById("socialLinks").innerHTML = CONFIG.socials.map(btn).join("");
+
+// bookings
+document.getElementById("bookEmail").textContent = CONFIG.bookings.email;
+document.getElementById("bookMail").href = "mailto:" + CONFIG.bookings.email;
+document.getElementById("bookNote").textContent = CONFIG.bookings.note;
+
+// embers
+(function () {
+  const box = document.getElementById("embers");
+  for (let i = 0; i < 14; i++) {
+    const s = document.createElement("span");
+    s.className = "ember";
+    const sz = 4 + Math.random() * 9;
+    s.style.width = s.style.height = sz + "px";
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.setProperty("--drift", (Math.random() * 120 - 60) + "px");
+    s.style.animationDuration = (7 + Math.random() * 9) + "s";
+    s.style.animationDelay = (Math.random() * 12) + "s";
+    box.appendChild(s);
+  }
+})();
+</script>
+</body>
+</html>
