@@ -6,289 +6,164 @@
 <meta name="theme-color" content="#0a0505">
 <title>RARA — Producer / DJ — Miami</title>
 <meta name="description" content="RARA — Miami producer/DJ. Afro-leaning dance music, extended sets. Machina Records.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a0505;
-  --bg2: #140a08;
-  --card: #181010;
-  --ink: #f5ede6;
-  --muted: rgba(245,237,230,0.6);
-  --faint: rgba(245,237,230,0.36);
-  --lava: #ff4d1c;
-  --lava-deep: #b32a08;
-  --ember: #ff9a3c;
-  --line: rgba(255,77,28,0.16);
-  --sat: env(safe-area-inset-top, 0px);
-  --sab: env(safe-area-inset-bottom, 0px);
-}
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html { background: var(--bg); scroll-behavior: smooth; }
-body {
-  font-family: "Archivo", -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg); color: var(--ink);
-  min-height: 100dvh; -webkit-font-smoothing: antialiased; overflow-x: hidden;
-}
-.grain {
-  position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0.09;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.embers { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-.ember {
-  position: absolute; bottom: -20px; border-radius: 50%;
-  background: radial-gradient(circle, var(--ember) 0%, var(--lava) 40%, transparent 70%);
-  opacity: 0; animation: rise linear infinite;
-}
-@keyframes rise {
-  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-  8% { opacity: 0.85; }
-  100% { transform: translateY(-105vh) translateX(var(--drift, 30px)) scale(0.3); opacity: 0; }
-}
-.wrap { max-width: 480px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
-.display { font-family: "Bebas Neue", "Arial Narrow", sans-serif; letter-spacing: 0.03em; line-height: 0.92; font-weight: 400; }
-.hero { padding: calc(var(--sat) + 44px) 0 10px; text-align: center; }
-.avatar-ring {
-  width: 118px; height: 118px; margin: 0 auto 18px; border-radius: 50%; padding: 3px;
-  background: conic-gradient(from 0deg, var(--lava), var(--ember), var(--lava-deep), var(--lava));
-  animation: spin 7s linear infinite;
-  box-shadow: 0 0 44px rgba(255,77,28,0.35);
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.avatar-ring img {
-  width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;
-  border: 4px solid var(--bg); animation: spinback 7s linear infinite;
-}
-@keyframes spinback { to { transform: rotate(-360deg); } }
-.hero h1 { font-size: 74px; margin-bottom: 2px; }
-.hero h1 .volc { color: var(--lava); }
-.hero .role {
-  font-size: 12px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--ember); margin-bottom: 12px;
-}
-.hero p.tag { font-size: 14.5px; line-height: 1.6; color: var(--muted); max-width: 34ch; margin: 0 auto; }
-.hero p.tag strong { color: var(--ink); }
-.marquee {
-  margin: 26px -20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-  overflow: hidden; white-space: nowrap; padding: 11px 0; background: var(--bg2);
-}
-.marquee .track { display: inline-block; animation: mq 26s linear infinite; }
-.marquee span {
-  font-family: "Bebas Neue", sans-serif; font-size: 17px; letter-spacing: 0.16em;
-  color: var(--faint); margin: 0 22px; text-transform: uppercase;
-}
-.marquee span b { color: var(--lava); font-weight: 400; }
-@keyframes mq { to { transform: translateX(-50%); } }
-section { padding: 34px 0 4px; }
-.eyebrow {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--lava); margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
-}
-.eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-.links { display: grid; gap: 12px; }
-.link-btn {
-  display: flex; align-items: center; gap: 14px;
-  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
-  padding: 16px 18px; text-decoration: none; color: var(--ink);
-  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.link-btn:active { transform: scale(0.97); }
-.link-btn:hover { border-color: rgba(255,77,28,0.45); box-shadow: 0 6px 28px rgba(255,77,28,0.12); }
-.link-btn .ic {
-  flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
-  background: linear-gradient(135deg, rgba(255,77,28,0.22), rgba(255,154,60,0.1));
-  border: 1px solid rgba(255,77,28,0.3);
-}
-.link-btn .ic svg { width: 22px; height: 22px; color: var(--ember); }
-.link-btn .tx { flex: 1; min-width: 0; }
-.link-btn .tx b { display: block; font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; }
-.link-btn .tx span { font-size: 12.5px; color: var(--faint); font-weight: 500; }
-.link-btn .go { flex: none; color: var(--faint); }
-.link-btn .go svg { width: 18px; height: 18px; display: block; }
-.link-btn.featured {
-  background: linear-gradient(135deg, rgba(255,77,28,0.16), rgba(179,42,8,0.08));
-  border-color: rgba(255,77,28,0.5);
-  box-shadow: 0 8px 32px rgba(255,77,28,0.18);
-}
-.link-btn.featured .tx b { color: var(--ember); }
-.event {
-  display: grid; grid-template-columns: 64px 1fr; gap: 16px;
-  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
-  padding: 16px; margin-bottom: 12px; align-items: center;
-}
-.event .date {
-  text-align: center; border: 1px solid rgba(255,77,28,0.35); border-radius: 14px;
-  padding: 10px 4px; background: rgba(255,77,28,0.07);
-}
-.event .date b { display: block; font-family: "Bebas Neue", sans-serif; font-size: 30px; color: var(--ember); line-height: 1; }
-.event .date span { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-.event h3 { font-size: 16.5px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 3px; }
-.event p { font-size: 13px; color: var(--muted); line-height: 1.5; }
-.event .tag {
-  display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--ember); border: 1px solid rgba(255,154,60,0.4); padding: 3px 9px; border-radius: 999px; margin-top: 8px;
-}
-.book {
-  border-radius: 22px; padding: 34px 26px; text-align: center;
-  background: linear-gradient(160deg, #241009 0%, var(--card) 65%);
-  border: 1px solid rgba(255,77,28,0.3); position: relative; overflow: hidden;
-}
-.book::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(70% 55% at 50% 0%, rgba(255,77,28,0.2), transparent 70%);
-}
-.book h2 { font-size: 46px; margin-bottom: 8px; position: relative; }
-.book p { color: var(--muted); font-size: 14px; margin-bottom: 20px; position: relative; }
-.book a.mail {
-  display: inline-flex; align-items: center; gap: 10px; position: relative;
-  background: linear-gradient(135deg, var(--lava), var(--lava-deep)); color: #fff;
-  font-weight: 800; font-size: 15px; text-decoration: none;
-  padding: 15px 30px; border-radius: 999px;
-  box-shadow: 0 8px 30px rgba(255,77,28,0.4);
-  transition: transform 0.15s ease;
-}
-.book a.mail:active { transform: scale(0.95); }
-.book a.mail svg { width: 17px; height: 17px; }
-footer { padding: 40px 0 calc(var(--sab) + 36px); text-align: center; }
-footer .sig { font-family: "Bebas Neue", sans-serif; font-size: 22px; letter-spacing: 0.06em; color: var(--faint); }
-footer .sig b { color: var(--lava); font-weight: 400; }
+/* ===== SHELL: theme switcher (always on top) ===== */
+#sw { position: fixed; z-index: 999; left: 0; right: 0; bottom: 0;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  background: rgba(8,8,10,0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255,255,255,0.1); }
+#sw .row { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; max-width: 560px; margin: 0 auto; }
+#sw .row::-webkit-scrollbar { display: none; }
+#sw button { flex: none; font: 700 10.5px/1 -apple-system, sans-serif; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55); background: transparent;
+  border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 9px 12px; cursor: pointer; }
+#sw button.on { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); }
+#stage { padding-bottom: 76px; }
+#theme-css { display: none; }
 </style>
 </head>
 <body>
-<div class="grain"></div>
-<div class="embers" id="embers"></div>
-
-<div class="wrap">
-  <header class="hero">
-    <div class="avatar-ring"><img id="avatar" src="" alt="RARA"></div>
-    <h1 class="display">RARA <span class="volc">.</span></h1>
-    <div class="role" id="role">Producer / DJ — Miami</div>
-    <p class="tag" id="tagline"></p>
-  </header>
-</div>
-
-<div class="marquee" aria-hidden="true"><div class="track" id="mqTrack"></div></div>
-
-<div class="wrap">
-  <section id="sec-upcoming">
-    <div class="eyebrow">Upcoming</div>
-    <div id="events"></div>
-  </section>
-
-  <section id="sec-music">
-    <div class="eyebrow">Music</div>
-    <div class="links" id="musicLinks"></div>
-  </section>
-
-  <section id="sec-social">
-    <div class="eyebrow">Follow</div>
-    <div class="links" id="socialLinks"></div>
-  </section>
-
-  <section id="sec-book">
-    <div class="book">
-      <h2 class="display">BOOK RARA</h2>
-      <p id="bookNote">Extended sets. Afro-leaning dance music. Vinyl deep cuts.</p>
-      <a class="mail" id="bookMail" href="">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 6 10-6"/></svg>
-        <span id="bookEmail"></span>
-      </a>
-    </div>
-  </section>
-
-  <footer>
-    <div class="sig">RARA <b>/</b> MACHINA RECS</div>
-  </footer>
-</div>
-
+<div id="stage"></div>
+<nav id="sw" aria-label="Theme switcher"><div class="row" id="swRow"></div></nav>
+<style id="theme-css"></style>
 <script>
 "use strict";
-/* ============================================================
-   CONFIG — clone this file for the next artist, edit ONLY this
-   block. Everything below renders from it.
-   ============================================================ */
+/* ================= CONFIG (shared by all themes) ================= */
 const CONFIG = {
   name: "RARA",
   role: "Producer / DJ — Miami",
-  tagline: "Afro-leaning dance music, <strong>extended sets</strong>, deep cuts. Running <strong>Machina Records</strong> + Omnisound out of the 305.",
-  avatar: "https://scontent.cdninstagram.com/v/t51.82787-19/651508537_18569649331031557_6609701620947410187_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=103&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=14wiqz5cVmgQ7kNvwH_8pri&_nc_oc=AdoITyy18YCgGG-nACBqOa6WZyeNaeWp6rgu55ojopzVobeC8ONMzkb74olSTf78GYTxfCUG74Dsmoc4vNXuwmE9&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_gid=ne6RDgSWWnKGaJ3W3oryjA&oh=00_AQO6Qx7pkN7heN-pZpWNBxNiBToZiuz6REwotpkbSUyuuw&oe=6ACB08C8",
+  tagline: "Afro-leaning dance music, extended sets, deep cuts. Running Machina Records + Omnisound out of the 305.",
   marquee: ["Machina Records", "Circuit", "Extended sets", "Deep cuts", "Miami", "Vinyl culture"],
   events: [
     { day: "—", mon: "TBA", title: "CIRCUIT", note: "Machina Records' Miami label party. Dates announced on IG.", tag: "Label party" },
     { day: "—", mon: "TBA", title: "DJ sets", note: "Jolene Sound Room + more. Watch the feed for the next date.", tag: "On the decks" }
   ],
   music: [
-    { title: "MOVIMIENTO CRIMINAL", sub: "RARA — on Bandcamp", url: "https://machinarecords.bandcamp.com/track/movimiento-criminal", icon: "disc", featured: true },
-    { title: "Machina Records", sub: "The label — Bandcamp", url: "https://machinarecords.bandcamp.com", icon: "label" },
-    { title: "Afro-Centraxx DJ Set", sub: "Miami Community Radio — YouTube", url: "https://www.youtube.com/watch?v=Cv6b3C2QPJo", icon: "play" }
+    { title: "MOVIMIENTO CRIMINAL", sub: "RARA — on Bandcamp", url: "https://machinarecords.bandcamp.com/track/movimiento-criminal", featured: true },
+    { title: "Machina Records", sub: "The label — Bandcamp", url: "https://machinarecords.bandcamp.com" },
+    { title: "Afro-Centraxx DJ Set", sub: "Miami Community Radio — YouTube", url: "https://www.youtube.com/watch?v=Cv6b3C2QPJo" }
   ],
   socials: [
-    { title: "@raravulcain", sub: "Instagram", url: "https://www.instagram.com/raravulcain", icon: "ig" },
-    { title: "@machinarecs", sub: "Machina Records — Instagram", url: "https://www.instagram.com/machinarecs", icon: "ig" },
-    { title: "@omnisoundspace", sub: "Omnisound — Instagram", url: "https://www.instagram.com/omnisoundspace", icon: "ig" }
+    { title: "@raravulcain", sub: "Instagram", url: "https://www.instagram.com/raravulcain" },
+    { title: "@machinarecs", sub: "Machina Records — Instagram", url: "https://www.instagram.com/machinarecs" },
+    { title: "@omnisoundspace", sub: "Omnisound — Instagram", url: "https://www.instagram.com/omnisoundspace" }
   ],
-  bookings: {
-    email: "omnisoundslabel@gmail.com",
-    note: "Extended sets. Afro-leaning dance music. Vinyl deep cuts."
-  }
-};
-/* ============================================================
-   END CONFIG — rendering logic below (don't touch per artist)
-   ============================================================ */
-
-const ICONS = {
-  disc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg>',
-  label: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L11 3.8A2 2 0 009.6 3.2H4a1 1 0 00-1 1v5.6c0 .5.2 1 .6 1.4l9.6 9.6a2 2 0 002.8 0l4.6-4.6a2 2 0 000-2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>',
-  play: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor"/></svg>',
-  ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" stroke="none"/></svg>',
-  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>'
+  bookings: { email: "omnisoundslabel@gmail.com", note: "Extended sets. Afro-leaning dance music. Vinyl deep cuts." }
 };
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const mailto = "mailto:" + CONFIG.bookings.email;
 
-// hero
-document.getElementById("avatar").src = CONFIG.avatar;
-document.getElementById("avatar").alt = CONFIG.name;
-document.getElementById("role").textContent = CONFIG.role;
-document.getElementById("tagline").innerHTML = CONFIG.tagline;
-document.title = CONFIG.name + " — " + CONFIG.role;
-
-// marquee
-const seq = CONFIG.marquee.map(w => `<span>${esc(w)} <b>/</b></span>`).join("");
-document.getElementById("mqTrack").innerHTML = seq + seq;
-
-// events
-document.getElementById("events").innerHTML = CONFIG.events.map(e => `
-  <div class="event">
-    <div class="date"><b>${esc(e.day)}</b><span>${esc(e.mon)}</span></div>
-    <div>
-      <h3>${esc(e.title)}</h3>
-      <p>${esc(e.note)}</p>
-      <span class="tag">${esc(e.tag)}</span>
-    </div>
-  </div>`).join("");
-
-// link buttons
-const btn = l => `
-  <a class="link-btn${l.featured ? " featured" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">
-    <span class="ic">${ICONS[l.icon] || ICONS.disc}</span>
-    <span class="tx"><b>${esc(l.title)}</b><span>${esc(l.sub)}</span></span>
-    <span class="go">${ICONS.arrow}</span>
-  </a>`;
-document.getElementById("musicLinks").innerHTML = CONFIG.music.map(btn).join("");
-document.getElementById("socialLinks").innerHTML = CONFIG.socials.map(btn).join("");
-
-// bookings
-document.getElementById("bookEmail").textContent = CONFIG.bookings.email;
-document.getElementById("bookMail").href = "mailto:" + CONFIG.bookings.email;
-document.getElementById("bookNote").textContent = CONFIG.bookings.note;
-
-// embers
-(function () {
-  const box = document.getElementById("embers");
+/* ================= THEME ENGINE ================= */
+const THEMES = {};
+function defineTheme(id, label, theme) { THEMES[id] = Object.assign({ id, label }, theme); }
+const ORDER = [];
+function setTheme(id) {
+  const t = THEMES[id]; if (!t) return;
+  document.getElementById("theme-css").textContent = t.css;
+  document.body.setAttribute("data-theme", id);
+  const stage = document.getElementById("stage");
+  stage.innerHTML = t.render();
+  document.querySelectorAll("#sw button").forEach(b => b.classList.toggle("on", b.dataset.t === id));
+  try { localStorage.setItem("rara-theme", id); } catch (e) {}
+  if (t.mount) t.mount(stage);
+  window.scrollTo(0, 0);
+}
+function initSwitcher() {
+  const row = document.getElementById("swRow");
+  row.innerHTML = ORDER.map(id => `<button data-t="${id}">${esc(THEMES[id].label)}</button>`).join("");
+  row.addEventListener("click", e => { const b = e.target.closest("button"); if (b) setTheme(b.dataset.t); });
+}
+</script>
+<script>
+/* ============ THEME 1: VOLCANO (original) ============ */
+defineTheme("volcano", "Volcano", {
+css: `
+.t-volcano { --bg:#0a0505; --bg2:#140a08; --card:#181010; --ink:#f5ede6; --muted:rgba(245,237,230,.6);
+  --faint:rgba(245,237,230,.36); --lava:#ff4d1c; --lava-deep:#b32a08; --ember:#ff9a3c; --line:rgba(255,77,28,.16);
+  background:var(--bg); color:var(--ink); font-family:"Archivo",-apple-system,sans-serif;
+  min-height:100dvh; -webkit-font-smoothing:antialiased; }
+.t-volcano .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.09;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.t-volcano .embers { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.t-volcano .ember { position:absolute; bottom:-20px; border-radius:50%;
+  background:radial-gradient(circle,var(--ember) 0%,var(--lava) 40%,transparent 70%);
+  opacity:0; animation:vrise linear infinite; }
+@keyframes vrise { 0%{transform:translateY(0) translateX(0) scale(1);opacity:0} 8%{opacity:.85}
+  100%{transform:translateY(-105vh) translateX(var(--drift,30px)) scale(.3);opacity:0} }
+.t-volcano .wrap { max-width:480px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
+.t-volcano .display { font-family:"Bebas Neue","Arial Narrow",sans-serif; letter-spacing:.03em; line-height:.92; }
+.t-volcano .hero { padding:44px 0 10px; text-align:center; }
+.t-volcano .avatar-ring { width:118px; height:118px; margin:0 auto 18px; border-radius:50%; padding:3px;
+  background:conic-gradient(from 0deg,var(--lava),var(--ember),var(--lava-deep),var(--lava));
+  animation:vspin 7s linear infinite; box-shadow:0 0 44px rgba(255,77,28,.35); }
+@keyframes vspin { to{transform:rotate(360deg)} }
+.t-volcano .avatar-ring .init { width:100%; height:100%; border-radius:50%; display:grid; place-items:center;
+  background:#1c0d08; border:4px solid var(--bg); font-family:"Bebas Neue",sans-serif; font-size:44px; color:var(--ember); }
+.t-volcano .hero h1 { font-size:74px; margin-bottom:2px; }
+.t-volcano .hero h1 .volc { color:var(--lava); }
+.t-volcano .role { font-size:12px; font-weight:700; letter-spacing:.3em; text-transform:uppercase; color:var(--ember); margin-bottom:12px; }
+.t-volcano .tag { font-size:14.5px; line-height:1.6; color:var(--muted); max-width:34ch; margin:0 auto; }
+.t-volcano .marquee { margin:26px -20px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  overflow:hidden; white-space:nowrap; padding:11px 0; background:var(--bg2); }
+.t-volcano .marquee .track { display:inline-block; animation:vmq 26s linear infinite; }
+.t-volcano .marquee span { font-family:"Bebas Neue",sans-serif; font-size:17px; letter-spacing:.16em; color:var(--faint); margin:0 22px; text-transform:uppercase; }
+.t-volcano .marquee span b { color:var(--lava); font-weight:400; }
+@keyframes vmq { to{transform:translateX(-50%)} }
+.t-volcano section { padding:34px 0 4px; }
+.t-volcano .eyebrow { font-size:11px; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--lava);
+  margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+.t-volcano .eyebrow::after { content:""; flex:1; height:1px; background:var(--line); }
+.t-volcano .links { display:grid; gap:12px; }
+.t-volcano .link-btn { display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--line);
+  border-radius:18px; padding:16px 18px; text-decoration:none; color:var(--ink); }
+.t-volcano .link-btn:active { transform:scale(.97); }
+.t-volcano .link-btn .tx { flex:1; min-width:0; }
+.t-volcano .link-btn .tx b { display:block; font-size:15.5px; font-weight:700; }
+.t-volcano .link-btn .tx span { font-size:12.5px; color:var(--faint); font-weight:500; }
+.t-volcano .link-btn .arr { color:var(--faint); font-size:18px; }
+.t-volcano .link-btn.featured { border-color:rgba(255,77,28,.5); box-shadow:0 8px 32px rgba(255,77,28,.18); }
+.t-volcano .link-btn.featured .tx b { color:var(--ember); }
+.t-volcano .event { display:grid; grid-template-columns:64px 1fr; gap:16px; background:var(--card);
+  border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:12px; align-items:center; }
+.t-volcano .event .date { text-align:center; border:1px solid rgba(255,77,28,.35); border-radius:14px; padding:10px 4px; background:rgba(255,77,28,.07); }
+.t-volcano .event .date b { display:block; font-family:"Bebas Neue",sans-serif; font-size:30px; color:var(--ember); line-height:1; }
+.t-volcano .event .date span { font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+.t-volcano .event h3 { font-size:16.5px; font-weight:800; margin-bottom:3px; }
+.t-volcano .event p { font-size:13px; color:var(--muted); line-height:1.5; }
+.t-volcano .event .tag { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ember); border:1px solid rgba(255,154,60,.4); padding:3px 9px; border-radius:999px; margin-top:8px; }
+.t-volcano .book { border-radius:22px; padding:34px 26px; text-align:center;
+  background:linear-gradient(160deg,#241009 0%,var(--card) 65%); border:1px solid rgba(255,77,28,.3); }
+.t-volcano .book h2 { font-size:46px; margin-bottom:8px; }
+.t-volcano .book p { color:var(--muted); font-size:14px; margin-bottom:20px; }
+.t-volcano .book a.mail { display:inline-block; background:linear-gradient(135deg,var(--lava),var(--lava-deep)); color:#fff;
+  font-weight:800; font-size:15px; text-decoration:none; padding:15px 30px; border-radius:999px; }
+.t-volcano footer { padding:40px 0 36px; text-align:center; }
+.t-volcano footer .sig { font-family:"Bebas Neue",sans-serif; font-size:22px; letter-spacing:.06em; color:var(--faint); }
+`,
+render() {
+  const ev = CONFIG.events.map(e => `<div class="event"><div class="date"><b>${esc(e.day)}</b><span>${esc(e.mon)}</span></div>
+    <div><h3>${esc(e.title)}</h3><p>${esc(e.note)}</p><span class="tag">${esc(e.tag)}</span></div></div>`).join("");
+  const btn = l => `<a class="link-btn${l.featured ? " featured" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <span class="tx"><b>${esc(l.title)}</b><span>${esc(l.sub)}</span></span><span class="arr">↗</span></a>`;
+  const seq = CONFIG.marquee.map(w => `<span>${esc(w)} <b>/</b></span>`).join("");
+  return `<div class="t-volcano"><div class="grain"></div><div class="embers" id="vEmbers"></div>
+    <div class="wrap"><header class="hero"><div class="avatar-ring"><div class="init">R</div></div>
+    <h1 class="display">RARA <span class="volc">.</span></h1><div class="role">${esc(CONFIG.role)}</div>
+    <p class="tag">${CONFIG.tagline}</p></header></div>
+    <div class="marquee"><div class="track">${seq}${seq}</div></div>
+    <div class="wrap"><section><div class="eyebrow">Upcoming</div>${ev}</section>
+    <section><div class="eyebrow">Music</div><div class="links">${CONFIG.music.map(btn).join("")}</div></section>
+    <section><div class="eyebrow">Follow</div><div class="links">${CONFIG.socials.map(btn).join("")}</div></section>
+    <section><div class="book"><h2 class="display">BOOK RARA</h2><p>${esc(CONFIG.bookings.note)}</p>
+    <a class="mail" href="${mailto}">${esc(CONFIG.bookings.email)}</a></div></section>
+    <footer><div class="sig">RARA / MACHINA RECS</div></footer></div></div>`;
+},
+mount(stage) {
+  const box = stage.querySelector("#vEmbers");
   for (let i = 0; i < 14; i++) {
-    const s = document.createElement("span");
-    s.className = "ember";
+    const s = document.createElement("span"); s.className = "ember";
     const sz = 4 + Math.random() * 9;
     s.style.width = s.style.height = sz + "px";
     s.style.left = Math.random() * 100 + "vw";
@@ -297,6 +172,587 @@ document.getElementById("bookNote").textContent = CONFIG.bookings.note;
     s.style.animationDelay = (Math.random() * 12) + "s";
     box.appendChild(s);
   }
+}
+});
+ORDER.push("volcano");
+</script>
+<script>
+/* ============ THEME 2: DECK (DJ mixer) ============ */
+defineTheme("deck", "Deck", {
+css: `
+.t-deck { --bg:#0b0d10; --panel:#14171c; --ink:#e8ecf1; --mut:#8a94a3; --acc:#00e5a0; --acc2:#ff5c38;
+  background:radial-gradient(120% 60% at 50% 0%, #161b22 0%, var(--bg) 60%) fixed, var(--bg);
+  color:var(--ink); font-family:-apple-system,"SF Pro Text",sans-serif; min-height:100dvh; }
+.t-deck .wrap { max-width:480px; margin:0 auto; padding:0 16px; }
+.t-deck .top { padding:40px 0 6px; display:flex; align-items:center; gap:14px; }
+.t-deck .platter { width:64px; height:64px; border-radius:50%; flex:none;
+  background:conic-gradient(#222 0 10%, #2c313a 10% 20%, #222 20% 30%, #2c313a 30% 40%, #222 40% 50%, #2c313a 50% 60%, #222 60% 70%, #2c313a 70% 80%, #222 80% 90%, #2c313a 90% 100%);
+  border:3px solid #2a2f37; position:relative; animation:dspin 4s linear infinite; }
+.t-deck .platter::after { content:""; position:absolute; inset:24px; border-radius:50%; background:var(--acc); }
+@keyframes dspin { to { transform:rotate(360deg); } }
+.t-deck .top h1 { font-size:30px; font-weight:800; letter-spacing:-.02em; }
+.t-deck .top p { font-size:12px; color:var(--mut); letter-spacing:.18em; text-transform:uppercase; margin-top:2px; }
+.t-deck .strip-label { font-size:10px; font-weight:700; letter-spacing:.22em; color:var(--mut); text-transform:uppercase;
+  margin:26px 0 10px; display:flex; align-items:center; gap:8px; }
+.t-deck .strip-label::after { content:""; flex:1; height:1px; background:#232830; }
+.t-deck .chan { display:block; text-decoration:none; color:var(--ink); background:var(--panel);
+  border:1px solid #232830; border-radius:14px; padding:14px 16px; margin-bottom:10px; position:relative; overflow:hidden; }
+.t-deck .chan:active { transform:scale(.98); }
+.t-deck .chan .row { display:flex; align-items:center; gap:12px; position:relative; z-index:1; }
+.t-deck .chan .fader { width:34px; height:52px; flex:none; border-radius:8px; background:#0b0d10; border:1px solid #2a2f37; position:relative; }
+.t-deck .chan .fader i { position:absolute; left:5px; right:5px; height:7px; border-radius:4px; background:var(--acc); bottom:8px; }
+.t-deck .chan.hot .fader i { background:var(--acc2); }
+.t-deck .chan b { display:block; font-size:14.5px; font-weight:700; }
+.t-deck .chan span { font-size:12px; color:var(--mut); }
+.t-deck .chan .vu { margin-left:auto; display:flex; gap:3px; align-items:flex-end; height:26px; flex:none; }
+.t-deck .chan .vu i { width:5px; border-radius:2px; background:#2a2f37; }
+.t-deck .chan .vu i.on { background:var(--acc); }
+.t-deck .chan .vu i:nth-child(1){height:8px}.t-deck .chan .vu i:nth-child(2){height:14px}
+.t-deck .chan .vu i:nth-child(3){height:20px}.t-deck .chan .vu i:nth-child(4){height:26px}
+.t-deck .xfade { margin:26px 0 8px; background:var(--panel); border:1px solid #232830; border-radius:14px; padding:16px; }
+.t-deck .xfade .bar { height:6px; border-radius:3px; background:linear-gradient(90deg,var(--acc),var(--acc2)); margin:12px 0 4px; position:relative; }
+.t-deck .xfade .bar::after { content:""; position:absolute; top:-7px; left:50%; width:20px; height:20px; margin-left:-10px;
+  border-radius:6px; background:#e8ecf1; }
+.t-deck .xfade a { display:block; text-align:center; color:var(--ink); font-weight:800; font-size:14px; text-decoration:none;
+  letter-spacing:.06em; padding:6px; }
+.t-deck .xfade small { display:block; text-align:center; color:var(--mut); font-size:12px; }
+.t-deck .gig { display:flex; gap:12px; align-items:center; background:var(--panel); border:1px dashed #2f3640;
+  border-radius:14px; padding:14px 16px; margin-bottom:10px; }
+.t-deck .gig .d { font-weight:800; font-size:13px; color:var(--acc); letter-spacing:.08em; white-space:nowrap; }
+.t-deck .gig b { font-size:14px; } .t-deck .gig p { font-size:12px; color:var(--mut); }
+`,
+render() {
+  const chan = (l, hot) => `<a class="chan${hot ? " hot" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <div class="row"><div class="fader"><i></i></div>
+    <div><b>${esc(l.title)}</b><span>${esc(l.sub)}</span></div>
+    <div class="vu"><i></i><i></i><i></i><i></i></div></div></a>`;
+  const gig = e => `<div class="gig"><div class="d">${esc(e.day)}<br>${esc(e.mon)}</div>
+    <div><b>${esc(e.title)}</b><p>${esc(e.note)}</p></div></div>`;
+  return `<div class="t-deck"><div class="wrap">
+    <div class="top"><div class="platter"></div><div><h1>RARA</h1><p>${esc(CONFIG.role)}</p></div></div>
+    <div class="strip-label">Live dates</div>${CONFIG.events.map(gig).join("")}
+    <div class="strip-label">Channels — tap to play out</div>
+    ${CONFIG.music.map((l, i) => chan(l, i === 0)).join("")}
+    <div class="strip-label">Follow</div>${CONFIG.socials.map(l => chan(l, false)).join("")}
+    <div class="xfade"><div class="strip-label" style="margin:0 0 4px">Bookings — crossfader</div>
+      <div class="bar"></div><a href="${mailto}">${esc(CONFIG.bookings.email)}</a>
+      <small>${esc(CONFIG.bookings.note)}</small></div>
+    <div style="height:24px"></div></div></div>`;
+},
+mount(stage) {
+  stage.querySelectorAll(".vu").forEach((vu, ci) => {
+    const bars = vu.querySelectorAll("i");
+    setInterval(() => {
+      const n = 1 + Math.floor(Math.random() * 4);
+      bars.forEach((b, i) => b.classList.toggle("on", i < n));
+    }, 380 + ci * 130);
+  });
+}
+});
+ORDER.push("deck");
+</script>
+<script>
+/* ============ THEME 3: SETLIST ============ */
+defineTheme("setlist", "Setlist", {
+css: `
+.t-setlist { --paper:#f4efe4; --ink:#1c1a16; --mut:#6f6a5e; --red:#c8352a;
+  background:#2b2620; color:var(--ink); font-family:"Courier New",monospace; min-height:100dvh; padding:28px 16px 20px; }
+.t-setlist .sheet { max-width:430px; margin:0 auto; background:var(--paper); padding:30px 26px 26px;
+  box-shadow:0 18px 50px rgba(0,0,0,.5); transform:rotate(-.6deg); position:relative; }
+.t-setlist .sheet::before { content:""; position:absolute; top:-12px; left:50%; width:110px; height:26px;
+  transform:translateX(-50%) rotate(2deg); background:rgba(210,200,170,.75); border:1px solid rgba(0,0,0,.08); }
+.t-setlist .venue { text-align:center; border-bottom:2px solid var(--ink); padding-bottom:14px; margin-bottom:6px; }
+.t-setlist .venue h1 { font-size:34px; letter-spacing:.06em; }
+.t-setlist .venue p { font-size:12px; color:var(--mut); margin-top:4px; }
+.t-setlist .venue .date-line { font-size:11px; letter-spacing:.2em; color:var(--red); font-weight:bold; margin-top:6px; }
+.t-setlist ol { list-style:none; margin:14px 0; }
+.t-setlist ol li { border-bottom:1px dashed #c9c2b2; }
+.t-setlist ol li a { display:flex; gap:12px; align-items:baseline; text-decoration:none; color:var(--ink); padding:11px 2px; }
+.t-setlist ol li a:active { background:#e9e2d0; }
+.t-setlist .num { font-size:12px; color:var(--mut); width:26px; flex:none; }
+.t-setlist .song b { display:block; font-size:15px; letter-spacing:.02em; }
+.t-setlist .song span { font-size:11.5px; color:var(--mut); }
+.t-setlist .song .star { color:var(--red); font-weight:bold; }
+.t-setlist .sec { font-size:11px; letter-spacing:.3em; color:var(--red); font-weight:bold; margin:20px 0 2px; }
+.t-setlist .encore { margin-top:18px; border:2px solid var(--ink); padding:16px; text-align:center; transform:rotate(.5deg); }
+.t-setlist .encore b { font-size:13px; letter-spacing:.24em; }
+.t-setlist .encore a { display:block; color:var(--red); font-weight:bold; font-size:15px; margin-top:8px; text-decoration:underline; }
+.t-setlist .encore p { font-size:11.5px; color:var(--mut); margin-top:6px; }
+.t-setlist .scribble { font-size:11px; color:var(--mut); font-style:italic; margin-top:16px; text-align:center; }
+.t-setlist .gigline { display:flex; gap:10px; padding:9px 2px; border-bottom:1px dashed #c9c2b2; font-size:12.5px; }
+.t-setlist .gigline b { color:var(--red); white-space:nowrap; }
+`,
+render() {
+  let n = 0;
+  const item = l => { n++; return `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">
+    <span class="num">${String(n).padStart(2, "0")}</span>
+    <span class="song"><b>${l.featured ? '<span class="star">★ </span>' : ""}${esc(l.title)}</b><span>${esc(l.sub)}</span></span></a></li>`; };
+  const gig = e => `<div class="gigline"><b>${esc(e.day)} ${esc(e.mon)}</b><span>${esc(e.title)} — ${esc(e.note)}</span></div>`;
+  return `<div class="t-setlist"><div class="sheet">
+    <div class="venue"><h1>RARA</h1><p>${esc(CONFIG.role)}</p><div class="date-line">MIAMI — EVERY NIGHT</div></div>
+    <div class="sec">// On stage</div>
+    ${CONFIG.events.map(gig).join("")}
+    <div class="sec">// A-side — music</div><ol>${CONFIG.music.map(item).join("")}</ol>
+    <div class="sec">// B-side — follow</div><ol>${CONFIG.socials.map(item).join("")}</ol>
+    <div class="encore"><b>ENCORE — BOOKINGS</b><a href="${mailto}">${esc(CONFIG.bookings.email)}</a>
+      <p>${esc(CONFIG.bookings.note)}</p></div>
+    <div class="scribble">* thank you miami, goodnight! *</div>
+  </div></div>`;
+}
+});
+ORDER.push("setlist");
+</script>
+<script>
+/* ============ THEME 4: METRO ============ */
+defineTheme("metro", "Metro", {
+css: `
+.t-metro { --bg:#0d1117; --ink:#eef2f7; --mut:#8b95a5; --g:#00c853; --o:#ff9100; --b:#2979ff; --p:#d500f9;
+  background:var(--bg); color:var(--ink); font-family:-apple-system,"SF Pro Text",sans-serif; min-height:100dvh; }
+.t-metro .wrap { max-width:480px; margin:0 auto; padding:0 18px; }
+.t-metro .hdr { padding:38px 0 4px; }
+.t-metro .hdr .sys { font-size:10px; font-weight:800; letter-spacing:.3em; color:var(--mut); }
+.t-metro .hdr h1 { font-size:44px; font-weight:800; letter-spacing:-.02em; margin:4px 0 2px; }
+.t-metro .hdr h1 em { font-style:normal; color:var(--g); }
+.t-metro .hdr p { font-size:13px; color:var(--mut); }
+.t-metro .line { margin-top:26px; }
+.t-metro .line-h { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+.t-metro .line-h i { width:12px; height:12px; border-radius:50%; flex:none; }
+.t-metro .line-h b { font-size:11px; letter-spacing:.22em; text-transform:uppercase; }
+.t-metro .st { display:flex; text-decoration:none; color:var(--ink); }
+.t-metro .st:active .nm { background:rgba(255,255,255,.08); }
+.t-metro .rail { width:26px; flex:none; display:flex; flex-direction:column; align-items:center; }
+.t-metro .rail::before, .t-metro .rail::after { content:""; width:4px; flex:1; }
+.t-metro .st:first-child .rail::before { visibility:hidden; }
+.t-metro .st:last-child .rail::after { visibility:hidden; }
+.t-metro .dot { width:16px; height:16px; border-radius:50%; background:var(--bg); border:4px solid; flex:none; margin:14px 0; z-index:1; }
+.t-metro .nm { flex:1; padding:12px 12px; border-bottom:1px solid rgba(255,255,255,.07); }
+.t-metro .nm b { display:block; font-size:14.5px; font-weight:700; }
+.t-metro .nm span { font-size:12px; color:var(--mut); }
+.t-metro .nm .x { float:right; color:var(--mut); font-size:14px; }
+.t-metro .term { margin:26px 0 10px; border:2px solid var(--p); border-radius:14px; padding:16px; text-align:center; }
+.t-metro .term b { font-size:11px; letter-spacing:.26em; color:var(--p); }
+.t-metro .term a { display:block; color:var(--ink); font-weight:800; font-size:16px; margin-top:8px; text-decoration:none; }
+.t-metro .term p { font-size:12px; color:var(--mut); margin-top:6px; }
+.t-metro .status { display:flex; align-items:center; gap:8px; margin-top:18px; padding:10px 12px;
+  background:rgba(0,200,83,.08); border:1px solid rgba(0,200,83,.3); border-radius:10px; font-size:12px; }
+.t-metro .status i { width:8px; height:8px; border-radius:50%; background:var(--g); flex:none; animation:mpulse 2s infinite; }
+@keyframes mpulse { 50% { opacity:.4; } }
+.t-metro .status b { color:var(--g); }
+.t-metro .lg { --c:var(--g); } .t-metro .lo { --c:var(--o); } .t-metro .lb { --c:var(--b); }
+.t-metro .lg .rail::before,.t-metro .lg .rail::after { background:var(--g); } .t-metro .lg .dot { border-color:var(--g); }
+.t-metro .lo .rail::before,.t-metro .lo .rail::after { background:var(--o); } .t-metro .lo .dot { border-color:var(--o); }
+.t-metro .lb .rail::before,.t-metro .lb .rail::after { background:var(--b); } .t-metro .lb .dot { border-color:var(--b); }
+.t-metro .lg .line-h i { background:var(--g); } .t-metro .lo .line-h i { background:var(--o); } .t-metro .lb .line-h i { background:var(--b); }
+`,
+render() {
+  const line = (cls, name, items) => `<div class="line ${cls}"><div class="line-h"><i></i><b>${name}</b></div>` +
+    items.map(l => `<a class="st" href="${esc(l.url)}" target="_blank" rel="noopener">
+      <span class="rail"><span class="dot"></span></span>
+      <span class="nm"><span class="x">→</span><b>${esc(l.title)}</b><span>${esc(l.sub)}</span></span></a>`).join("") + `</div>`;
+  const gigs = CONFIG.events.map(e => `<div class="st"><span class="rail"><span class="dot"></span></span>
+    <span class="nm"><b>${esc(e.title)}</b><span>${esc(e.day)} ${esc(e.mon)} — ${esc(e.note)}</span></span></div>`).join("");
+  return `<div class="t-metro"><div class="wrap">
+    <div class="hdr"><div class="sys">MIAMI TRANSIT AUTHORITY</div><h1>RARA <em>LINE</em></h1><p>${esc(CONFIG.role)} — all stops, all night.</p></div>
+    <div class="line lg"><div class="line-h"><i></i><b>Green line — Live dates</b></div>${gigs}</div>
+    ${line("lo", "Orange line — Music", CONFIG.music)}
+    ${line("lb", "Blue line — Follow", CONFIG.socials)}
+    <div class="term"><b>TERMINUS — BOOKINGS</b><a href="${mailto}">${esc(CONFIG.bookings.email)}</a>
+      <p>${esc(CONFIG.bookings.note)}</p></div>
+    <div class="status"><i></i><span><b>Good service</b> <span style="color:var(--mut)">on all RARA lines — no delays tonight.</span></span></div>
+    <div style="height:26px"></div></div></div>`;
+}
+});
+ORDER.push("metro");
+</script>
+<script>
+/* ============ THEME 5: CASSETTE ============ */
+defineTheme("cassette", "Cassette", {
+css: `
+.t-cass { --paper:#efe6d4; --ink:#191512; --mut:#7a6f5d; --red:#d63c2f; --tape:#2b2b2e;
+  background:#141210; color:var(--ink); font-family:"Arial Narrow",Arial,sans-serif; min-height:100dvh; padding:26px 14px; }
+.t-cass .jcard { max-width:440px; margin:0 auto; background:var(--paper); padding:22px 20px 20px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6); }
+.t-cass .spine { background:var(--ink); color:var(--paper); font-size:10px; font-weight:bold; letter-spacing:.3em;
+  padding:8px 12px; display:flex; justify-content:space-between; margin:-22px -20px 18px; }
+.t-cass .cassette { background:var(--tape); border-radius:10px; padding:16px 14px; margin-bottom:18px; position:relative; }
+.t-cass .reels { display:flex; justify-content:space-between; align-items:center; }
+.t-cass .reel { width:56px; height:56px; border-radius:50%; background:#101012; border:3px solid #4a4a4e;
+  position:relative; animation:creel 3.2s linear infinite; }
+.t-cass .reel::before { content:""; position:absolute; inset:18px; border-radius:50%; background:var(--paper); }
+.t-cass .reel::after { content:""; position:absolute; left:50%; top:6px; bottom:6px; width:6px; margin-left:-3px; background:#4a4a4e; }
+@keyframes creel { to { transform:rotate(360deg); } }
+.t-cass .window { flex:1; margin:0 12px; height:34px; background:#c9bfa8; border-radius:6px; border:3px solid #101012; position:relative; overflow:hidden; }
+.t-cass .window::after { content:""; position:absolute; top:14px; left:0; right:0; height:5px; background:#5a4a38; }
+.t-cass .clabel { text-align:center; color:var(--paper); font-size:10px; letter-spacing:.34em; font-weight:bold; margin-top:10px; }
+.t-cass h1 { font-size:40px; letter-spacing:.02em; line-height:1; }
+.t-cass .role { font-size:11px; letter-spacing:.26em; font-weight:bold; color:var(--mut); margin:6px 0 4px; }
+.t-cass .tag { font-size:13px; line-height:1.55; color:#3d382e; margin-bottom:6px; }
+.t-cass .side { font-size:12px; font-weight:bold; letter-spacing:.3em; background:var(--ink); color:var(--paper);
+  display:inline-block; padding:5px 12px; margin:18px 0 4px; }
+.t-cass .trk { display:flex; gap:10px; text-decoration:none; color:var(--ink); padding:10px 2px; border-bottom:1px solid #d8cdb4; align-items:baseline; }
+.t-cass .trk:active { background:#e2d7bd; }
+.t-cass .trk .n { font-size:12px; color:var(--mut); width:24px; flex:none; font-weight:bold; }
+.t-cass .trk b { display:block; font-size:14.5px; letter-spacing:.03em; }
+.t-cass .trk span { font-size:11.5px; color:var(--mut); }
+.t-cass .trk .hit { color:var(--red); font-weight:bold; }
+.t-cass .gig { font-size:12.5px; padding:9px 2px; border-bottom:1px solid #d8cdb4; }
+.t-cass .gig b { color:var(--red); }
+.t-cass .bookbox { margin-top:20px; border:3px double var(--ink); padding:16px; text-align:center; }
+.t-cass .bookbox b { font-size:12px; letter-spacing:.3em; }
+.t-cass .bookbox a { display:block; font-size:16px; font-weight:bold; color:var(--red); margin-top:8px; }
+.t-cass .bookbox p { font-size:11.5px; color:var(--mut); margin-top:6px; }
+`,
+render() {
+  let n = 0;
+  const trk = l => { n++; return `<a class="trk" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <span class="n">${l.featured ? '<span class="hit">▸</span>' : String(n).padStart(2, "0")}</span>
+    <span><b>${esc(l.title)}</b><span>${esc(l.sub)}</span></span></a>`; };
+  return `<div class="t-cass"><div class="jcard">
+    <div class="spine"><span>RARA — 305</span><span>C-60</span></div>
+    <div class="cassette"><div class="reels"><div class="reel"></div><div class="window"></div><div class="reel"></div></div>
+      <div class="clabel">MACHINA RECORDS</div></div>
+    <h1>RARA</h1><div class="role">${esc(CONFIG.role)}</div><p class="tag">${CONFIG.tagline}</p>
+    <div class="side">A — LIVE DATES</div>
+    ${CONFIG.events.map(e => `<div class="gig"><b>${esc(e.day)} ${esc(e.mon)}</b> — ${esc(e.title)}: ${esc(e.note)}</div>`).join("")}
+    <div class="side">A — MUSIC</div>${CONFIG.music.map(trk).join("")}
+    <div class="side">B — FOLLOW</div>${CONFIG.socials.map(trk).join("")}
+    <div class="bookbox"><b>BOOKINGS</b><a href="${mailto}">${esc(CONFIG.bookings.email)}</a>
+      <p>${esc(CONFIG.bookings.note)}</p></div>
+  </div></div>`;
+}
+});
+ORDER.push("cassette");
+</script>
+<script>
+/* ============ THEME 6: TERMINAL ============ */
+defineTheme("terminal", "Terminal", {
+css: `
+.t-term { --bg:#050705; --grn:#33ff66; --dim:#1d5c2e; --amb:#ffb000; --ink:#c9f5d6;
+  background:var(--bg); color:var(--ink); font-family:"SF Mono",Menlo,monospace; min-height:100dvh; font-size:13.5px; }
+.t-term .wrap { max-width:520px; margin:0 auto; padding:34px 18px 20px; }
+.t-term .bar { display:flex; gap:7px; margin-bottom:22px; }
+.t-term .bar i { width:11px; height:11px; border-radius:50%; background:#2a332c; }
+.t-term .bar i:first-child { background:#ff5f57; } .t-term .bar i:nth-child(2) { background:#febc2e; } .t-term .bar i:nth-child(3) { background:#28c840; }
+.t-term .bar span { margin-left:8px; color:var(--dim); font-size:11px; }
+.t-term .ln { margin:7px 0; line-height:1.65; word-break:break-word; }
+.t-term .p { color:var(--grn); } .t-term .d { color:var(--dim); } .t-term .a { color:var(--amb); }
+.t-term .cmd { display:block; color:var(--ink); text-decoration:none; padding:9px 10px; border:1px solid #142114;
+  border-radius:8px; margin:6px 0; background:rgba(51,255,102,.03); }
+.t-term .cmd:active { background:rgba(51,255,102,.12); }
+.t-term .cmd .p { margin-right:8px; }
+.t-term .cmd small { display:block; color:var(--dim); margin-top:2px; font-size:11.5px; }
+.t-term .cmd.hot { border-color:var(--amb); }
+.t-term .cmd.hot .t { color:var(--amb); }
+.t-term .sec { color:var(--amb); margin:22px 0 6px; font-weight:bold; }
+.t-term .cursor::after { content:"▊"; color:var(--grn); animation:blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity:0; } }
+.t-term .gig { color:var(--dim); } .t-term .gig b { color:var(--ink); }
+`,
+render() {
+  const cmd = (c, t, sub, hot) => `<a class="cmd${hot ? " hot" : ""}" href="${esc(c === "mail" ? mailto : t.url || "#")}"${c === "mail" ? "" : ' target="_blank" rel="noopener"'}>
+    <span class="p">$</span><span class="t">${esc(c)}</span>${sub ? `<small>${esc(sub)}</small>` : ""}</a>`;
+  return `<div class="t-term"><div class="wrap">
+    <div class="bar"><i></i><i></i><i></i><span>rara@305:~</span></div>
+    <div class="ln"><span class="d"># whoami</span></div>
+    <div class="ln"><span class="p">RARA</span> <span class="d">— ${esc(CONFIG.role)}</span></div>
+    <div class="ln"><span class="d"># bio</span></div>
+    <div class="ln">${esc(CONFIG.tagline.replace(/<[^>]+>/g, ""))}</div>
+    <div class="sec">## upcoming</div>
+    ${CONFIG.events.map(e => `<div class="ln gig"><span class="a">[${esc(e.day)} ${esc(e.mon)}]</span> <b>${esc(e.title)}</b> — ${esc(e.note)}</div>`).join("")}
+    <div class="sec">## music <span class="d">— type to play out</span></div>
+    ${CONFIG.music.map(l => cmd("open " + l.title.toLowerCase(), l, l.sub, l.featured)).join("")}
+    <div class="sec">## follow</div>
+    ${CONFIG.socials.map(l => cmd("follow " + l.title, l, l.sub)).join("")}
+    <div class="sec">## bookings</div>
+    ${cmd("mail", null, CONFIG.bookings.note)}
+    <div class="ln"><span class="p">rara@305</span><span class="d">:~$ </span><span class="cursor" id="termCur"></span></div>
+  </div></div>`;
+},
+mount(stage) {
+  const bio = stage.querySelectorAll(".t-term .ln")[3];
+  if (!bio) return;
+  const full = bio.textContent;
+  bio.innerHTML = '<span class="cursor"></span>';
+  let i = 0;
+  const iv = setInterval(() => {
+    i += 2;
+    bio.innerHTML = esc(full.slice(0, i)) + '<span class="cursor"></span>';
+    if (i >= full.length) clearInterval(iv);
+  }, 18);
+}
+});
+ORDER.push("terminal");
+</script>
+<script>
+/* ============ THEME 7: POLAROIDS ============ */
+defineTheme("polaroid", "Polaroids", {
+css: `
+.t-pol { --bg:#3a2f28; --paper:#fdfbf5; --ink:#26221c;
+  background:var(--bg); background-image:radial-gradient(rgba(0,0,0,.25) 1px, transparent 1px);
+  background-size:22px 22px; color:var(--ink); font-family:"Segoe Print","Bradley Hand",cursive; min-height:100dvh; padding:30px 14px; }
+.t-pol .board { max-width:440px; margin:0 auto; }
+.t-pol .pin-hdr { text-align:center; color:#f5eedd; margin-bottom:22px; transform:rotate(-1deg); }
+.t-pol .pin-hdr h1 { font-size:38px; letter-spacing:.04em; }
+.t-pol .pin-hdr p { font-size:13px; opacity:.75; font-family:-apple-system,sans-serif; }
+.t-pol .pol { background:var(--paper); padding:10px 10px 12px; margin:0 auto 22px; max-width:300px;
+  box-shadow:0 10px 28px rgba(0,0,0,.45); cursor:pointer; position:relative;
+  transition:transform .25s ease; }
+.t-pol .pol:nth-child(odd) { transform:rotate(-2deg); } .t-pol .pol:nth-child(even) { transform:rotate(1.6deg); }
+.t-pol .pol:active { transform:rotate(0) scale(.98); }
+.t-pol .pol::before { content:""; position:absolute; top:-11px; left:50%; width:64px; height:22px;
+  transform:translateX(-50%) rotate(-3deg); background:rgba(240,230,200,.85); box-shadow:0 2px 4px rgba(0,0,0,.2); }
+.t-pol .ph { aspect-ratio:1; background:linear-gradient(135deg,#8a7f70,#5c544a); display:grid; place-items:center;
+  color:#f5eedd; font-size:44px; font-family:-apple-system,sans-serif; font-weight:800; overflow:hidden; }
+.t-pol .cap { font-size:14px; text-align:center; padding:10px 4px 2px; }
+.t-pol .cap small { display:block; font-family:-apple-system,sans-serif; font-size:11px; color:#8a8172; margin-top:2px; }
+.t-pol .back { display:none; text-align:center; padding:14px 6px 6px; }
+.t-pol .pol.flip .front { display:none; } .t-pol .pol.flip .back { display:block; }
+.t-pol .back a { display:inline-block; background:var(--ink); color:#fdfbf5; text-decoration:none;
+  font-family:-apple-system,sans-serif; font-weight:700; font-size:13px; padding:11px 22px; border-radius:999px; margin-top:8px; }
+.t-pol .back p { font-family:-apple-system,sans-serif; font-size:12px; color:#8a8172; }
+.t-pol .note { background:#fff8c9; color:#4a4436; font-size:13px; padding:14px 16px; max-width:300px; margin:0 auto 22px;
+  transform:rotate(1.2deg); box-shadow:0 8px 20px rgba(0,0,0,.35); font-family:"Segoe Print",cursive; }
+.t-pol .note b { display:block; font-family:-apple-system,sans-serif; font-size:10px; letter-spacing:.2em; margin-bottom:6px; }
+`,
+render() {
+  const art = (t) => t.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+  const pol = l => `<div class="pol" onclick="this.classList.toggle('flip')">
+    <div class="front"><div class="ph">${art(l.title)}</div>
+    <div class="cap">${esc(l.title)}<small>${esc(l.sub)} — tap to flip</small></div></div>
+    <div class="back"><p>${esc(l.sub)}</p><a href="${esc(l.url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open link →</a></div></div>`;
+  return `<div class="t-pol"><div class="board">
+    <div class="pin-hdr"><h1>RARA</h1><p>${esc(CONFIG.role)}</p></div>
+    <div class="note"><b>PINNED</b>${CONFIG.events.map(e => `${esc(e.title)} — ${esc(e.note)}`).join("<br>")}</div>
+    ${CONFIG.music.map(pol).join("")}
+    ${CONFIG.socials.map(pol).join("")}
+    <div class="pol" onclick="this.classList.toggle('flip')">
+      <div class="front"><div class="ph">@</div><div class="cap">Bookings<small>tap to flip</small></div></div>
+      <div class="back"><p>${esc(CONFIG.bookings.note)}</p><a href="${mailto}" onclick="event.stopPropagation()">${esc(CONFIG.bookings.email)}</a></div></div>
+  </div></div>`;
+}
+});
+ORDER.push("polaroid");
+</script>
+<script>
+/* ============ THEME 8: BOOTH (club booth, photorealistic) ============ */
+defineTheme("booth", "Club Booth", {
+css: `
+.t-booth { --bg:#07060a; --ink:#f2ede8; --mut:#9a93a8; --mag:#ff2d78; --cyn:#22d3ee; --amb:#ffb347;
+  background:var(--bg); color:var(--ink); font-family:-apple-system,"SF Pro Text",sans-serif; min-height:100dvh; }
+.t-booth .club { position:fixed; inset:0; pointer-events:none;
+  background:
+    radial-gradient(45% 30% at 20% 0%, rgba(255,45,120,.16), transparent 70%),
+    radial-gradient(45% 30% at 80% 0%, rgba(34,211,238,.12), transparent 70%),
+    radial-gradient(60% 40% at 50% 110%, rgba(255,179,71,.08), transparent 70%); }
+.t-booth .wrap { max-width:480px; margin:0 auto; padding:0 16px; position:relative; }
+.t-booth .hdr { padding:36px 0 4px; text-align:center; }
+.t-booth .hdr .live { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.3em; color:#0a0a0a;
+  background:var(--mag); padding:5px 12px; border-radius:999px; margin-bottom:10px; }
+.t-booth .hdr h1 { font-size:40px; font-weight:800; letter-spacing:-.02em; }
+.t-booth .hdr p { font-size:12px; color:var(--mut); letter-spacing:.2em; text-transform:uppercase; margin-top:4px; }
+.t-booth .booth { margin-top:20px; background:linear-gradient(180deg,#14121a,#0b0a0f);
+  border:1px solid #262330; border-radius:20px; padding:18px 14px; box-shadow:0 24px 60px rgba(0,0,0,.6); }
+.t-booth .decks { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.t-booth .deck { background:#0e0c13; border:1px solid #262330; border-radius:14px; padding:12px; text-align:center; position:relative; }
+.t-booth .vinyl { width:100%; aspect-ratio:1; border-radius:50%; margin:0 auto; position:relative;
+  background:repeating-radial-gradient(circle at 50% 50%, #16131c 0 2px, #1e1a26 2px 4px);
+  border:2px solid #2c2836; animation:bspin 2.8s linear infinite; }
+.t-booth .vinyl::after { content:""; position:absolute; inset:32%; border-radius:50%;
+  background:conic-gradient(var(--mag), var(--cyn), var(--mag)); }
+.t-booth .deck:nth-child(2) .vinyl { animation-duration:3.4s; animation-direction:reverse; }
+.t-booth .deck:nth-child(2) .vinyl::after { background:conic-gradient(var(--cyn), var(--amb), var(--cyn)); }
+@keyframes bspin { to { transform:rotate(360deg); } }
+.t-booth .deck .dl { font-size:9px; font-weight:800; letter-spacing:.24em; color:var(--mut); margin-top:8px; }
+.t-booth .mixer { margin-top:12px; background:#0e0c13; border:1px solid #262330; border-radius:14px; padding:14px; }
+.t-booth .mixer .ml { font-size:9px; font-weight:800; letter-spacing:.24em; color:var(--mut); text-align:center; margin-bottom:10px; }
+.t-booth .ticker { overflow:hidden; white-space:nowrap; background:#0e0c13; border:1px solid #262330; border-radius:10px;
+  margin-top:12px; padding:9px 0; }
+.t-booth .ticker span { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.14em; color:var(--cyn);
+  animation:tick 14s linear infinite; padding-left:100%; }
+@keyframes tick { to { transform:translateX(-100%); } }
+.t-booth .eq { display:flex; gap:4px; align-items:flex-end; height:30px; justify-content:center; margin-top:10px; }
+.t-booth .eq i { width:7px; border-radius:3px; background:linear-gradient(180deg,var(--mag),var(--cyn)); animation:eqb 0.9s ease-in-out infinite alternate; }
+.t-booth .eq i:nth-child(1){height:40%;animation-delay:0s}.t-booth .eq i:nth-child(2){height:75%;animation-delay:.15s}
+.t-booth .eq i:nth-child(3){height:55%;animation-delay:.3s}.t-booth .eq i:nth-child(4){height:90%;animation-delay:.45s}
+.t-booth .eq i:nth-child(5){height:65%;animation-delay:.6s}.t-booth .eq i:nth-child(6){height:45%;animation-delay:.75s}
+.t-booth .eq i:nth-child(7){height:80%;animation-delay:.9s}
+@keyframes eqb { from { transform:scaleY(.4); } to { transform:scaleY(1); } }
+.t-booth .pads { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.t-booth .pad { display:block; text-decoration:none; color:var(--ink); background:#17141e; border:1px solid #2e2a3a;
+  border-radius:10px; padding:12px 6px; text-align:center; }
+.t-booth .pad:active { transform:scale(.94); background:#221d2c; border-color:var(--mag); }
+.t-booth .pad b { display:block; font-size:10.5px; font-weight:800; letter-spacing:.04em; line-height:1.3; }
+.t-booth .pad span { font-size:9.5px; color:var(--mut); }
+.t-booth .pad.hot { border-color:var(--mag); box-shadow:0 0 18px rgba(255,45,120,.25); }
+.t-booth .pad.hot b { color:var(--mag); }
+.t-booth .socials { display:flex; gap:8px; margin-top:12px; }
+.t-booth .soc { flex:1; text-align:center; text-decoration:none; color:var(--ink); font-size:11.5px; font-weight:700;
+  background:#17141e; border:1px solid #2e2a3a; border-radius:10px; padding:11px 4px; }
+.t-booth .soc:active { transform:scale(.95); }
+.t-booth .gigs { margin-top:14px; }
+.t-booth .gig { display:flex; gap:12px; align-items:center; padding:11px 4px; border-top:1px solid #1d1a26; font-size:12.5px; }
+.t-booth .gig b { color:var(--amb); font-size:11px; letter-spacing:.1em; white-space:nowrap; }
+.t-booth .gig span { color:var(--mut); }
+.t-booth .book { display:block; margin:18px 0 6px; text-align:center; text-decoration:none; color:#0a0a0a;
+  font-weight:900; letter-spacing:.14em; font-size:15px; padding:17px; border-radius:14px;
+  background:linear-gradient(135deg,var(--mag),#ff7a3c); box-shadow:0 10px 34px rgba(255,45,120,.35); }
+.t-booth .book small { display:block; font-weight:600; letter-spacing:.02em; font-size:11.5px; margin-top:4px; opacity:.75; }
+`,
+render() {
+  const pad = l => `<a class="pad${l.featured ? " hot" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <b>${esc(l.title)}</b><span>${esc(l.sub)}</span></a>`;
+  return `<div class="t-booth"><div class="club"></div><div class="wrap">
+    <div class="hdr"><span class="live">● LIVE FROM THE BOOTH</span><h1>RARA</h1><p>${esc(CONFIG.role)}</p></div>
+    <div class="booth">
+      <div class="decks"><div class="deck"><div class="vinyl"></div><div class="dl">DECK A</div></div>
+        <div class="deck"><div class="vinyl"></div><div class="dl">DECK B</div></div></div>
+      <div class="mixer"><div class="ml">PERFORMANCE PADS — TAP TO PLAY OUT</div>
+        <div class="pads">${CONFIG.music.map(pad).join("")}</div>
+        <div class="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="ticker"><span>NOW SPINNING — ${esc(CONFIG.music[0].title)} · ${esc(CONFIG.music[0].sub)} · BOOKINGS OPEN ·</span></div>
+        <div class="socials">${CONFIG.socials.map(l => `<a class="soc" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title)}</a>`).join("")}</div>
+      </div>
+    </div>
+    <div class="gigs">${CONFIG.events.map(e => `<div class="gig"><b>${esc(e.day)} ${esc(e.mon)}</b><span><strong style="color:var(--ink)">${esc(e.title)}</strong> — ${esc(e.note)}</span></div>`).join("")}</div>
+    <a class="book" href="${mailto}">BOOK RARA<small>${esc(CONFIG.bookings.email)}</small></a>
+    <div style="height:22px"></div></div></div>`;
+}
+});
+ORDER.push("booth");
+</script>
+<script>
+/* ============ THEME 9: GAMECUBE ============ */
+defineTheme("gamecube", "GameCube", {
+css: `
+.t-gc { --bg:#5b5bb5; --bg2:#4a4a9e; --ink:#fff; --dark:#2e2e6e; --acc:#ffd23f; --grn:#7ee081;
+  background:linear-gradient(180deg,var(--bg),var(--bg2)); color:var(--ink);
+  font-family:"Trebuchet MS",Verdana,sans-serif; min-height:100dvh; }
+.t-gc .wrap { max-width:440px; margin:0 auto; padding:26px 16px 10px; }
+.t-gc .console { background:#6e6ec4; border:4px solid var(--dark); border-radius:26px; padding:20px 16px 18px;
+  box-shadow:0 14px 0 var(--dark), 0 24px 50px rgba(0,0,0,.35); }
+.t-gc .screen { background:#101018; border:4px solid var(--dark); border-radius:14px; padding:18px 14px; text-align:center;
+  box-shadow:inset 0 0 40px rgba(90,90,200,.35); }
+.t-gc .screen h1 { font-size:44px; font-weight:900; letter-spacing:.02em; text-shadow:3px 3px 0 var(--dark); }
+.t-gc .screen h1 .y { color:var(--acc); }
+.t-gc .screen p { font-size:11px; letter-spacing:.22em; color:#b9b9e8; margin-top:6px; font-weight:bold; }
+.t-gc .screen .tag { font-size:12px; color:#d8d8f5; margin-top:10px; line-height:1.5; }
+.t-gc .pad-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; }
+.t-gc .gbtn { display:block; text-decoration:none; color:var(--ink); background:#7d7dd2; border:3px solid var(--dark);
+  border-radius:18px; padding:13px 6px; text-align:center; box-shadow:0 5px 0 var(--dark); }
+.t-gc .gbtn:active { transform:translateY(4px); box-shadow:0 1px 0 var(--dark); }
+.t-gc .gbtn b { display:block; font-size:11px; font-weight:900; letter-spacing:.03em; line-height:1.35; }
+.t-gc .gbtn span { font-size:9.5px; color:#d8d8f5; }
+.t-gc .gbtn.hot { background:var(--acc); color:var(--dark); }
+.t-gc .gbtn.hot span { color:#5a4a10; }
+.t-gc .ctl { display:flex; gap:10px; margin-top:14px; align-items:stretch; }
+.t-gc .dpad { flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.t-gc .dpad a { background:#7d7dd2; border:3px solid var(--dark); border-radius:12px; color:var(--ink);
+  text-decoration:none; font-size:10px; font-weight:900; padding:10px 2px; text-align:center; box-shadow:0 4px 0 var(--dark); }
+.t-gc .dpad a:active { transform:translateY(3px); box-shadow:none; }
+.t-gc .start { flex:none; width:96px; border-radius:50%; background:#ff6b6b; border:4px solid var(--dark); color:#fff;
+  font-weight:900; font-size:12px; letter-spacing:.08em; box-shadow:0 6px 0 var(--dark); cursor:pointer;
+  display:grid; place-items:center; text-decoration:none; text-align:center; line-height:1.3; padding:8px; }
+.t-gc .start:active { transform:translateY(5px); box-shadow:0 1px 0 var(--dark); }
+.t-gc .mem { margin-top:16px; background:#101018; border:4px solid var(--dark); border-radius:14px; padding:14px; }
+.t-gc .mem .ml { font-size:9px; font-weight:900; letter-spacing:.3em; color:#b9b9e8; margin-bottom:8px; }
+.t-gc .mem .slot { display:flex; gap:10px; align-items:center; padding:8px 0; border-top:1px solid #26264a; font-size:12px; }
+.t-gc .mem .slot b { color:var(--acc); white-space:nowrap; }
+.t-gc .mem .slot span { color:#b9b9e8; }
+.t-gc .foot { text-align:center; font-size:10px; color:#c9c9ef; letter-spacing:.2em; margin:18px 0 8px; font-weight:bold; }
+`,
+render() {
+  const gbtn = l => `<a class="gbtn${l.featured ? " hot" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <b>${esc(l.title)}</b><span>${esc(l.sub)}</span></a>`;
+  return `<div class="t-gc"><div class="wrap"><div class="console">
+    <div class="screen"><h1>RARA<span class="y">.</span></h1><p>${esc(CONFIG.role).toUpperCase()}</p>
+      <div class="tag">${CONFIG.tagline}</div></div>
+    <div class="pad-row">${CONFIG.music.map(gbtn).join("")}</div>
+    <div class="ctl"><div class="dpad">
+      ${CONFIG.socials.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title)}</a>`).join("")}
+      </div><a class="start" href="${mailto}">START<br>BOOK</a></div>
+    <div class="mem"><div class="ml">MEMORY CARD — UPCOMING</div>
+      ${CONFIG.events.map(e => `<div class="slot"><b>${esc(e.day)} ${esc(e.mon)}</b><span>${esc(e.title)} — ${esc(e.note)}</span></div>`).join("")}
+      <div class="slot"><b>@</b><span>${esc(CONFIG.bookings.email)}</span></div></div>
+  </div><div class="foot">MACHINA RECORDS — PLAYER 1 READY</div></div></div>`;
+}
+});
+ORDER.push("gamecube");
+</script>
+<script>
+/* ============ THEME 10: MACOS ============ */
+defineTheme("macos", "macOS", {
+css: `
+.t-mac { --bg1:#dfe5ee; --bg2:#b8c4d8; --ink:#1d1d1f; --mut:#6e6e73; --acc:#0071e3;
+  background:linear-gradient(160deg,var(--bg1),var(--bg2)); color:var(--ink);
+  font-family:-apple-system,"SF Pro Text","Helvetica Neue",sans-serif; min-height:100dvh; padding:0 14px 30px; }
+.t-mac .menubar { display:flex; gap:16px; align-items:center; padding:9px 16px; margin:0 -14px 22px;
+  background:rgba(250,250,252,.72); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  font-size:12.5px; font-weight:600; border-bottom:1px solid rgba(0,0,0,.08); }
+.t-mac .menubar .apple { font-size:14px; }
+.t-mac .menubar b { font-weight:700; }
+.t-mac .menubar .clock { margin-left:auto; color:var(--mut); font-weight:500; }
+.t-mac .win { max-width:440px; margin:0 auto; background:rgba(252,252,254,.82); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+  border-radius:14px; box-shadow:0 30px 80px rgba(30,40,70,.3), 0 0 0 .5px rgba(0,0,0,.12); overflow:hidden; }
+.t-mac .titlebar { display:flex; align-items:center; gap:8px; padding:12px 16px;
+  background:rgba(240,240,245,.7); border-bottom:1px solid rgba(0,0,0,.08); }
+.t-mac .titlebar i { width:12px; height:12px; border-radius:50%; }
+.t-mac .titlebar i:nth-child(1){background:#ff5f57}.t-mac .titlebar i:nth-child(2){background:#febc2e}.t-mac .titlebar i:nth-child(3){background:#28c840}
+.t-mac .titlebar span { flex:1; text-align:center; font-size:12.5px; font-weight:600; color:var(--mut); }
+.t-mac .hero { padding:26px 22px 6px; display:flex; gap:16px; align-items:center; }
+.t-mac .ava { width:64px; height:64px; border-radius:50%; flex:none; display:grid; place-items:center;
+  background:linear-gradient(135deg,#a8b8d8,#7d8fb5); color:#fff; font-size:26px; font-weight:800; }
+.t-mac .hero h1 { font-size:26px; font-weight:700; letter-spacing:-.02em; }
+.t-mac .hero p { font-size:12.5px; color:var(--mut); margin-top:2px; }
+.t-mac .sec { padding:18px 22px 0; }
+.t-mac .sec h2 { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); margin-bottom:8px; }
+.t-mac .row { display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink);
+  background:rgba(255,255,255,.65); border-radius:12px; padding:12px 14px; margin-bottom:8px;
+  box-shadow:0 1px 4px rgba(0,0,0,.06); }
+.t-mac .row:active { transform:scale(.98); }
+.t-mac .row .ic { width:38px; height:38px; border-radius:10px; flex:none; display:grid; place-items:center;
+  background:linear-gradient(135deg,#e8ecf4,#d3dcea); font-weight:800; font-size:14px; color:#4a5a7a; }
+.t-mac .row.hot .ic { background:linear-gradient(135deg,#0071e3,#42a5f5); color:#fff; }
+.t-mac .row b { display:block; font-size:14px; font-weight:600; }
+.t-mac .row span { font-size:12px; color:var(--mut); }
+.t-mac .row .chev { margin-left:auto; color:#c7c7cc; font-size:16px; }
+.t-mac .gig { display:flex; gap:12px; align-items:center; padding:10px 2px; border-bottom:1px solid rgba(0,0,0,.06); font-size:13px; }
+.t-mac .gig .d { font-weight:700; color:var(--acc); white-space:nowrap; font-size:12px; }
+.t-mac .dock { margin:20px 12px 12px; background:rgba(240,240,245,.7); border-radius:16px; padding:12px;
+  display:flex; gap:10px; align-items:center; }
+.t-mac .dock .msg { flex:1; font-size:12.5px; color:var(--mut); }
+.t-mac .dock a { flex:none; background:var(--acc); color:#fff; font-weight:700; font-size:13.5px; text-decoration:none;
+  padding:11px 20px; border-radius:999px; }
+.t-mac .dock a:active { transform:scale(.95); }
+`,
+render() {
+  const art = t => t.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+  const row = l => `<a class="row${l.featured ? " hot" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <span class="ic">${art(l.title)}</span>
+    <span><b>${esc(l.title)}</b><span>${esc(l.sub)}</span></span><span class="chev">›</span></a>`;
+  return `<div class="t-mac">
+    <div class="menubar"><span class="apple">●</span><b>RARA</b><span>File</span><span>Edit</span><span>View</span><span class="clock">305 — Miami</span></div>
+    <div class="win">
+    <div class="titlebar"><i></i><i></i><i></i><span>RARA — link-in-bio</span></div>
+    <div class="hero"><div class="ava">R</div><div><h1>RARA</h1><p>${esc(CONFIG.role)}</p></div></div>
+    <div class="sec"><h2>Up next</h2>
+      ${CONFIG.events.map(e => `<div class="gig"><span class="d">${esc(e.day)} ${esc(e.mon)}</span><span><b>${esc(e.title)}</b> — ${esc(e.note)}</span></div>`).join("")}</div>
+    <div class="sec"><h2>Music</h2>${CONFIG.music.map(row).join("")}</div>
+    <div class="sec"><h2>Follow</h2>${CONFIG.socials.map(row).join("")}</div>
+    <div class="dock"><span class="msg">${esc(CONFIG.bookings.note)}</span><a href="${mailto}">Book</a></div>
+  </div></div>`;
+}
+});
+ORDER.push("macos");
+</script>
+<script>
+/* ================= BOOT ================= */
+(function () {
+  initSwitcher();
+  let start = "volcano";
+  try { start = localStorage.getItem("rara-theme") || "volcano"; } catch (e) {}
+  if (!THEMES[start]) start = "volcano";
+  document.title = CONFIG.name + " — " + CONFIG.role;
+  setTheme(start);
 })();
 </script>
 </body>
