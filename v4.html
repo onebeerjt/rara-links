@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RARA 🌋 — STROBE</title>
+<meta name="theme-color" content="#000000">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--r:#ff1a00;--k:0;--bg:#000;--fg:#fff;--dim:#7a7a7a;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--hd:Anton,Impact,"Arial Narrow",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:#000}
+body{background:#000;color:var(--fg);font:500 14px/1.35 var(--mono);overflow-x:hidden;min-height:100dvh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+/* the flash: a red wash behind the type, driven by the real kick drum */
+#wash{position:fixed;inset:0;background:var(--r);opacity:calc(var(--k) * .62);pointer-events:none;z-index:0}
+#spec{position:fixed;left:0;right:0;bottom:0;width:100%;height:46vh;z-index:0;pointer-events:none;opacity:.55}
+main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 0 calc(40px + env(safe-area-inset-bottom))}
+.top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:max(10px,env(safe-area-inset-top)) 14px 10px;background:linear-gradient(#000 60%,transparent)}
+.top .id{font:700 11px var(--mono);letter-spacing:.18em;display:flex;align-items:center;gap:8px}
+.top .id i{width:9px;height:9px;border-radius:50%;background:var(--r);animation:bl 1.2s steps(2) infinite}
+.live .top .id i{animation:none;box-shadow:0 0 12px var(--r)}
+@keyframes bl{50%{opacity:.15}}
+#vs{display:flex;gap:3px}
+#vs a{min-width:24px;height:24px;display:grid;place-items:center;font:700 11px var(--mono);color:var(--dim);border:1px solid #2a2a2a}
+#vs a[aria-current]{background:var(--r);color:#000;border-color:var(--r)}
+.warn{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 14px;font-size:10px;letter-spacing:.14em;color:var(--dim)}
+.warn button{border:1px solid #333;padding:7px 10px;font-weight:700;letter-spacing:.14em;color:#fff;font-size:10px}
+.warn button[aria-pressed=true]{background:#fff;color:#000}
+/* hero */
+.hero{padding:8px 6px 0;line-height:.8;user-select:none}
+.hero .w{display:flex;justify-content:space-between;font:400 clamp(130px,46vw,290px)/.82 var(--hd);letter-spacing:-.01em;text-transform:uppercase;transform:scaleY(calc(1 + var(--k) * .07));transform-origin:50% 100%}
+.hero .w span{color:transparent;-webkit-text-stroke:2px #fff;transition:color .05s}
+.hero .w span.on{color:var(--r);-webkit-text-stroke-color:var(--r)}
+.sub{display:flex;justify-content:space-between;padding:12px 14px 14px;font-size:11px;letter-spacing:.2em;font-weight:700}
+.sub b{color:var(--r)}
+.tick{overflow:hidden;background:var(--r);color:#000;border-block:2px solid #000;white-space:nowrap}
+.tick div{display:inline-block;padding:7px 0;font:400 22px/1 var(--hd);letter-spacing:.04em;animation:mq 26s linear infinite}
+.tick span{margin:0 14px}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* tracks: giant, tappable */
+h2.lab{padding:30px 14px 10px;font:700 11px var(--mono);letter-spacing:.22em;color:var(--dim);display:flex;justify-content:space-between}
+.trk{position:relative;display:block;width:100%;text-align:left;border-top:1px solid #333;padding:16px 14px 0;background:linear-gradient(90deg,var(--r) var(--p,0%),transparent var(--p,0%));isolation:isolate}
+.trk:last-of-type{border-bottom:1px solid #333}
+.trk .n{font-size:11px;letter-spacing:.2em;color:var(--dim)}
+.trk .t{display:block;font:400 clamp(54px,18.5vw,118px)/.9 var(--hd);text-transform:uppercase;letter-spacing:-.005em;margin:6px 0 14px;word-break:break-word}
+.trk .t small{display:block;font:700 12px var(--mono);letter-spacing:.2em;margin-top:8px;color:var(--dim)}
+.trk .row{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;font-weight:700;letter-spacing:.14em;font-size:12px}
+.trk .go{display:flex;align-items:center;gap:10px;background:#fff;color:#000;padding:10px 16px;font-size:13px}
+.trk.cur .go{background:var(--r);color:#000}
+.trk .tm{font-variant-numeric:tabular-nums}
+.sk{position:absolute;left:0;right:0;bottom:0;height:22px;cursor:pointer;touch-action:none}
+.sk::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.18)}
+.trk.cur .sk::after{background:rgba(255,255,255,.3)}
+/* releases: chase-light rows */
+.rel{display:block;position:relative;border-top:1px solid #222;padding:12px 14px 12px;transition:background .06s}
+.rel .t{display:block;font:400 clamp(44px,14.5vw,92px)/.92 var(--hd);text-transform:uppercase;color:transparent;-webkit-text-stroke:1.5px #fff;word-break:break-word}
+.rel .m{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;color:var(--dim);margin-top:6px;font-weight:700}
+.rel.lit{background:var(--r)}
+.rel.lit .t{-webkit-text-stroke-color:#000;color:#000}
+.rel.lit .m{color:#000}
+.rel:active .t{color:#fff}
+/* booking */
+.book{display:block;margin-top:34px;background:#fff;color:#000;padding:20px 14px 18px;position:relative}
+.book .a{font:700 11px var(--mono);letter-spacing:.2em}
+.book b{display:block;font:400 clamp(90px,34vw,210px)/.8 var(--hd);margin:10px 0 12px;text-transform:uppercase}
+.book .e{font:700 clamp(13px,4vw,17px) var(--mono);word-break:break-all;border-top:2px solid #000;padding-top:10px;display:flex;justify-content:space-between;gap:10px}
+.book.hot{background:var(--r)}
+.acts{display:flex}
+.acts button,.acts a{flex:1;text-align:center;padding:14px;border:1px solid #333;font-weight:700;letter-spacing:.14em;font-size:12px;border-left:0}
+.acts :first-child{border-left:1px solid #333}
+.foot{padding:26px 14px 0;display:flex;justify-content:space-between;gap:10px;font-size:11px;letter-spacing:.16em;color:var(--dim);font-weight:700;flex-wrap:wrap}
+.foot a{color:#fff;border-bottom:1px solid var(--r)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,30px);background:#fff;color:#000;padding:10px 16px;font:700 12px var(--mono);letter-spacing:.14em;opacity:0;transition:.2s;z-index:20;pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.tick div{animation:none}.top .id i{animation:none}}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="wash"></div>
+<canvas id="spec" aria-hidden="true"></canvas>
+<main id="app">
+  <div class="top"><span class="id"><i></i>RARA/STROBE</span><nav id="vs" aria-label="Versions"></nav></div>
+  <div class="warn"><span>⚠ FLASHING LIGHTS WHEN SOUND IS ON</span><button id="fl" aria-pressed="true">FLASH ON</button></div>
+
+  <section class="hero" aria-label="RARA"><div class="w" id="hero"><span>R</span><span>A</span><span>R</span><span>A</span></div></section>
+  <div class="sub"><span>MIAMI <b>●</b> MACHINA RECORDS</span><span id="clk">--:--:--</span></div>
+  <div class="tick" aria-hidden="true"><div id="tk"></div></div>
+
+  <h2 class="lab"><span>ARM A TRACK</span><span id="st">STANDBY</span></h2>
+  <div id="tracks"></div>
+
+  <h2 class="lab"><span>THE REST OF THE CATALOG</span><span>↗</span></h2>
+  <div id="rels"></div>
+
+  <a class="book" id="bk" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B"><span class="a">BOOKINGS OPEN</span><b>BOOK</b><span class="e"><span>omnisoundslabel@gmail.com</span><span>→</span></span></a>
+  <div class="acts"><button id="cp">COPY EMAIL</button><a href="https://instagram.com/raravulcain" target="_blank" rel="noopener">@RARAVULCAIN ↗</a></div>
+  <div class="foot"><a href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener">MACHINA RECORDS ↗</a><a href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener">OMNISOUND ↗</a></div>
+</main>
+<div id="toast" role="status"></div>
+<script src="real.js"></script>
+<script>
+(() => {
+'use strict';
+const R = REAL, $ = s => document.querySelector(s), root = document.documentElement;
+R.switcher('v4');
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1600); };
+
+/* marquee of real names */
+const names = ['JOLENE 3-HOUR SET', 'CIRCUIT × DJ MARFOX', 'TALENT SHOW', 'IN MY OWN WORLD', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'PERREO DEL FUTURO', 'MACHINA RECORDS'];
+const strip = names.map(n => `<span>${n}</span><span>✕</span>`).join('');
+$('#tk').innerHTML = strip + strip;
+
+/* tracks */
+$('#tracks').innerHTML = R.TRACKS.map((t, i) => `
+  <div class="trk" data-i="${i}" role="group" aria-label="${t.title}">
+    <span class="n">0${i + 1} / ${t.tag.toUpperCase()}</span>
+    <span class="t">${t.title.replace(/ \(/, '<small>(').replace(/\)$/, ')</small>')}${t.title.includes('(') ? '' : '<small>RARA</small>'}</span>
+    <div class="row"><button class="go" aria-label="Play ${t.title}"><span class="ic">▶</span><span class="lb">PLAY</span></button><span class="tm">0:00 / –:––</span></div>
+    <div class="sk" role="slider" aria-label="Seek ${t.title}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></div>
+  </div>`).join('');
+const trk = [...document.querySelectorAll('.trk')];
+trk.forEach((el, i) => {
+  el.querySelector('.go').addEventListener('click', () => R.toggle(i));
+  el.addEventListener('click', e => { if (!e.target.closest('.sk,.go')) R.toggle(i); });
+  const sk = el.querySelector('.sk'); let dn = false;
+  const at = e => { const r = sk.getBoundingClientRect(); R.seek(i, (e.clientX - r.left) / r.width); };
+  sk.addEventListener('pointerdown', e => { dn = true; sk.setPointerCapture(e.pointerId); if (!R.isPlaying(i)) R.play(i); at(e); });
+  sk.addEventListener('pointermove', e => dn && at(e));
+  sk.addEventListener('pointerup', () => dn = false); sk.addEventListener('pointercancel', () => dn = false);
+  sk.addEventListener('keydown', e => { if (e.key === 'ArrowRight') R.seek(i, R.prog(i) + .03); if (e.key === 'ArrowLeft') R.seek(i, R.prog(i) - .03); });
+});
+
+/* releases */
+$('#rels').innerHTML = R.RELEASES.map(r => `<a class="rel" href="${r.href}" target="_blank" rel="noopener"><span class="t">${r.title}</span><span class="m"><span>${r.type.toUpperCase()} · ${r.note.toUpperCase()}</span><span>${r.cta.toUpperCase()} ↗</span></span></a>`).join('');
+R.fitText($('.book b'), () => $('.book').clientWidth - 28);
+R.fitText($('#hero'), () => $('.hero').clientWidth - 14);
+const rels = [...document.querySelectorAll('.rel')], hero = [...document.querySelectorAll('#hero span')];
+
+$('#cp').onclick = () => R.copyEmail(ok => toast(ok ? 'EMAIL COPIED' : 'LONG-PRESS THE EMAIL TO COPY'));
+
+/* state */
+const paint = () => {
+  const playing = R.isPlaying();
+  root.classList.toggle('live', playing);
+  $('#st').textContent = playing ? 'ON AIR · ' + R.TRACKS[R.cur].short.toUpperCase() : 'STANDBY';
+  trk.forEach((el, i) => {
+    const on = R.isPlaying(i), cur = i === R.cur && (on || R.time(i) > 0);
+    el.classList.toggle('cur', cur);
+    el.querySelector('.ic').textContent = on ? '❚❚' : '▶';
+    el.querySelector('.lb').textContent = on ? 'PAUSE' : (cur ? 'RESUME' : 'PLAY');
+    el.querySelector('.go').setAttribute('aria-label', (on ? 'Pause ' : 'Play ') + R.TRACKS[i].title);
+  });
+  if (!playing) { wash = 0; rels.forEach(r => r.classList.remove('lit')); hero.forEach(h => h.classList.remove('on')); }
+};
+R.on('state', paint); R.on('meta', () => frame.tm = 0);
+R.on('blocked', () => toast('TAP PLAY AGAIN'));
+
+/* flash toggle: flashes are soft-edged and capped under 3/sec; off by default for reduced-motion users */
+let flash = !R.REDUCE, wash = 0, lastFlash = 0, chase = -1;
+const fl = $('#fl'); const setFl = () => { fl.setAttribute('aria-pressed', flash); fl.textContent = flash ? 'FLASH ON' : 'FLASH OFF'; };
+fl.onclick = () => { flash = !flash; setFl(); wash = 0; };
+setFl();
+
+/* spectrum bars behind everything */
+const cv = $('#spec'), cx = cv.getContext('2d');
+const fit = () => { const d = Math.min(2, devicePixelRatio || 1); cv.width = cv.clientWidth * d; cv.height = cv.clientHeight * d; cx.setTransform(d, 0, 0, d, 0, 0); };
+fit(); addEventListener('resize', fit);
+const draw = () => {
+  const w = cv.clientWidth, h = cv.clientHeight, sp = R.spectrum(); cx.clearRect(0, 0, w, h);
+  if (!sp) return;
+  const n = 36, bw = w / n;
+  for (let b = 0; b < n; b++) {
+    const k = Math.floor(1 + Math.pow(b / n, 1.7) * 150), v = sp[k] / 255;
+    cx.fillStyle = '#ff1a00'; cx.globalAlpha = .35 + v * .65; cx.fillRect(b * bw + 1, h - v * h, bw - 2, v * h);
+  }
+  cx.globalAlpha = 1;
+};
+
+const frame = ts => {
+  requestAnimationFrame(frame);
+  const L = R.analyse(ts);
+  if (L.hit && flash && ts - lastFlash > 340) {
+    lastFlash = ts; wash = .9; chase = (chase + 1) % rels.length;
+    rels.forEach((r, i) => r.classList.toggle('lit', i === chase));
+    hero.forEach((h, i) => h.classList.toggle('on', i === L.beats % 4));
+  }
+  wash *= .86; root.style.setProperty('--k', (flash ? wash : 0).toFixed(3));
+  /* no analyser (file://) → still show it's alive */
+  const i = R.cur;
+  trk.forEach((el, j) => {
+    const p = j === i ? R.prog(j) : (el.classList.contains('cur') ? R.prog(j) : 0);
+    el.style.setProperty('--p', (p * 100).toFixed(2) + '%');
+    const tm = el.querySelector('.tm'), s = R.fmt(R.time(j)) + ' / ' + R.fmt(R.dur(j));
+    if (tm.textContent !== s) tm.textContent = s;
+  });
+  if (R.isPlaying()) draw(); else if (ts - (frame.c || 0) > 500) { frame.c = ts; draw(); }
+  if (ts - (frame.k || 0) > 500) { frame.k = ts; $('#clk').textContent = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour12: false, timeStyle: 'medium' }).format(new Date()) + ' MIA'; }
+};
+requestAnimationFrame(frame);
+paint();
+})();
+</script>
+</body>
+</html>

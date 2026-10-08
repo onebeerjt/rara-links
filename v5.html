@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RARA 🌋 — Tracklist</title>
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
+<style>
+/* No webfonts, no images, no effects. The type and the waveform are the design. */
+:root{--k:#000;--w:#fff;--g:#c9c9c9;--d:#6b6b6b;--o:#ff3b00;--sans:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",system-ui,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+::selection{background:var(--o);color:#000}
+html{background:var(--w)}
+body{background:var(--w);color:var(--k);font:400 17px/1.25 var(--sans);-webkit-font-smoothing:antialiased;padding:max(14px,env(safe-area-inset-top)) 14px calc(60px + env(safe-area-inset-bottom));max-width:760px;margin:0 auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.bar{display:flex;justify-content:space-between;align-items:baseline;font:500 13px var(--mono);border-bottom:3px solid var(--k);padding-bottom:6px}
+#vs{display:flex;gap:10px}
+#vs a{text-decoration:none;color:var(--d)}
+#vs a[aria-current]{color:var(--k);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
+h1{font:700 clamp(120px,41vw,330px)/.74 var(--sans);letter-spacing:-.075em;margin:16px 0 0 -.05em;padding-bottom:.02em;text-transform:uppercase}
+.lede{font:700 clamp(24px,7.6vw,52px)/1 var(--sans);letter-spacing:-.04em;margin:18px 0 0;max-width:15em}
+.note{font:400 13px/1.45 var(--mono);color:var(--d);margin-top:14px;max-width:46ch}
+h2{font:500 13px var(--mono);text-transform:uppercase;letter-spacing:.04em;border-bottom:3px solid var(--k);padding:42px 0 6px;display:flex;justify-content:space-between}
+/* the two real tracks */
+.tr{border-bottom:1px solid var(--k);padding:18px 0 20px}
+.tr .no{font:500 13px var(--mono);color:var(--d)}
+.tr .ti{display:inline;font:700 clamp(38px,13.2vw,102px)/.92 var(--sans);letter-spacing:-.055em;margin:6px 0 0;word-break:break-word;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.tr .tw{margin:6px 0 12px}
+.tr.on .ti{background:var(--k);color:var(--w);padding:0 .08em}
+.tr .ctl{display:flex;gap:18px;align-items:baseline;font:500 15px var(--mono);margin:0 0 12px;flex-wrap:wrap}
+.tr .ctl button{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px;font-weight:700;font-size:20px;padding:6px 0;min-width:4.4em}
+.tr.on .ctl button{color:var(--o)}
+.tr .tm{font-variant-numeric:tabular-nums}
+canvas.wv{display:block;width:100%;touch-action:none;cursor:crosshair}
+.hint{font:400 12px var(--mono);color:var(--d);margin-top:8px}
+/* the rest, as a plain index */
+ol{list-style:none}
+ol a{display:block;text-decoration:none;padding:12px 0;border-bottom:1px solid var(--k)}
+ol a:active{background:var(--k);color:var(--w)}
+ol .l1{display:flex;gap:10px;align-items:baseline}
+ol .nn{font:500 13px var(--mono);color:var(--d);min-width:2.2em}
+ol a:active .nn,ol a:active .l2{color:var(--g)}
+ol .tt{font:700 clamp(26px,8.2vw,54px)/.98 var(--sans);letter-spacing:-.045em;flex:1;word-break:break-word}
+ol .ar{font:700 22px var(--sans)}
+ol .l2{font:400 13px var(--mono);color:var(--d);margin:3px 0 0 calc(2.2em + 10px);display:flex;justify-content:space-between;gap:10px}
+.bk{display:block;font:700 clamp(30px,10.4vw,78px)/.95 var(--sans);letter-spacing:-.055em;word-break:break-all;margin-top:18px;text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.08em}
+.bk:active{background:var(--k);color:var(--w)}
+.row{display:flex;gap:22px;flex-wrap:wrap;font:700 18px var(--sans);margin-top:16px}
+.row a,.row button{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px;padding:6px 0}
+.fine{font:400 12px/1.5 var(--mono);color:var(--d);margin-top:48px;border-top:1px solid var(--k);padding-top:10px}
+#toast{position:fixed;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));background:var(--k);color:var(--w);font:500 13px var(--mono);padding:12px 14px;opacity:0;pointer-events:none;transition:opacity .12s}
+#toast.show{opacity:1}
+:focus-visible{outline:3px solid var(--o);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="bar"><span>RARA / TRACKLIST</span><nav id="vs" aria-label="Versions"></nav></div>
+<h1>Rara</h1>
+<p class="lede">Producer and DJ. Miami. Machina Records.</p>
+<p class="note">This page has no pictures. Two tracks are playable below. Tap anywhere on a waveform to jump there. Everything else is the catalog, in order.</p>
+
+<h2><span>A. Play</span><span>2 tracks</span></h2>
+<div id="tracks"></div>
+
+<h2><span>B. Catalog</span><span>8 entries</span></h2>
+<ol id="idx"></ol>
+
+<h2><span>C. Booking</span><span>Open</span></h2>
+<a class="bk" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B">omnisoundslabel@gmail.com</a>
+<div class="row"><button id="cp">Copy email</button><a href="https://instagram.com/raravulcain" target="_blank" rel="noopener">Instagram ↗</a><a href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener">Machina Records ↗</a><a href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener">Omnisound ↗</a></div>
+<p class="fine">RARA. Miami. Machina Records. <span id="clk"></span></p>
+<div id="toast" role="status"></div>
+<script src="real.js"></script>
+<script>
+(() => {
+'use strict';
+const R = REAL, $ = s => document.querySelector(s);
+R.switcher('v5');
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1500); };
+
+$('#tracks').innerHTML = R.TRACKS.map((t, i) => `
+  <section class="tr" data-i="${i}">
+    <div class="no">${String(i + 1).padStart(2, '0')} — ${t.tag}</div>
+    <div class="tw"><h3 class="ti">“${t.title}”</h3></div>
+    <div class="ctl"><button class="pb" aria-label="Play ${t.title}">Play</button><span class="tm">0:00 / –:––</span></div>
+    <canvas class="wv" role="slider" aria-label="Seek ${t.title}" tabindex="0"></canvas>
+  </section>`).join('');
+$('#idx').innerHTML = R.RELEASES.map((r, i) => `<li><a href="${r.href}" target="_blank" rel="noopener"><div class="l1"><span class="nn">${String(i + 1).padStart(2, '0')}</span><span class="tt">${r.title}</span><span class="ar">↗</span></div><div class="l2"><span>${r.type}, ${r.note}</span><span>${r.cta}</span></div></a></li>`).join('');
+R.fitText($('h1'), () => document.body.clientWidth - 28);
+$('#cp').onclick = () => R.copyEmail(ok => toast(ok ? 'Copied: ' + R.EMAIL : 'Press and hold the email to copy'));
+
+const secs = [...document.querySelectorAll('.tr')];
+const V = secs.map((s, i) => ({ s, i, cv: s.querySelector('canvas'), pb: s.querySelector('.pb'), tm: s.querySelector('.tm'), pk: null, W: 0, H: 0 }));
+const LINES = 4, BAR = 3, GAP = 2, LH = 40;   // the track is set like a paragraph: 4 lines of 1px-spaced bars
+
+function size(v) {
+  const d = Math.min(2, devicePixelRatio || 1), w = v.cv.clientWidth;
+  v.cols = Math.floor((w + GAP) / (BAR + GAP)); v.W = w; v.H = LINES * (LH + 8);
+  v.cv.style.height = v.H + 'px'; v.cv.width = w * d; v.cv.height = v.H * d; v.cv.getContext('2d').setTransform(d, 0, 0, d, 0, 0);
+  v.pk = null;
+  R.peaks(v.i, v.cols * LINES).then(p => { v.pk = p; });
+}
+function draw(v) {
+  const x = v.cv.getContext('2d'), n = v.cols * LINES, pr = R.prog(v.i), head = pr * n, on = R.isPlaying(v.i);
+  x.clearRect(0, 0, v.W, v.H);
+  for (let k = 0; k < n; k++) {
+    const line = Math.floor(k / v.cols), c = k % v.cols, a = v.pk ? Math.max(.06, v.pk[k]) : .06;
+    const h = Math.max(2, a * LH), px = c * (BAR + GAP), y = line * (LH + 8) + LH - h;
+    x.fillStyle = k < head ? '#000' : '#c9c9c9';
+    x.fillRect(px, y, BAR, h);
+  }
+  /* playhead: a single orange block, like a text cursor */
+  const hl = Math.min(LINES - 1, Math.floor(head / v.cols)), hc = Math.floor(head % v.cols);
+  if (pr > 0 && pr < 1) { x.fillStyle = '#ff3b00'; x.fillRect(hc * (BAR + GAP) - 1, hl * (LH + 8) - 2, BAR + 2, LH + 4); }
+  /* baseline rule under each line */
+  x.fillStyle = '#000'; for (let l = 0; l < LINES; l++) x.fillRect(0, l * (LH + 8) + LH + 2, v.W, 1);
+}
+V.forEach(v => {
+  v.pb.onclick = () => R.toggle(v.i);
+  let dn = false;
+  const at = e => {
+    const r = v.cv.getBoundingClientRect(), n = v.cols * LINES;
+    const line = Math.min(LINES - 1, Math.max(0, Math.floor((e.clientY - r.top) / (LH + 8)))), c = Math.min(v.cols - 1, Math.max(0, Math.floor((e.clientX - r.left) / (BAR + GAP))));
+    R.seek(v.i, (line * v.cols + c) / n);
+  };
+  v.cv.addEventListener('pointerdown', e => { dn = true; v.cv.setPointerCapture(e.pointerId); if (!R.isPlaying(v.i)) R.play(v.i); at(e); });
+  v.cv.addEventListener('pointermove', e => dn && at(e));
+  v.cv.addEventListener('pointerup', () => dn = false); v.cv.addEventListener('pointercancel', () => dn = false);
+  v.cv.addEventListener('keydown', e => { if (e.key === 'ArrowRight') R.seek(v.i, R.prog(v.i) + .03); if (e.key === 'ArrowLeft') R.seek(v.i, R.prog(v.i) - .03); });
+  size(v);
+});
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => V.forEach(size), 150); });
+
+const paint = () => V.forEach(v => { const on = R.isPlaying(v.i); v.s.classList.toggle('on', on); v.pb.textContent = on ? 'Pause' : (R.time(v.i) > 0 ? 'Resume' : 'Play'); v.pb.setAttribute('aria-label', (on ? 'Pause ' : 'Play ') + R.TRACKS[v.i].title); });
+R.on('state', paint); R.on('blocked', () => toast('Tap Play again'));
+paint();
+
+const tzf = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour12: false, timeStyle: 'short' });
+const loop = ts => {
+  requestAnimationFrame(loop);
+  V.forEach(v => {
+    const s = R.fmt(R.time(v.i)) + ' / ' + R.fmt(R.dur(v.i)); if (v.tm.textContent !== s) v.tm.textContent = s;
+    const key = R.prog(v.i).toFixed(4) + (v.pk ? 1 : 0) + v.W; if (v.k !== key) { v.k = key; draw(v); }
+    v.cv.setAttribute('aria-valuenow', Math.round(R.prog(v.i) * 100));
+  });
+  if (ts - (loop.c || 0) > 5000) { loop.c = ts; $('#clk').textContent = tzf.format(new Date()) + ' in Miami.'; }
+};
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

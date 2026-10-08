@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RARA 🌋 — CCTV</title>
+<meta name="theme-color" content="#050706">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050706;--ph:#d5f5dc;--dim:#6f8a76;--ln:#1c2a21;--rec:#ff2b2b;--osd:"VT323","Share Tech Mono",ui-monospace,Menlo,monospace;--mono:"Share Tech Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ph);font:400 14px/1.4 var(--mono);min-height:100dvh;padding:0 0 calc(40px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+main{max-width:640px;margin:0 auto}
+.os{font-family:var(--osd);font-size:21px;line-height:1;text-shadow:1px 0 #000,-1px 0 #000,0 1px #000,0 -1px #000,0 0 6px rgba(0,0,0,.8)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:max(10px,env(safe-area-inset-top)) 12px 8px}
+.top .id{display:flex;align-items:center;gap:8px}
+.rec{width:11px;height:11px;border-radius:50%;background:var(--rec);animation:bl 1s steps(2) infinite}
+.paused .rec{animation:none;opacity:.35}
+@keyframes bl{50%{opacity:0}}
+#vs{display:flex;gap:3px}
+#vs a{min-width:24px;height:24px;display:grid;place-items:center;font:400 17px var(--osd);color:var(--dim);border:1px solid var(--ln)}
+#vs a[aria-current]{background:var(--ph);color:#000;border-color:var(--ph)}
+/* the monitor */
+.mon{position:relative;aspect-ratio:4/3;background:#000;overflow:hidden;border-block:1px solid var(--ln);cursor:pointer;touch-action:manipulation;user-select:none}
+.mon canvas{position:absolute;inset:0;width:100%;height:100%;display:block;filter:contrast(1.18) brightness(1.04)}
+.tint{position:absolute;inset:0;background:#b9ffcf;mix-blend-mode:multiply;pointer-events:none}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,transparent 52%,rgba(0,0,0,.72) 100%)}
+.scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)}
+.ov{position:absolute;pointer-events:none;color:#fff}
+.tl{left:10px;top:8px}.tr{right:10px;top:8px;text-align:right}.bl{left:10px;bottom:8px}.br{right:10px;bottom:8px;text-align:right}
+.ov small{display:block;font-size:17px;opacity:.82;margin-top:3px}
+.mon .big{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.mon .big span{font:400 34px var(--osd);color:#fff;border:2px solid #fff;padding:6px 14px 4px;background:rgba(0,0,0,.45);letter-spacing:.08em;text-shadow:none}
+.mon.playing .big{display:none}
+.mon.flick{animation:fk .18s steps(2)}
+@keyframes fk{50%{transform:translateX(3px)}}
+/* NVR playback bar */
+.nvr{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--ln)}
+.nvr button{width:44px;height:38px;border:1px solid var(--dim);font:400 24px var(--osd);display:grid;place-items:center;padding-top:3px}
+.nvr button:active{background:var(--ph);color:#000}
+.tl2{flex:1;height:38px;position:relative;touch-action:none;cursor:pointer;border:1px solid var(--ln);background:repeating-linear-gradient(90deg,var(--ln) 0 1px,transparent 1px 10%)}
+.tl2 i{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(213,245,220,.2);border-right:2px solid var(--ph)}
+.tl2 em{position:absolute;right:6px;top:50%;transform:translateY(-52%);font:400 21px var(--osd);font-style:normal;color:var(--ph)}
+h2{font:400 22px var(--osd);letter-spacing:.12em;color:var(--dim);padding:22px 12px 8px;display:flex;justify-content:space-between}
+/* channel grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 2px}
+.cam{position:relative;aspect-ratio:4/3;background:#000;overflow:hidden;display:block;border:1px solid var(--ln);color:#fff;text-align:left}
+.cam canvas{position:absolute;inset:0;width:100%;height:100%;display:block;filter:contrast(1.1)}
+.cam .tint,.cam .vig,.cam .scan{position:absolute}
+.cam .ov{font-size:18px}
+.cam .nm{left:6px;right:6px;bottom:6px;font-size:21px;line-height:.95}
+.cam .nm small{font-size:16px;color:#bde;opacity:.85;margin-top:4px}
+.cam .cn{left:6px;top:5px;font-size:18px}
+.cam .st{right:6px;top:5px;font-size:18px}
+.cam.sel{outline:2px solid var(--ph);outline-offset:-2px;z-index:1}
+.cam.off .st{color:#ffb74a}
+.cam:active{filter:brightness(1.4)}
+/* log + desk */
+.log{padding:0 12px;font:400 19px/1.25 var(--osd);color:var(--dim);min-height:5.8em}
+.log div:first-child{color:var(--ph)}
+.desk{margin:26px 12px 0;border:1px solid var(--dim);padding:14px;position:relative}
+.desk .k{font:400 20px var(--osd);color:var(--dim);letter-spacing:.12em}
+.desk b{display:block;font:400 clamp(42px,14vw,72px)/.9 var(--osd);color:var(--ph);margin:6px 0 10px;letter-spacing:.03em}
+.desk .e{display:block;font:400 clamp(14px,4.4vw,19px) var(--mono);word-break:break-all;border-top:1px solid var(--ln);padding-top:10px}
+.desk .a{display:flex;gap:8px;margin-top:12px}
+.desk .a a,.desk .a button{flex:1;text-align:center;border:1px solid var(--ph);padding:12px 6px 9px;font:400 22px var(--osd);letter-spacing:.08em}
+.desk .a .p{background:var(--ph);color:#000}
+.desk .a :active{opacity:.6}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:20px 12px 0;font:400 19px var(--osd);color:var(--dim)}
+.foot a{border-bottom:1px solid var(--dim)}
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#000;border:1px solid var(--ph);padding:8px 14px 5px;font:400 21px var(--osd);opacity:0;transition:.15s;z-index:60;pointer-events:none}
+#toast.show{opacity:1}
+:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.rec{animation:none}.mon.flick{animation:none}}
+</style>
+</head>
+<body class="paused">
+<main>
+  <div class="top os"><span class="id"><i class="rec"></i>RARA/CCTV</span><nav id="vs" aria-label="Versions"></nav></div>
+
+  <section class="mon" id="mon" aria-label="Camera monitor. Tap to play or pause.">
+    <canvas id="main" width="320" height="240"></canvas>
+    <div class="tint"></div><div class="vig"></div><div class="scan"></div>
+    <div class="ov os tl"><span id="cn">CAM 01</span><small id="cs">JET FUEL (BATIDA EDIT)</small></div>
+    <div class="ov os tr"><span id="dt">----/--/--</span><small id="tz">--:--:--</small></div>
+    <div class="ov os bl"><span id="md">STANDBY</span></div>
+    <div class="ov os br"><span id="tc">0:00 / –:––</span></div>
+    <div class="big os"><span id="bg">▶ TAP TO PLAY</span></div>
+  </section>
+  <div class="nvr">
+    <button id="pv" class="os" aria-label="Previous camera">|◀</button>
+    <button id="pp" class="os" aria-label="Play">▶</button>
+    <button id="nx" class="os" aria-label="Next camera">▶|</button>
+    <div class="tl2" id="sk" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><i id="skf"></i><em id="skt"></em></div>
+  </div>
+
+  <h2><span>CHANNEL SELECT</span><span id="ct">10 CH</span></h2>
+  <div class="grid" id="grid"></div>
+
+  <h2><span>EVENT LOG</span><span>LOCAL</span></h2>
+  <div class="log" id="log"></div>
+
+  <section class="desk">
+    <div class="k">SECURITY DESK / BOOKINGS</div>
+    <b>REPORT<br>AN EVENT</b>
+    <a class="e" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B">omnisoundslabel@gmail.com</a>
+    <div class="a"><a class="p" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B">BOOK RARA</a><button id="cp">COPY</button></div>
+  </section>
+  <div class="foot"><a href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener">MACHINA RECORDS ↗</a><a href="https://instagram.com/raravulcain" target="_blank" rel="noopener">@RARAVULCAIN ↗</a><a href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener">OMNISOUND ↗</a></div>
+</main>
+<div id="toast" role="status"></div>
+<script src="real.js"></script>
+<script>
+(() => {
+'use strict';
+const R = REAL, $ = s => document.querySelector(s);
+R.switcher('v6');
+const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1500); };
+const tzf = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+const dtf = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' });
+
+/* ---------- channel grid: 2 live feeds (the real tracks), 8 archive feeds (the rest of the catalog, as links) ---------- */
+const CH = n => 'CAM ' + String(n).padStart(2, '0');
+const grid = $('#grid');
+grid.innerHTML = R.TRACKS.map((t, i) => `<button class="cam live" data-i="${i}" aria-label="${CH(i + 1)} ${t.title}"><canvas width="160" height="120"></canvas><div class="tint"></div><div class="vig"></div><div class="scan"></div><span class="ov os cn">${CH(i + 1)}</span><span class="ov os st">● LIVE</span><span class="ov os nm">${t.title.toUpperCase()}<small>${t.tag.toUpperCase()}</small></span></button>`).join('')
+  + R.RELEASES.map((r, j) => `<a class="cam off" href="${r.href}" target="_blank" rel="noopener" aria-label="${CH(j + 3)} archive: ${r.title}, opens ${r.cta}"><canvas width="160" height="120"></canvas><div class="tint"></div><div class="vig"></div><div class="scan"></div><span class="ov os cn">${CH(j + 3)}</span><span class="ov os st">ARCHIVE ↗</span><span class="ov os nm">${r.title.toUpperCase()}<small>${(r.type + ' · ' + r.note).toUpperCase()}</small></span></a>`).join('');
+const tiles = [...grid.children], live = tiles.slice(0, 2), arch = tiles.slice(2);
+$('#ct').textContent = (R.TRACKS.length + R.RELEASES.length) + ' CH';
+
+/* ---------- procedural club footage (no images: it's drawn) ---------- */
+const noise = [0, 1, 2, 3].map(() => { const c = document.createElement('canvas'); c.width = 128; c.height = 96; const g = c.getContext('2d'), d = g.createImageData(128, 96); for (let k = 0; k < d.data.length; k += 4) { const v = Math.random() * 255; d.data[k] = d.data[k + 1] = d.data[k + 2] = v; d.data[k + 3] = 255; } g.putImageData(d, 0, 0); return c; });
+function scene(g, W, H, t, E, cam) {
+  const u = H / 120, hz = H * (cam ? .36 : .42), px = cam ? Math.sin(t * .16) * W * .05 : 0;
+  const lift = E.on ? .55 + E.k * .45 + E.lo * .3 : .28;
+  let bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#0b0b0b'); bg.addColorStop(.5, '#3b3b3b'); bg.addColorStop(1, '#090909');
+  g.globalCompositeOperation = 'source-over'; g.fillStyle = bg; g.fillRect(0, 0, W, H);
+  g.save(); g.translate(px, 0);
+  /* haze + beams */
+  g.globalCompositeOperation = 'lighter';
+  const rg = g.createRadialGradient(W * .5, hz - 10 * u, 2, W * .5, hz - 10 * u, W * .62); rg.addColorStop(0, `rgba(255,255,255,${.5 * lift})`); rg.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = rg; g.fillRect(-W * .1, 0, W * 1.2, H);
+  for (let b = 0; b < 4; b++) {
+    const ox = W * (.12 + b * .25 + (cam ? .04 : 0)), a = Math.sin(t * (.5 + b * .17) + b * 2.1 + (cam ? 1 : 0)) * W * .3, tx = ox + a, ty = H * .98;
+    const bgm = g.createLinearGradient(ox, 0, tx, ty); bgm.addColorStop(0, `rgba(255,255,255,${.34 * lift})`); bgm.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = bgm; g.beginPath(); g.moveTo(ox - 2 * u, 0); g.lineTo(ox + 2 * u, 0); g.lineTo(tx + 20 * u, ty); g.lineTo(tx - 20 * u, ty); g.fill();
+  }
+  g.globalCompositeOperation = 'source-over';
+  /* booth */
+  const bx = W * (cam ? .52 : .3), bw = W * (cam ? .34 : .4), by = hz - 3 * u;
+  g.fillStyle = '#d8d8d8'; g.globalAlpha = .55 + .4 * lift; g.fillRect(bx, by - 2 * u, bw, 1.6 * u); g.globalAlpha = 1;   // lit top edge
+  g.fillStyle = '#0a0a0a'; g.fillRect(bx, by - .4 * u, bw, 13 * u);
+  const led = Math.min(1, .25 + E.k + E.mid * .8); g.fillStyle = `rgba(255,255,255,${led})`;
+  for (let s = 0; s < 14; s++) g.fillRect(bx + (s + .5) * bw / 14 - .6 * u, by + 3 * u, 1.2 * u, (1 + hash(s + Math.floor(t * 8) * 3) * 3) * u * (E.on ? 1 : .35));
+  /* DJ */
+  const dx = bx + bw * .5, sway = Math.sin(t * 3.1) * .8 * u * (E.on ? 1 : .3) - E.k * 1.2 * u;
+  g.fillStyle = '#060606'; g.beginPath(); g.ellipse(dx + sway, by - 12 * u, 3.4 * u, 3.8 * u, 0, 0, 7); g.fill();
+  g.beginPath(); g.moveTo(dx - 7 * u + sway, by); g.lineTo(dx - 5 * u + sway, by - 8 * u); g.lineTo(dx + 5 * u + sway, by - 8 * u); g.lineTo(dx + 7 * u + sway, by); g.fill();
+  g.strokeStyle = '#060606'; g.lineWidth = 2.2 * u; g.beginPath();
+  g.moveTo(dx - 5 * u + sway, by - 7 * u); g.lineTo(dx - 11 * u, by - 1 * u + Math.sin(t * 5) * 1.5 * u * (E.on ? 1 : 0));
+  g.moveTo(dx + 5 * u + sway, by - 7 * u); g.lineTo(dx + 11 * u, by - 1 * u + Math.cos(t * 4.3) * 1.5 * u * (E.on ? 1 : 0)); g.stroke();
+  /* crowd, back row to front */
+  const rows = 6;
+  for (let r = 0; r < rows; r++) {
+    const f = r / (rows - 1), s = .55 + f * 1.05, y = hz + 9 * u + Math.pow(f, 1.25) * (H - hz - 5 * u), step = 15 * s * u, n = Math.ceil((W * 1.15) / step) + 1;
+    const shade = Math.round(48 - f * 44); g.fillStyle = `rgb(${shade},${shade},${shade})`; g.strokeStyle = g.fillStyle; g.lineWidth = 1.7 * s * u;
+    for (let i = 0; i < n; i++) {
+      const id = r * 100 + i, x = (i - .5) * step + hash(id) * step * .7 - W * .075, ph = hash(id + 9) * 6.28;
+      const bob = (E.on ? (E.k * 2.6 + E.lo * 2 + .7) : .5) * s * u * (.55 + .45 * Math.abs(Math.sin(t * 2.2 + ph)));
+      const yy = y - bob + Math.sin(t * 1.3 + ph) * .5 * u;
+      g.beginPath(); g.ellipse(x, yy + 8 * s * u, 7.4 * s * u, 8 * s * u, 0, 0, 7); g.fill();
+      g.beginPath(); g.arc(x, yy - 1 * s * u, 3.9 * s * u, 0, 7); g.fill();
+      if (E.on && hash(id + 3) < .26 + E.mid) {                                         // arms up
+        const w = Math.sin(t * 4 + ph) * 3 * s * u; g.beginPath();
+        g.moveTo(x - 5 * s * u, yy + 5 * s * u); g.lineTo(x - 8 * s * u + w, yy - 10 * s * u);
+        g.moveTo(x + 5 * s * u, yy + 5 * s * u); g.lineTo(x + 8 * s * u - w, yy - 10 * s * u); g.stroke();
+      }
+      if (hash(id + 5) < .035 && r > 1) { g.fillStyle = '#fff'; g.fillRect(x + 4 * s * u, yy - 6 * s * u, 1.7 * s * u, 2.6 * s * u); g.fillStyle = `rgb(${shade},${shade},${shade})`; }  // a phone
+    }
+  }
+  g.restore();
+  /* a strobe pop on the kick */
+  if (E.k > .05) { g.globalCompositeOperation = 'lighter'; g.fillStyle = `rgba(255,255,255,${E.k * .22})`; g.fillRect(0, 0, W, H); g.globalCompositeOperation = 'source-over'; }
+}
+function grain(g, W, H, a) { g.globalAlpha = a; g.globalCompositeOperation = 'overlay'; g.drawImage(noise[(Math.random() * 4) | 0], 0, 0, W, H); g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; }
+
+/* ---------- elements / state ---------- */
+const mon = $('#mon'), cv = $('#main'), cg = cv.getContext('2d'), logEl = $('#log');
+const tcs = live.map(t => t.querySelector('canvas')), tgs = tcs.map(c => c.getContext('2d')), ags = arch.map(a => a.querySelector('canvas').getContext('2d'));
+let glitch = { until: 0, y: 0, h: 0, dx: 0 }, nextGl = 4000, motion = 0, lastMain = 0, lastTile = 0, sel = R.cur;
+
+const LOG = [];
+const log = msg => { LOG.unshift(tzf.format(new Date()) + '  ' + msg); LOG.length = Math.min(LOG.length, 5); logEl.innerHTML = LOG.map(l => `<div>${l}</div>`).join(''); };
+log('CAM 01–02 ONLINE. 03–10 ARCHIVE'); log('SYSTEM ARMED');
+
+const paint = () => {
+  const playing = R.isPlaying(); sel = R.cur, t = R.TRACKS[sel];
+  document.body.classList.toggle('paused', !playing); mon.classList.toggle('playing', playing);
+  $('#cn').textContent = CH(sel + 1); $('#cs').textContent = t.title.toUpperCase();
+  $('#md').textContent = playing ? '▶ PLAYBACK' : (R.time(sel) > 0 ? '❚❚ PAUSED' : 'STANDBY');
+  $('#bg').textContent = R.time(sel) > 0 ? '▶ RESUME' : '▶ TAP TO PLAY';
+  $('#pp').textContent = playing ? '❚❚' : '▶'; $('#pp').setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  live.forEach((el, i) => { el.classList.toggle('sel', i === sel); el.querySelector('.st').textContent = (i === sel && playing) ? '● ON AIR' : '● LIVE'; });
+  mon.setAttribute('aria-label', (playing ? 'Pause ' : 'Play ') + t.title);
+};
+let t;
+R.on('state', paint);
+R.on('play', i => { log(CH(i + 1) + ' PLAY ' + R.TRACKS[i].short.toUpperCase()); glitch = { until: performance.now() + 220, y: 30, h: 40, dx: 14 }; mon.classList.remove('flick'); void mon.offsetWidth; mon.classList.add('flick'); });
+R.on('pause', i => { if (!R.isPlaying()) log(CH(i + 1) + ' PAUSED'); });
+R.on('blocked', () => toast('TAP PLAY AGAIN'));
+
+mon.addEventListener('click', () => R.toggle(R.cur));
+live.forEach((el, i) => el.addEventListener('click', () => R.toggle(i)));
+$('#pp').onclick = () => R.toggle(R.cur);
+$('#pv').onclick = () => R.next(-1); $('#nx').onclick = () => R.next(1);
+$('#cp').onclick = () => R.copyEmail(ok => toast(ok ? 'EMAIL COPIED' : 'HOLD THE EMAIL TO COPY'));
+const sk = $('#sk'); let dn = false;
+const at = e => { const r = sk.getBoundingClientRect(); R.seek(R.cur, (e.clientX - r.left) / r.width); };
+sk.addEventListener('pointerdown', e => { dn = true; sk.setPointerCapture(e.pointerId); at(e); }); sk.addEventListener('pointermove', e => dn && at(e));
+sk.addEventListener('pointerup', () => dn = false); sk.addEventListener('pointercancel', () => dn = false);
+sk.addEventListener('keydown', e => { if (e.key === 'ArrowRight') R.seek(R.cur, R.prog(R.cur) + .03); if (e.key === 'ArrowLeft') R.seek(R.cur, R.prog(R.cur) - .03); });
+
+/* ---------- loop ---------- */
+const loop = ts => {
+  requestAnimationFrame(loop);
+  const L = R.analyse(ts), T = ts / 1000, playing = R.isPlaying();
+  if (L.hit) motion = ts;
+  if (ts > nextGl) { glitch = { until: ts + 160 + Math.random() * 120, y: Math.random() * 200, h: 6 + Math.random() * 30, dx: (Math.random() - .5) * 26 }; nextGl = ts + 5000 + Math.random() * 6000; }
+  if (L.hit && Math.random() < .05) glitch = { until: ts + 120, y: Math.random() * 200, h: 10 + Math.random() * 20, dx: (Math.random() - .5) * 18 };
+  const Efor = i => (i === R.cur && playing) ? { on: true, k: R.live ? L.kick : 0, lo: R.live ? L.low : .25, mid: R.live ? L.mid : .25 } : { on: false, k: 0, lo: 0, mid: 0 };
+  const fb = tcs.map((_, i) => Efor(i));
+
+  if (ts - lastMain > 33) {                                   // main monitor ~30fps
+    lastMain = ts;
+    scene(cg, 320, 240, T + sel * 40, fb[sel], sel);
+    grain(cg, 320, 240, .22);
+    const y0 = ((ts / 38) % 330) - 60; cg.fillStyle = 'rgba(255,255,255,.07)'; cg.fillRect(0, y0, 320, 9);   // rolling tracking bar
+    if (ts < glitch.until) cg.drawImage(cv, 0, glitch.y, 320, glitch.h, glitch.dx, glitch.y, 320, glitch.h);
+    if (ts - motion < 320 && playing) {                       // NVR "motion" box on every real kick
+      const bw2 = sel ? .34 : .4, bxx = (sel ? .52 : .3) * 320, byy = (sel ? .36 : .42) * 240;
+      cg.strokeStyle = '#fff'; cg.lineWidth = 1.4; cg.setLineDash([5, 3]); cg.strokeRect(bxx - 4, byy - 50, bw2 * 320 + 8, 66); cg.setLineDash([]);
+      cg.fillStyle = '#fff'; cg.font = '12px monospace'; cg.fillText('MOTION', bxx - 3, byy - 53);
+    }
+  }
+  if (ts - lastTile > 80) {                                   // tiles ~12fps
+    lastTile = ts;
+    tgs.forEach((g, i) => { scene(g, 160, 120, T + i * 40, fb[i], i); grain(g, 160, 120, .25); });
+    ags.forEach((g, i) => { g.drawImage(noise[((ts / 80) | 0) % 4], 0, 0, 160, 120); g.fillStyle = 'rgba(0,0,0,.5)'; g.fillRect(0, 0, 160, 120); });
+  }
+  const now = new Date();
+  $('#dt').textContent = dtf.format(now); $('#tz').textContent = tzf.format(now) + ' MIA';
+  $('#tc').textContent = R.fmt(R.time(sel)) + ' / ' + R.fmt(R.dur(sel));
+  const p = R.prog(sel); $('#skf').style.width = (p * 100).toFixed(2) + '%'; $('#skt').textContent = R.fmt(R.time(sel)); sk.setAttribute('aria-valuenow', Math.round(p * 100));
+};
+requestAnimationFrame(loop);
+paint();
+})();
+</script>
+</body>
+</html>
