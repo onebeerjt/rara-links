@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RARA 🌋 — Miami · V2 Studio</title>
+<meta name="description" content="RARA 🌋 — Miami producer/DJ. Afro-diasporic club music: kuduro, batida, perreo. Machina Records, Omnisound. Bookings: omnisoundslabel@gmail.com">
+<meta name="theme-color" content="#14100c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo+Narrow:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#110d09;--pn:#1d1711;--pn2:#2a2118;--ln:#3a2e21;--cr:#efe2c8;--dim:#9a8a70;--dim2:#5e5242;
+  --am:#ffa51f;--or:#ff6a1a;--rd:#ff3b25;--gr:#8dff5c;--br:#c9a45c;
+  --disp:"Bebas Neue","Impact",sans-serif;--ui:"Archivo Narrow","Arial Narrow",sans-serif;--vfd:"Share Tech Mono",ui-monospace,monospace;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  --k:0;
+}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{min-height:100dvh;color:var(--cr);font-family:var(--ui);font-weight:600;overflow-x:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+  background:radial-gradient(100% 50% at 50% 0,#2b1c10 0,transparent 70%),var(--bg)}
+body::before{content:"";position:fixed;inset:0;background:var(--grain);opacity:.06;pointer-events:none;z-index:60;mix-blend-mode:overlay}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
+canvas{display:block;width:100%}
+.app{max-width:500px;margin:0 auto;padding:0 10px calc(26px + env(safe-area-inset-bottom))}
+.eng{font:700 9px/1 var(--ui);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+
+/* ---- hardware panel ---- */
+.hw{position:relative;border-radius:14px;border:1px solid #000;
+  background:var(--grain),linear-gradient(180deg,#2c231a 0%,#1d1711 12%,#17120d 100%);background-blend-mode:soft-light,normal;
+  box-shadow:inset 0 1px 0 rgba(255,235,200,.12),inset 0 0 0 1px rgba(255,200,120,.05),0 18px 30px -16px #000,0 2px 0 #000}
+.screw{position:absolute;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8a7e6c,#2c261d 70%);box-shadow:0 0 0 1px #000,inset 0 -1px 1px rgba(0,0,0,.6)}
+.screw::after{content:"";position:absolute;left:1px;right:1px;top:4px;height:1px;background:#0c0905;transform:rotate(calc(var(--r,20)*1deg))}
+.s1{left:7px;top:7px}.s2{right:7px;top:7px;--r:70}.s3{left:7px;bottom:7px;--r:110}.s4{right:7px;bottom:7px;--r:150}
+.sec{display:flex;align-items:center;gap:10px;margin:22px 6px 8px}
+.sec h2{font:400 22px/1 var(--disp);letter-spacing:.14em;color:var(--cr)}
+.sec i{flex:1;height:2px;border-top:1px solid #000;border-bottom:1px solid rgba(255,235,200,.1)}
+
+/* ---- nameplate ---- */
+.plate{display:flex;align-items:center;gap:10px;margin:max(10px,env(safe-area-inset-top)) 0 10px;padding:10px 12px;border-radius:10px;
+  background:linear-gradient(180deg,#d7ccb4,#a99d85 55%,#c2b69c);border:1px solid #000;box-shadow:inset 0 1px 0 #fff8,0 4px 10px rgba(0,0,0,.6);color:#1a130b;position:relative}
+.plate h1{font:400 34px/.8 var(--disp);letter-spacing:.08em;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+.plate small{display:block;font:700 8px var(--ui);letter-spacing:.24em;margin-top:5px;color:#4a3d28}
+.plate .sp{flex:1}
+#vs{display:flex;gap:5px}
+#vs a{width:28px;height:28px;border-radius:5px;display:grid;place-items:center;font:700 13px var(--vfd);color:#d9cdb2;background:linear-gradient(180deg,#3a3025,#17110b);border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,235,200,.2),0 2px 0 #000}
+#vs a[aria-current]{color:#1a0d00;background:linear-gradient(180deg,#ffbe55,#e98a10);box-shadow:inset 0 1px 0 #fff8,0 0 12px rgba(255,165,31,.7),0 2px 0 #000}
+.mon{width:34px;height:28px;border-radius:5px;display:grid;place-items:center;background:linear-gradient(180deg,#3a3025,#17110b);border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,235,200,.2),0 2px 0 #000;color:#d9cdb2;position:relative}
+.mon svg{width:15px;height:15px}
+.mon::after{content:"";position:absolute;right:4px;top:3px;width:4px;height:4px;border-radius:50%;background:#3a1a10}
+.mon[aria-pressed=true]::after{background:var(--gr);box-shadow:0 0 8px var(--gr)}
+
+/* ---- turntable ---- */
+.tt{padding:12px 10px 22px;--k:0}
+.tt-in{display:grid;grid-template-columns:1fr 62px;gap:8px}
+.well{position:relative;border-radius:12px;background:radial-gradient(120% 120% at 30% 20%,#2a2118,#0e0a07);box-shadow:inset 0 3px 10px #000,inset 0 0 0 1px #000,0 1px 0 rgba(255,235,200,.1);overflow:hidden;aspect-ratio:1}
+#plat{position:absolute;inset:0;height:100%;touch-action:pan-y;cursor:grab}
+.well .strobe{position:absolute;left:12px;bottom:12px;width:9px;height:9px;border-radius:50%;background:var(--am);box-shadow:0 0 calc(6px + var(--k)*14px) var(--am);opacity:calc(.5 + var(--k)*.5)}
+.side{display:flex;flex-direction:column;align-items:center;gap:8px}
+.pitch{position:relative;flex:1;width:100%;border-radius:10px;background:linear-gradient(180deg,#0d0906,#1c150e);box-shadow:inset 0 2px 8px #000,0 1px 0 rgba(255,235,200,.1);touch-action:none}
+.pitch .slot{position:absolute;left:50%;top:14px;bottom:14px;width:6px;margin-left:-3px;border-radius:3px;background:#000;box-shadow:inset 0 0 0 1px #2a2118}
+.pitch .tk{position:absolute;left:8px;right:8px;top:14px;bottom:14px;background:repeating-linear-gradient(180deg,rgba(239,226,200,.5) 0 1px,transparent 1px calc(100%/8))}
+.pitch .tk::after{content:"";position:absolute;left:-2px;right:-2px;top:50%;height:2px;background:var(--am);box-shadow:0 0 6px var(--am)}
+.pitch .cap{position:absolute;left:50%;width:44px;height:30px;margin-left:-22px;border-radius:4px;transform:translateY(-50%);
+  background:repeating-linear-gradient(180deg,#0006 0 2px,transparent 2px 5px),linear-gradient(180deg,#58504a,#2a2520 50%,#46403a);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 4px 6px #000,0 0 0 1px #000}
+.pitch .cap::after{content:"";position:absolute;left:3px;right:3px;top:50%;height:2px;background:var(--cr);margin-top:-1px}
+.pitch .lb{position:absolute;left:0;right:0;text-align:center;font:700 8px var(--vfd);color:var(--dim)}
+.pv{font:700 12px var(--vfd);color:var(--am);text-shadow:0 0 8px rgba(255,165,31,.7);font-variant-numeric:tabular-nums}
+#vu{height:90px;width:30px;border-radius:6px;background:#0a0705;box-shadow:inset 0 2px 6px #000}
+
+/* ---- VFD ---- */
+.vfd{margin-top:10px;padding:10px 12px;border-radius:8px;background:#0a0603;box-shadow:inset 0 2px 8px #000,0 1px 0 rgba(255,235,200,.12);position:relative;overflow:hidden;
+  font-family:var(--vfd);color:var(--am);text-shadow:0 0 7px rgba(255,150,20,.65)}
+.vfd::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle,transparent 55%,rgba(0,0,0,.55) 60%) 0 0/3px 3px,linear-gradient(180deg,rgba(255,255,255,.06),transparent 40%)}
+.vfd .l1{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.vfd .l1 .eng{color:#8a5a14;text-shadow:none;font-family:var(--vfd);font-size:9px}
+.mq{flex:1;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.mq div{display:inline-block;animation:mq 15s linear infinite;font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.mq span{padding-right:30px}
+@keyframes mq{to{transform:translateX(-50%)}}
+.vfd .l2{display:grid;grid-template-columns:1.35fr .7fr 1fr;gap:8px;margin-top:8px;align-items:end}
+.vfd .big{font-size:38px;line-height:.9;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.vfd .big small{font-size:12px;color:#8a5a14;text-shadow:none;margin-left:3px;letter-spacing:0}
+.vfd .v2{font-size:24px;line-height:1}
+.vfd .t{font-size:15px;line-height:1.25;font-variant-numeric:tabular-nums;text-align:right}
+.vfd .t span{color:#a2701f;text-shadow:none}
+.vfd .seg{display:flex;gap:3px;margin-top:8px}
+.vfd .seg i{flex:1;height:5px;background:#2a1a08;border-radius:1px;text-shadow:none}
+.vfd .seg i.on{background:var(--am);box-shadow:0 0 7px var(--am)}
+.ovw{margin-top:8px;height:34px;border-radius:5px;background:#0a0603;box-shadow:inset 0 2px 6px #000;overflow:hidden;position:relative;touch-action:pan-y;cursor:pointer}
+#ov{height:34px}
+#wf{height:84px;margin-top:8px;border-radius:6px;background:#0a0603;box-shadow:inset 0 2px 8px #000,0 1px 0 rgba(255,235,200,.1);cursor:grab;touch-action:pan-y}
+
+/* ---- transport keys ---- */
+.keys{display:grid;grid-template-columns:1fr 1.25fr repeat(4,.8fr);gap:7px;margin-top:12px}
+.key{position:relative;height:52px;border-radius:7px;padding-top:12px;display:grid;place-items:center;font:700 13px var(--ui);letter-spacing:.16em;color:#d9cdb2;
+  background:linear-gradient(180deg,#4a4036,#241d16 55%,#2d251c);border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,235,200,.28),0 4px 0 #050302,0 7px 10px rgba(0,0,0,.6);transition:transform .06s,box-shadow .06s}
+.key::before{content:"";position:absolute;top:7px;left:50%;width:14px;height:3px;margin-left:-7px;border-radius:2px;background:var(--c,#3a2a18);opacity:.35}
+.key:active,.key.hit{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,235,200,.15),0 1px 0 #050302}
+.key:active::before,.key.hit::before,.key[aria-pressed=true]::before{opacity:1;box-shadow:0 0 10px var(--c)}
+.key svg{width:18px;height:18px;margin-top:-2px}
+.key.cue{--c:var(--am)}.key.play{--c:var(--gr)}
+.key.hc{--c:var(--c);font-family:var(--vfd);font-size:14px;letter-spacing:0}
+.key.hc{background:linear-gradient(180deg,color-mix(in srgb,var(--c) 45%,#2a2118),color-mix(in srgb,var(--c) 18%,#17110b) 60%);color:#fff;text-shadow:0 1px 0 #0008}
+
+/* ---- patch bay (links) ---- */
+.bay{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:14px 12px 14px}
+.arc{grid-column:1/-1;position:relative;display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:12px;
+  background:linear-gradient(180deg,#ff5a35,#c4200e 70%,#e1381c);border:1px solid #000;color:#1b0402;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -12px 20px rgba(80,0,0,.35),0 5px 0 #5d0d02,0 10px 22px rgba(255,59,37,.28);animation:bk 3.2s ease-in-out infinite;transition:transform .07s}
+@keyframes bk{50%{box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -12px 20px rgba(80,0,0,.35),0 5px 0 #5d0d02,0 10px 36px rgba(255,59,37,.6)}}
+.arc:active{transform:translateY(4px);box-shadow:inset 0 2px 0 rgba(255,255,255,.4),0 1px 0 #5d0d02}
+.arc .lamp{width:48px;height:48px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,#fff3d0,#ffb02a 40%,#c46a00);box-shadow:inset 0 -3px 6px rgba(120,40,0,.5),0 0 18px rgba(255,170,40,.8),0 0 0 3px #1b0402,0 0 0 4px #c9a45c;display:grid;place-items:center;font:400 22px var(--disp);color:#3a1600}
+.arc b{display:block;font:400 40px/.85 var(--disp);letter-spacing:.06em}
+.arc s{text-decoration:none;font:700 11px var(--vfd);opacity:.8}
+.arc .eng{color:rgba(27,4,2,.7);margin-bottom:4px;display:block}
+.sw{position:relative;padding:12px 12px 12px;border-radius:9px;background:linear-gradient(180deg,#32291f,#1b150f);border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,235,200,.15),0 4px 0 #050302,0 8px 12px rgba(0,0,0,.5);transition:transform .07s,box-shadow .07s;min-height:84px;display:flex;flex-direction:column;justify-content:flex-end}
+.sw:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,235,200,.1),0 1px 0 #050302}
+.sw::before{content:"";position:absolute;right:11px;top:11px;width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);animation:lamp 3s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes lamp{0%,100%{opacity:.35}50%{opacity:1}}
+.sw .eng{position:absolute;left:12px;top:12px}
+.sw b{font:400 27px/.9 var(--disp);letter-spacing:.08em}
+.sw s{text-decoration:none;font:700 10px var(--vfd);color:var(--dim);margin-top:4px}
+.sw.wide{grid-column:1/-1;min-height:88px}
+
+/* ---- library rack ---- */
+.rack{padding:8px 8px}
+.row{position:relative;border-bottom:1px solid #000;box-shadow:0 1px 0 rgba(255,235,200,.07)}
+.row:last-child{border:0;box-shadow:none}
+.rm{display:grid;grid-template-columns:30px 1fr auto;gap:9px;align-items:center;width:100%;padding:11px 6px;text-align:left}
+.rm .n{font:700 17px var(--vfd);color:#6a5a40;text-align:center;background:#0a0603;border-radius:3px;padding:3px 0;box-shadow:inset 0 1px 3px #000}
+.rm .t b{display:block;font:400 25px/.95 var(--disp);letter-spacing:.07em;text-transform:uppercase;color:var(--cr)}
+.rm .t s{display:block;text-decoration:none;margin-top:3px;font:700 10px var(--ui);letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.rm .r{text-align:right;font:700 15px var(--vfd);color:#a2701f;line-height:1.2}
+.rm .r em{font-style:normal;display:block;font-size:12px;color:var(--c)}
+.row.cur .n{color:var(--am);text-shadow:0 0 8px var(--am)}
+.row.cur .t b{color:var(--am);text-shadow:0 0 12px rgba(255,165,31,.45)}
+.row.cur::before{content:"";position:absolute;left:-2px;top:12px;bottom:12px;width:3px;border-radius:2px;background:var(--am);box-shadow:0 0 10px var(--am)}
+.row.cur .r{color:var(--am);text-shadow:0 0 8px rgba(255,165,31,.6)}
+.rb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.3,.8,.2,1)}
+.row.open .rb{grid-template-rows:1fr}
+.rb>div{overflow:hidden}
+.inner{padding:0 6px 14px;opacity:0;transform:translateY(-6px);transition:.3s}
+.row.open .inner{opacity:1;transform:none}
+.inner canvas{height:62px;border-radius:6px;background:#0a0603;box-shadow:inset 0 2px 6px #000;cursor:crosshair}
+.inner p{margin-top:10px;font:500 16px/1.25 var(--ui);color:#cfc2a6}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}
+.btn{height:42px;border-radius:7px;display:grid;place-items:center;font:700 13px var(--ui);letter-spacing:.16em;text-transform:uppercase;color:#d9cdb2;
+  background:linear-gradient(180deg,#4a4036,#241d16 55%,#2d251c);border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,235,200,.28),0 3px 0 #050302;transition:transform .06s,box-shadow .06s}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #050302}
+.btn.am{color:#1a0d00;background:linear-gradient(180deg,#ffc067,#e98a10);box-shadow:inset 0 1px 0 #fff8,0 3px 0 #6a3b00}
+
+/* ---- mixer ---- */
+.mix{padding:14px 12px 12px}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.meters canvas{height:96px;border-radius:8px;box-shadow:inset 0 2px 8px #000,0 1px 0 rgba(255,235,200,.12)}
+#spec{height:92px;margin-top:8px;border-radius:6px;background:#0a0603;box-shadow:inset 0 2px 8px #000}
+.knobs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:14px}
+.knob{display:flex;flex-direction:column;align-items:center;gap:5px;touch-action:none;user-select:none;-webkit-user-select:none;outline:0}
+.kb{position:relative;width:72px;height:72px}
+.kb svg.sc{position:absolute;inset:0;width:100%;height:100%}
+.kb .cap{position:absolute;inset:12px;border-radius:50%;background:conic-gradient(from 0deg,#5a5047,#2a241d,#6a6056,#2a241d,#5a5047);box-shadow:0 5px 9px #000,0 0 0 1px #000,inset 0 0 0 2px rgba(0,0,0,.5);transition:box-shadow .15s}
+.kb .cap::before{content:"";position:absolute;inset:4px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#4a4036,#17120d 75%);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.kb .cap i{position:absolute;left:50%;top:3px;width:3px;height:12px;margin-left:-1.5px;border-radius:2px;background:var(--cr);box-shadow:0 0 6px rgba(239,226,200,.6);z-index:1}
+.knob.drag .cap,.knob:focus-visible .cap{box-shadow:0 5px 9px #000,0 0 0 1px #000,0 0 14px var(--kc)}
+.knob .kv{font:700 11px var(--vfd);color:var(--am);text-shadow:0 0 6px rgba(255,165,31,.6)}
+.knob .eng{margin-top:-1px}
+.mbtn{margin-top:12px;width:100%}
+
+/* ---- labels: aluminum plates ---- */
+.chs{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.al{position:relative;display:flex;flex-direction:column;gap:8px;min-height:160px;padding:14px 12px;border-radius:10px;color:#1a130b;overflow:hidden;
+  background:var(--grain),repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 1px,transparent 1px 3px),linear-gradient(180deg,#d9cfb8,#a99d85 60%,#c9bda3);background-blend-mode:multiply,normal,normal;border:1px solid #000;box-shadow:inset 0 1px 0 #fff9,0 6px 14px rgba(0,0,0,.6)}
+.al .eng{color:#4a3d28;display:flex;justify-content:space-between}
+.al .eng em{font-style:normal;color:#8a1a0a}
+.al h3{font:400 31px/.88 var(--disp);letter-spacing:.06em;text-transform:uppercase;text-shadow:0 1px 0 rgba(255,255,255,.55)}
+.al p{font:600 13px/1.2 var(--ui);color:#3c3020}
+.al .go{margin-top:auto;font:700 10px var(--vfd);letter-spacing:.06em;color:#1a130b}
+.al .lv{position:absolute;right:11px;bottom:12px;display:flex;gap:2px;align-items:flex-end;height:40px}
+.al .lv i{width:4px;background:linear-gradient(0deg,#1a130b,#8a1a0a);border-radius:1px;animation:eq2 .9s ease-in-out infinite alternate}
+.al .lv i:nth-child(2n){animation-duration:.65s;animation-delay:-.3s}.al .lv i:nth-child(3n){animation-duration:1.15s;animation-delay:-.6s}
+@keyframes eq2{from{height:4px}to{height:40px}}
+
+/* ---- booking + foot ---- */
+.fin{padding:20px 14px;text-align:center}
+.fin h2{font:400 62px/.85 var(--disp);letter-spacing:.05em;margin-top:8px}
+.fin h2 span{color:var(--am);text-shadow:0 0 20px rgba(255,165,31,.55)}
+.fin .em{display:inline-block;margin:14px 0 4px;padding:9px 12px;border-radius:6px;background:#0a0603;box-shadow:inset 0 2px 6px #000;font:700 14px var(--vfd);color:var(--am);text-shadow:0 0 8px rgba(255,165,31,.6);word-break:break-all}
+.fin .acts{max-width:340px;margin:12px auto 0}
+.foot{display:flex;justify-content:space-between;gap:10px;margin:16px 6px 0;font:700 9px/1.6 var(--vfd);color:var(--dim2);letter-spacing:.08em}
+.foot b{color:var(--gr)}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translate(-50%,30px);opacity:0;z-index:70;pointer-events:none;font:700 12px var(--vfd);letter-spacing:.08em;padding:10px 14px;border-radius:7px;background:#0a0603;border:1px solid var(--br);color:var(--am);text-shadow:0 0 8px rgba(255,165,31,.6);box-shadow:0 10px 30px #000;transition:.3s cubic-bezier(.3,.8,.2,1);white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+
+  <header class="plate">
+    <div><h1>RARA 🌋</h1><small>MODEL 10.2 · STUDIO · MIAMI</small></div>
+    <span class="sp"></span>
+    <button class="mon" id="mon" aria-pressed="false" aria-label="Monitor audio (synth test tone loop)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+    <nav id="vs" aria-label="Versions"></nav>
+  </header>
+
+  <section class="hw tt rv" id="deck">
+    <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
+    <div class="tt-in">
+      <div class="well" id="well"><canvas id="plat" aria-label="Turntable. Drag to scrub."></canvas><i class="strobe"></i></div>
+      <div class="side">
+        <span class="eng">Pitch</span>
+        <div class="pitch" id="pitch" role="slider" tabindex="0" aria-label="Pitch" aria-valuemin="-8" aria-valuemax="8" aria-valuenow="0">
+          <i class="slot"></i><i class="tk"></i><span class="lb" style="top:3px">+8</span><span class="lb" style="bottom:3px">-8</span><div class="cap" id="pcap"></div>
+        </div>
+        <span class="pv" id="pv">±0.0%</span>
+        <canvas id="vu" aria-hidden="true"></canvas>
+      </div>
+    </div>
+
+    <div class="vfd">
+      <div class="l1"><span class="eng">DECK A</span><div class="mq"><div id="mq"></div></div></div>
+      <div class="l2">
+        <div><span class="eng" style="display:block;margin-bottom:3px">BPM</span><div class="big"><span id="bpm">134.00</span></div></div>
+        <div><span class="eng" style="display:block;margin-bottom:3px">KEY</span><div class="v2" id="key">8A</div></div>
+        <div class="t"><span>EL</span> <b id="tel" style="font-weight:400">00:00.0</b><br><span>RM</span> <b id="trm" style="font-weight:400">-00:00.0</b></div>
+      </div>
+      <div class="seg" id="beats"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="ovw"><canvas id="ov" aria-label="Track overview. Tap to seek."></canvas></div>
+    <canvas id="wf" aria-label="Scrolling waveform. Drag to scrub."></canvas>
+
+    <div class="keys">
+      <button class="key cue" id="cue" aria-label="Cue">CUE</button>
+      <button class="key play" id="play" aria-pressed="true" aria-label="Play / pause"><svg viewBox="0 0 24 24" fill="currentColor" id="ico"></svg></button>
+      <button class="key hc" style="--c:#ff6a1a" data-c="0" aria-label="Hot cue A">A</button>
+      <button class="key hc" style="--c:#ffd23a" data-c="1" aria-label="Hot cue B">B</button>
+      <button class="key hc" style="--c:#8dff5c" data-c="2" aria-label="Hot cue C">C</button>
+      <button class="key hc" style="--c:#ff3b6a" data-c="3" aria-label="Hot cue D">D</button>
+    </div>
+  </section>
+
+  <div class="sec rv"><h2>PATCH BAY</h2><i></i><span class="eng">links</span></div>
+  <nav class="hw bay rv" aria-label="Links">
+    <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
+    <a class="arc" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B"><span class="lamp">→</span><div><span class="eng">Bookings open</span><b>BOOK RARA</b><s>omnisoundslabel@gmail.com</s></div></a>
+    <a class="sw" style="--c:#ff3b6a;--d:-.3s" href="https://instagram.com/raravulcain" target="_blank" rel="noopener"><span class="eng">IN 1</span><b>Insta</b><s>@raravulcain</s></a>
+    <a class="sw" style="--c:#ffd23a;--d:-1.2s" href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener"><span class="eng">IN 2</span><b>Machina</b><s>Records</s></a>
+    <a class="sw wide" style="--c:#8dff5c;--d:-2s" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="eng">IN 3</span><b>Omnisound</b><s>@omnisoundspace</s></a>
+  </nav>
+
+  <div class="sec rv"><h2>CRATE</h2><i></i><span class="eng" id="cnt">08 records · tap to open</span></div>
+  <section class="hw rack rv" id="lib"><i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i></section>
+
+  <div class="sec rv"><h2>CONSOLE</h2><i></i><span class="eng">master · eq</span></div>
+  <section class="hw mix rv">
+    <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
+    <div class="meters"><canvas id="nl" aria-hidden="true"></canvas><canvas id="nr" aria-hidden="true"></canvas></div>
+    <canvas id="spec" aria-label="Spectrum analyzer with EQ curve"></canvas>
+    <div class="knobs" id="knobs"></div>
+  </section>
+
+  <div class="sec rv"><h2>LABELS</h2><i></i><span class="eng">ch 1–2</span></div>
+  <section class="chs rv">
+    <a class="al" href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener"><span class="eng">CH 1<em>● LIVE</em></span><h3>Machina<br>Records</h3><p>Label head. Afro-diasporic club music out of Miami.</p><span class="go">BANDCAMP ↗</span><div class="lv"><i></i><i></i><i></i><i></i><i></i></div></a>
+    <a class="al" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="eng">CH 2<em>● LIVE</em></span><h3>Omni-<br>sound</h3><p>Label, bookings desk and the party space.</p><span class="go">@OMNISOUNDSPACE ↗</span><div class="lv"><i></i><i></i><i></i><i></i><i></i></div></a>
+  </section>
+
+  <section class="hw fin rv" style="margin-top:14px">
+    <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
+    <span class="eng">Booking line</span>
+    <h2>LET'S <span>RUN IT.</span></h2>
+    <div class="em" id="email">omnisoundslabel@gmail.com</div>
+    <div class="acts"><button class="btn" id="copy">Copy</button><a class="btn am" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B">Email</a></div>
+  </section>
+  <footer class="foot"><span>● ALL SYSTEMS <b>NOMINAL</b><br>MIA <span id="clk">00:00:00</span></span><span style="text-align:right">RARA/OS 10.2 · STUDIO<br>MACHINA × OMNISOUND</span></footer>
+</main>
+<div class="toast" id="toast"></div>
+
+<script src="core.js"></script>
+<script>
+(() => {
+const R = RARA, { $, $$, S, TRACKS, clamp, pad, fmt } = R;
+R.switcher('v2');
+const CUEC = ['#ff6a1a', '#ffd23a', '#8dff5c', '#ff3b6a'], KC = t => `hsl(${28 + (t.kn - 1) * 8} 95% 62%)`;
+const AM = '#ffa51f';
+
+/* ---------- crate ---------- */
+const lib = $('#lib');
+lib.insertAdjacentHTML('beforeend', TRACKS.map((t, i) => `
+  <article class="row" data-i="${i}" style="--c:${KC(t)}">
+    <button class="rm" aria-expanded="false" aria-controls="b${i}">
+      <span class="n">${pad(i + 1)}</span>
+      <span class="t"><b>${t.title}</b><s>${t.type} · ${t.sub}</s></span>
+      <span class="r">${t.bpm}<em>${t.key}</em></span>
+    </button>
+    <div class="rb" id="b${i}"><div><div class="inner">
+      <canvas aria-label="Waveform for ${t.title}. Tap to load at that point."></canvas>
+      <p>${t.desc}</p>
+      <div class="acts"><button class="btn" data-load="${i}">Load to deck</button><a class="btn am" href="${t.href}" target="_blank" rel="noopener">${t.cta} ↗</a></div>
+    </div></div></div>
+  </article>`).join(''));
+const rows = $$('.row', lib);
+function drawBig(row) {
+  const t = TRACKS[row.dataset.i], { x, w, h } = R.fit($('canvas', row)), a = R.overviewAmps(t, Math.floor(w / 3)), cy = h / 2;
+  x.clearRect(0, 0, w, h);
+  a.forEach(([lo, mid, hi], k) => { const px = k * 3; x.fillStyle = '#ff6a1a'; x.fillRect(px, cy - lo * cy * .92, 2, lo * cy * 1.84); x.fillStyle = '#ffd88a'; x.fillRect(px, cy - mid * cy * .55, 2, mid * cy * 1.1); x.fillStyle = '#fff'; x.fillRect(px, cy - hi * cy * .28, 2, hi * cy * .56); });
+  t.cues.forEach((q, n) => { x.fillStyle = CUEC[n]; x.fillRect(q / t.beats * w - 1, 0, 2, h); });
+  if (S.tr === t) { const p = R.curPos() / t.beats * w; x.fillStyle = 'rgba(10,6,3,.55)'; x.fillRect(0, 0, p, h); x.fillStyle = '#fff'; x.fillRect(p - 1, 0, 2, h); }
+}
+let openRow = null;
+rows.forEach(row => {
+  const i = +row.dataset.i, btn = $('.rm', row), bc = $('canvas', row);
+  btn.addEventListener('click', () => {
+    const was = row.classList.contains('open');
+    rows.forEach(r => { r.classList.remove('open'); $('.rm', r).setAttribute('aria-expanded', 'false'); }); openRow = null;
+    if (!was) { row.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); openRow = row; requestAnimationFrame(() => drawBig(row)); setTimeout(() => drawBig(row), 400); }
+  });
+  bc.addEventListener('click', e => { const r = bc.getBoundingClientRect(); R.load(i, clamp((e.clientX - r.left) / r.width, 0, .999)); });
+  $('[data-load]', row).addEventListener('click', () => { R.load(i); $('#deck').scrollIntoView({ behavior: R.REDUCE ? 'auto' : 'smooth', block: 'start' }); });
+});
+
+/* ---------- transport ---------- */
+const ICO = { play: '<path d="M7 4.5v15l13-7.5z"/>', pause: '<path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/>' };
+let bpmShown = TRACKS[0].bpm;
+const showBpm = v => { bpmShown = v; $('#bpm').textContent = v.toFixed(2).padStart(6, '0'); };
+function tween(to) { const from = bpmShown, t0 = performance.now(); const step = ts => { const k = clamp((ts - t0) / 600, 0, 1); showBpm(from + (to - from) * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
+R.onLoad(t => {
+  const label = t.title.toUpperCase() + ' — ' + t.type.toUpperCase();
+  $('#mq').innerHTML = `<span>${label}</span>`.repeat(4);
+  $('#key').textContent = t.key; tween(t.bpm); setPitchUI(0);
+  rows.forEach(r => r.classList.toggle('cur', +r.dataset.i === t.i));
+});
+R.onPlay(p => { $('#play').setAttribute('aria-pressed', p); $('#ico').innerHTML = p ? ICO.pause : ICO.play; });
+$('#play').addEventListener('click', R.togglePlay);
+const flash = b => { b.classList.add('hit'); setTimeout(() => b.classList.remove('hit'), 120); };
+$('#cue').addEventListener('click', e => { R.cue(0); flash(e.currentTarget); });
+$$('.hc').forEach(b => b.addEventListener('click', () => { R.cue(+b.dataset.c); flash(b); }));
+$('#mon').addEventListener('click', e => R.toggleAudio(e.currentTarget));
+$('#copy').addEventListener('click', () => R.copyEmail('#email'));
+
+/* scrubbing: platter (angular), waveform (linear), overview (seek) */
+const plat = $('#plat'), wf = $('#wf'), ov = $('#ov');
+(() => {
+  let last = 0;
+  const ang = e => { const r = plat.getBoundingClientRect(); return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)); };
+  R.drag(plat, {
+    down: e => { last = ang(e); R.scrub.grab(); plat.style.cursor = 'grabbing'; },
+    move: (dx, dy, e) => { const a = ang(e); let d = a - last; if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI; last = a; R.scrub.move(d / (2 * Math.PI) * 4); },
+    up: () => { R.scrub.release(); plat.style.cursor = 'grab'; } });
+  R.drag(wf, { down: () => { R.scrub.grab(); wf.style.cursor = 'grabbing'; }, move: dx => R.scrub.move(-dx / (wf.getBoundingClientRect().width / 7)), up: () => { R.scrub.release(); wf.style.cursor = 'grab'; } });
+  const seek = e => { const r = ov.getBoundingClientRect(); R.setPos(clamp((e.clientX - r.left) / r.width, 0, .999) * S.tr.beats); };
+  R.drag(ov, { down: seek, move: (dx, dy, e) => seek(e) });
+})();
+
+/* pitch fader */
+const pitch = $('#pitch'), pcap = $('#pcap');
+function setPitchUI(pct) { const f = .5 - pct / 16; pcap.style.top = (14 + f * (pitch.clientHeight - 28 || 1)) + 'px'; $('#pv').textContent = (pct >= 0 ? '+' : '−') + Math.abs(pct).toFixed(1) + '%'; pitch.setAttribute('aria-valuenow', pct.toFixed(1)); }
+function pitchTo(e) {
+  const r = pitch.getBoundingClientRect(), f = clamp((e.clientY - r.top - 14) / (r.height - 28), 0, 1); let pct = (.5 - f) * 16;
+  if (Math.abs(pct) < .35) pct = 0;
+  R.setRate(1 + pct / 100); setPitchUI(pct); showBpm(S.bpm);
+}
+R.drag(pitch, { down: pitchTo, move: (dx, dy, e) => pitchTo(e) });
+pitch.addEventListener('dblclick', () => { R.setRate(1); setPitchUI(0); showBpm(S.bpm); });
+pitch.addEventListener('keydown', e => { const d = { ArrowUp: .5, ArrowDown: -.5 }[e.key]; if (d) { e.preventDefault(); const p = clamp((S.rate - 1) * 100 + d, -8, 8); R.setRate(1 + p / 100); setPitchUI(p); showBpm(S.bpm); } });
+
+/* ---------- knobs ---------- */
+const KCOL = { gain: '#8dff5c', lo: '#ff6a1a', mid: '#ffd23a', hi: '#ff3b6a' };
+const pol = (a, r) => [32 + r * Math.sin(a * Math.PI / 180), 32 - r * Math.cos(a * Math.PI / 180)];
+const scale = () => { let s = ''; for (let i = 0; i <= 10; i++) { const a = -135 + i * 27, [x0, y0] = pol(a, 28.5), [x1, y1] = pol(a, i % 5 === 0 ? 24 : 26); s += `<path d="M${x0} ${y0}L${x1} ${y1}" stroke="${i % 5 === 0 ? '#efe2c8' : '#8a7a60'}" stroke-width="${i % 5 === 0 ? 1.6 : 1}"/>`; } return s; };
+$('#knobs').innerHTML = R.CTRL.map(n => `
+  <div class="knob" tabindex="0" role="slider" aria-label="${n.label}" aria-valuemin="${n.min}" aria-valuemax="${n.max}" data-k="${n.k}" style="--kc:${KCOL[n.k]}">
+    <div class="kb"><svg class="sc" viewBox="0 0 64 64" fill="none" stroke-linecap="round">${scale()}</svg><div class="cap"><i></i></div></div>
+    <span class="kv"></span><span class="eng">${n.label}</span></div>`).join('');
+R.CTRL.forEach(n => {
+  const el = $(`.knob[data-k=${n.k}]`), cap = $('.cap', el), kv = $('.kv', el);
+  const render = () => { const v = R.EQ[n.k], ang = -135 + (v - n.min) / (n.max - n.min) * 270; cap.style.transform = `rotate(${ang}deg)`; kv.textContent = n.fmt(v); el.setAttribute('aria-valuenow', v.toFixed(1)); };
+  let v0 = 0;
+  R.drag(el, { down: () => { v0 = R.EQ[n.k]; el.classList.add('drag'); }, move: (dx, dy, e, tx, ty) => { R.setEQ(n.k, v0 - ty / 130 * (n.max - n.min)); render(); }, up: () => el.classList.remove('drag') });
+  el.addEventListener('dblclick', () => { R.setEQ(n.k, n.def); render(); });
+  el.addEventListener('keydown', e => { const d = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); R.setEQ(n.k, R.EQ[n.k] + d * (n.max - n.min) / 24); render(); } });
+  R.setEQ(n.k, n.def); render();
+});
+
+/* ---------- drawing ---------- */
+const rr = (x, a, b, c, d, r) => { x.beginPath(); x.roundRect(a, b, c, d, r); };
+let vinylAng = 0;
+function drawPlatter(pos, tt) {
+  const { x, w, h } = R.fit(plat), s = Math.min(w, h), cx = w / 2, cy = h / 2, Rr = s * .435, k = S.playing ? R.kickEnv() : 0;
+  x.clearRect(0, 0, w, h);
+  const a = pos / 4 * Math.PI * 2;                 // 4 beats = 1.8s per rev at 133bpm ≈ 33⅓ rpm, locked to the beat
+  /* platter rim */
+  let g = x.createRadialGradient(cx, cy, Rr * .9, cx, cy, Rr * 1.03); g.addColorStop(0, '#6e665a'); g.addColorStop(.5, '#d6ccb6'); g.addColorStop(1, '#4a443a');
+  x.shadowColor = 'rgba(0,0,0,.8)'; x.shadowBlur = 24; x.shadowOffsetY = 10; x.fillStyle = g; x.beginPath(); x.arc(cx, cy, Rr * 1.03, 0, 7); x.fill(); x.shadowBlur = 0; x.shadowOffsetY = 0;
+  x.save(); x.translate(cx, cy); x.rotate(a);
+  /* strobe dots on rim */
+  for (let i = 0; i < 72; i++) { x.save(); x.rotate(i / 72 * Math.PI * 2); x.fillStyle = i % 6 === 0 ? '#1a130b' : '#2c261d'; x.fillRect(-1, -Rr * 1.0, 2, i % 6 === 0 ? Rr * .07 : Rr * .045); x.restore(); }
+  /* vinyl */
+  g = x.createRadialGradient(0, 0, Rr * .3, 0, 0, Rr * .93); g.addColorStop(0, '#15110d'); g.addColorStop(1, '#070504'); x.fillStyle = g; x.beginPath(); x.arc(0, 0, Rr * .93, 0, 7); x.fill();
+  x.lineWidth = .6;
+  for (let r = Rr * .38; r < Rr * .9; r += 2.2) { x.strokeStyle = `rgba(255,255,255,${.025 + .035 * Math.abs(Math.sin(r * .9))})`; x.beginPath(); x.arc(0, 0, r, 0, 7); x.stroke(); }
+  for (let i = 0; i < 8; i++) { const r = Rr * (.42 + .1 * i + .03 * ((S.tr.seed + i) % 3)); x.strokeStyle = 'rgba(0,0,0,.75)'; x.lineWidth = 1.6; x.beginPath(); x.arc(0, 0, r, 0, 7); x.stroke(); }
+  /* label */
+  const L = Rr * .34; g = x.createRadialGradient(0, -L * .3, 2, 0, 0, L); g.addColorStop(0, '#ffcf6a'); g.addColorStop(1, '#e8771a'); x.fillStyle = g; x.beginPath(); x.arc(0, 0, L, 0, 7); x.fill();
+  x.strokeStyle = 'rgba(26,13,0,.35)'; x.lineWidth = 1; for (let i = 0; i < 3; i++) { x.beginPath(); x.arc(0, 0, L * (.55 + i * .2), 0, 7); x.stroke(); }
+  x.fillStyle = '#1a0d00'; x.textAlign = 'center'; x.font = `400 ${L * .5}px "Bebas Neue", Impact, sans-serif`; x.fillText('RARA', 0, -L * .3);
+  x.font = `700 ${L * .13}px "Archivo Narrow", sans-serif`; x.fillText(S.tr.title.toUpperCase().slice(0, 22), 0, L * .22); x.font = `700 ${L * .11}px "Share Tech Mono", monospace`; x.fillText(`${S.tr.bpm} BPM · ${S.tr.key}`, 0, L * .42);
+  x.restore();
+  /* sheen (fixed to light, not to the record) */
+  if (x.createConicGradient) { const cg = x.createConicGradient(-.6, cx, cy); cg.addColorStop(0, 'rgba(255,240,210,.0)'); cg.addColorStop(.06, 'rgba(255,240,210,.16)'); cg.addColorStop(.12, 'rgba(255,240,210,0)'); cg.addColorStop(.5, 'rgba(255,240,210,0)'); cg.addColorStop(.56, 'rgba(255,240,210,.1)'); cg.addColorStop(.62, 'rgba(255,240,210,0)'); x.fillStyle = cg; x.beginPath(); x.arc(cx, cy, Rr * .93, 0, 7); x.arc(cx, cy, L0(Rr), 0, 7, true); x.fill(); }
+  /* spindle */
+  g = x.createRadialGradient(cx - 1, cy - 1, 0, cx, cy, 5); g.addColorStop(0, '#fff'); g.addColorStop(1, '#6a6256'); x.fillStyle = g; x.beginPath(); x.arc(cx, cy, 4, 0, 7); x.fill();
+  /* tonearm: sweeps outer groove -> label as the track plays */
+  const px = cx + Rr * 1.02, py = cy - Rr * .84, prog = pos / S.tr.beats, armLen = Rr * 1.55, lift = S.playing || S.held ? 0 : 1;
+  const base = Math.PI * .5 + .36, aa = base + (.0 + prog * .26) + lift * -.16;
+  const sx = px + Math.cos(aa) * armLen, sy = py + Math.sin(aa) * armLen;
+  x.lineCap = 'round'; x.strokeStyle = 'rgba(0,0,0,.45)'; x.lineWidth = 6; x.beginPath(); x.moveTo(px + 6, py + 10); x.lineTo(sx + 6, sy + 10); x.stroke();
+  g = x.createLinearGradient(px, py, sx, sy); g.addColorStop(0, '#e9e0cc'); g.addColorStop(1, '#8a8274'); x.strokeStyle = g; x.lineWidth = 4.5; x.beginPath(); x.moveTo(px, py); x.lineTo(sx, sy); x.stroke();
+  x.save(); x.translate(sx, sy); x.rotate(aa + Math.PI / 2 + .35); x.fillStyle = '#1a1510'; rr(x, -6, -2, 12, 20, 2); x.fill(); x.fillStyle = AM; x.fillRect(-6, 14, 12, 2); x.restore();
+  g = x.createRadialGradient(px - 3, py - 3, 1, px, py, 16); g.addColorStop(0, '#d8cfba'); g.addColorStop(1, '#3a342a'); x.fillStyle = g; x.beginPath(); x.arc(px, py, 14, 0, 7); x.fill(); x.fillStyle = '#17120d'; x.beginPath(); x.arc(px, py, 5, 0, 7); x.fill();
+  /* kick glow on rim */
+  x.strokeStyle = `rgba(255,165,31,${k * .5})`; x.lineWidth = 3; x.beginPath(); x.arc(cx, cy, Rr * 1.045, 0, 7); x.stroke();
+}
+const L0 = Rr => Rr * .34;
+
+function drawOverview() {
+  const { x, w, h } = R.fit(ov), t = S.tr, p = R.curPos() / t.beats, a = R.overviewAmps(t, Math.floor(w / 2)), cy = h / 2;
+  x.clearRect(0, 0, w, h);
+  a.forEach(([lo, mid, hi], k) => { const px = k * 2; x.fillStyle = '#ff6a1a'; x.fillRect(px, cy - lo * cy * .92, 1.4, lo * cy * 1.84); x.fillStyle = '#ffd88a'; x.fillRect(px, cy - mid * cy * .5, 1.4, mid * cy); });
+  x.fillStyle = 'rgba(10,6,3,.6)'; x.fillRect(0, 0, p * w, h);
+  t.cues.forEach((c, i) => { x.fillStyle = CUEC[i]; x.fillRect(c / t.beats * w - 1, 0, 2, 6); });
+  x.fillStyle = '#fff'; x.shadowColor = '#fff'; x.shadowBlur = 6; x.fillRect(p * w - 1, 0, 2, h); x.shadowBlur = 0;
+}
+function drawWave(pos) {
+  const { x, w, h } = R.fit(wf), t = S.tr, cx = w / 2, ppb = w / 7, cy = h / 2;
+  x.clearRect(0, 0, w, h);
+  const reveal = R.REDUCE ? 1 : clamp((performance.now() - S.boot - 300) / 900, 0, 1);
+  x.save(); x.beginPath(); x.rect(0, 0, w * (1 - Math.pow(1 - reveal, 3)), h); x.clip();
+  const b0 = Math.floor(pos - cx / ppb) - 1, b1 = Math.ceil(pos + cx / ppb) + 1;
+  for (let b = b0; b <= b1; b++) { const gx = cx + (b - pos) * ppb, bar = ((b % 4) + 4) % 4 === 0; x.fillStyle = bar ? 'rgba(255,200,120,.3)' : 'rgba(255,200,120,.09)'; x.fillRect(Math.round(gx), 0, 1, h); }
+  const col = 2, n = Math.ceil(w / col) + 1;
+  for (let i = 0; i < n; i++) {
+    const [lo, mid, hi] = R.wave(t, R.wrap(pos + (i * col - cx) / ppb)), px = i * col; x.globalAlpha = px < cx ? .4 : 1;
+    x.fillStyle = '#ff6a1a'; x.fillRect(px, cy - lo * cy * .94, col - .6, lo * cy * 1.88);
+    x.fillStyle = '#ffd88a'; x.fillRect(px, cy - mid * cy * .6, col - .6, mid * cy * 1.2);
+    x.fillStyle = '#fff'; x.fillRect(px, cy - hi * cy * .3, col - .6, hi * cy * .6);
+  }
+  x.globalAlpha = 1;
+  t.cues.forEach((c, i) => { for (const k of [-1, 0, 1]) { const d = c + k * t.beats - pos; if (Math.abs(d) > cx / ppb + .5) continue; const gx = cx + d * ppb; x.fillStyle = CUEC[i]; x.fillRect(gx - 1, 0, 2, h); x.fillRect(gx, h - 13, 13, 13); x.fillStyle = '#0a0603'; x.font = '700 9px Share Tech Mono, monospace'; x.fillText('ABCD'[i], gx + 3.5, h - 3.5); } });
+  x.restore();
+  x.shadowColor = AM; x.shadowBlur = 10; x.fillStyle = '#fff'; x.fillRect(cx - 1, 0, 2, h); x.shadowBlur = 0;
+}
+function drawVU(vu) {
+  const { x, w, h } = R.fit($('#vu')), SEG = 16, sh = (h - 6) / SEG, bw = (w - 8) / 2 - 1;
+  x.clearRect(0, 0, w, h);
+  [[vu.l, vu.hl, 3], [vu.r, vu.hr, 5 + bw]].forEach(([v, pk, bx]) => {
+    for (let i = 0; i < SEG; i++) { const on = i / SEG < v, y = h - 3 - (i + 1) * sh, c = i > SEG * .85 ? '255,59,37' : i > SEG * .62 ? '255,200,40' : '255,150,20'; x.fillStyle = `rgba(${c},${on ? 1 : .1})`; if (on) { x.shadowColor = `rgb(${c})`; x.shadowBlur = 4; } x.fillRect(bx, y + 1, bw, sh - 2); x.shadowBlur = 0; }
+    const pi = Math.min(SEG - 1, Math.floor(pk * SEG)); x.fillStyle = '#fff'; x.fillRect(bx, h - 3 - (pi + 1) * sh + 1, bw, sh - 2);
+  });
+}
+function drawNeedle(c, v, name) {
+  const { x, w, h } = R.fit(c), px = w / 2, py = h * 1.02, rad = Math.min(w * .52, h * .98);
+  x.clearRect(0, 0, w, h);
+  let g = x.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#f6e6b8'); g.addColorStop(1, '#d9b873'); x.fillStyle = g; rr(x, 0, 0, w, h, 8); x.fill();
+  x.save(); rr(x, 0, 0, w, h, 8); x.clip();
+  g = x.createRadialGradient(px, h * .5, 4, px, h * .5, w * .7); g.addColorStop(0, 'rgba(255,255,230,.5)'); g.addColorStop(1, 'rgba(120,70,0,.28)'); x.fillStyle = g; x.fillRect(0, 0, w, h);
+  const A0 = -52, A1 = 52, pt = (a, r) => [px + Math.sin(a * Math.PI / 180) * r, py - Math.cos(a * Math.PI / 180) * r];
+  for (let i = 0; i <= 40; i++) { const a = A0 + (A1 - A0) * i / 40, red = i > 28, big = i % 4 === 0, [x0, y0] = pt(a, rad * .8), [x1, y1] = pt(a, rad * (big ? .66 : .72)); x.strokeStyle = red ? '#c4200e' : '#2a1a08'; x.lineWidth = big ? 1.6 : 1; x.beginPath(); x.moveTo(x0, y0); x.lineTo(x1, y1); x.stroke(); }
+  x.lineWidth = 3; x.strokeStyle = '#c4200e'; x.beginPath(); x.arc(px, py, rad * .84, (-90 + A0 + 52 * 1.4) * Math.PI / 180 + 0, (-90 + A1) * Math.PI / 180); x.stroke();
+  x.fillStyle = '#2a1a08'; x.font = '700 9px Archivo Narrow, sans-serif'; x.textAlign = 'center'; x.fillText(name, px, h * .34); x.font = '700 8px Share Tech Mono, monospace'; x.fillText('-20   -10   -3   0  +3', px, h * .5);
+  const a = A0 + (A1 - A0) * clamp(v, 0, 1) + Math.sin(performance.now() / 90) * v * .8, [nx, ny] = pt(a, rad * .86);
+  x.strokeStyle = 'rgba(0,0,0,.25)'; x.lineWidth = 2; x.beginPath(); x.moveTo(px + 2, py + 2); x.lineTo(nx + 2, ny + 3); x.stroke();
+  x.strokeStyle = '#c4200e'; x.lineWidth = 1.6; x.beginPath(); x.moveTo(px, py); x.lineTo(nx, ny); x.stroke();
+  x.restore();
+  x.fillStyle = '#17120d'; x.beginPath(); x.arc(px, h, 12, 0, 7); x.fill();
+}
+const sp = R.makeSpectrum(42);
+function drawSpec(pos, tt) {
+  const { x, w, h } = R.fit($('#spec')), N = sp.N, bw = w / N, rowsN = 16, rh = (h - 6) / rowsN;
+  x.clearRect(0, 0, w, h); sp.step(pos, tt);
+  for (let k = 0; k < N; k++) for (let r = 0; r < rowsN; r++) {
+    const on = r / rowsN < sp.v[k], pk = Math.floor(sp.p[k] * rowsN) === r, c = r > rowsN * .8 ? '255,59,37' : '255,165,31';
+    x.fillStyle = `rgba(${pk ? '255,240,200' : c},${on || pk ? 1 : .08})`; if (on) { x.shadowColor = `rgb(${c})`; x.shadowBlur = 3; }
+    x.beginPath(); x.arc(k * bw + bw / 2, h - 3 - (r + .5) * rh, Math.min(bw, rh) * .34, 0, 7); x.fill(); x.shadowBlur = 0;
+  }
+  const y = db => h * .5 - db / 15 * h * .38; x.beginPath();
+  for (let px = 0; px <= w; px += 3) { const yy = y(R.eqDb(R.fOf(px / w))); px ? x.lineTo(px, yy) : x.moveTo(px, yy); }
+  x.strokeStyle = 'rgba(239,226,200,.9)'; x.lineWidth = 1.5; x.shadowColor = '#fff'; x.shadowBlur = 6; x.stroke(); x.shadowBlur = 0;
+}
+
+/* ---------- boot ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('in', e.isIntersecting || e.target.classList.contains('in'))), { threshold: .06 });
+$$('.rv').forEach(el => io.observe(el));
+const vis = new Map(), io2 = new IntersectionObserver(es => es.forEach(e => vis.set(e.target, e.isIntersecting)), { rootMargin: '60px' });
+['#deck', '.mix'].forEach(s => { vis.set($(s), true); io2.observe($(s)); });
+let lastBeat = -1;
+R.ready(() => {
+  R.load(0, null, true); showBpm(TRACKS[0].bpm); setPitchUI(0);
+  R.run((ts, pos, tt, frame) => {
+    const lv = R.levels(pos, tt), vu = R.stepVU(S.playing ? lv[0] : 0, S.playing ? lv[1] : 0);
+    if (vis.get($('#deck'))) {
+      drawPlatter(pos, tt); drawWave(pos); drawOverview(); drawVU(vu);
+      $('#deck').style.setProperty('--k', S.playing ? R.kickEnv().toFixed(2) : 0);
+      if (frame % 3 === 0) { const sec = pos * 60 / S.bpm, tot = S.tr.beats * 60 / S.bpm; $('#tel').textContent = fmt(sec); $('#trm').textContent = '-' + fmt(tot - sec); }
+      const bi = Math.floor(pos); if (bi !== lastBeat) { lastBeat = bi; $$('#beats i').forEach((d, k) => d.classList.toggle('on', k === bi % 4)); }
+    }
+    if (vis.get($('.mix'))) { drawNeedle($('#nl'), vu.l, 'L'); drawNeedle($('#nr'), vu.r, 'R'); drawSpec(pos, tt); }
+    if (openRow && frame % 3 === 0) drawBig(openRow);
+  });
+  addEventListener('resize', () => setPitchUI((S.rate - 1) * 100));
+  setInterval(() => { $('#clk').textContent = R.miamiTime(); }, 500);
+});
+})();
+</script>
+</body>
+</html>
