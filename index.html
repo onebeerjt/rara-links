@@ -6,6 +6,7 @@
 <title>RARA 🌋 — pick a version</title>
 <meta name="theme-color" content="#0b0b0c">
 <meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -24,22 +25,40 @@ a.c .go{position:absolute;right:16px;top:14px;font-size:22px}
 a.c.old{--bg:#10131a;--b:#272e3b;--fg:#cfd6e4;--f:system-ui;opacity:.8}
 p.grp{font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.2em;text-transform:uppercase;color:#8b8b90;margin:26px 0 12px}
 small{display:block;margin-top:18px;color:#6b6b70;font-weight:500;font-size:12px;line-height:1.5}
+a.c>*{position:relative;z-index:1}
+a.c>video{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;opacity:.42;filter:var(--vf,grayscale(1) contrast(1.3));mix-blend-mode:var(--vm,screen)}
+a.c::after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,var(--bg) 8%,transparent 85%);opacity:.9}
+.hero{position:relative;margin:0 -16px 26px;padding:34px 16px 22px;overflow:hidden;isolation:isolate}
+.hero video{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.4) brightness(.9)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(165deg,#ff2a1a,#ff7a1a);mix-blend-mode:multiply}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(11,11,12,.4),transparent 40%,#0b0b0c)}
+.hero h2{font:900 clamp(54px,19vw,96px)/.84 Archivo,'Arial Narrow',Impact,sans-serif;font-stretch:62%;text-transform:uppercase;letter-spacing:-.01em;margin:12px 0 0;color:#ffe9e0}
+.hero h2 b{color:#ff2a1a;text-shadow:0 0 24px #ff2a1a}
+.hero h1{color:#ffe9e0}
+@media(prefers-reduced-motion:reduce){a.c>video,.hero video{display:none}}
 </style>
 </head>
 <body>
 <main>
-  <h1>RARA/OS · redesign</h1>
-  <h2>Pick a version.</h2>
-  <a class="c" style="--bg:#05010c;--b:#ff1fa8;--fg:#fff;--f:Impact,'Arial Narrow',sans-serif" href="v1.html"><span class="n">V1 · CLUB</span><span class="go">→</span><b>Club Install</b><p>Neon on black. A full-screen LED wall with lasers and tunnel rings that fire on the real kick drum.</p><div class="sw"><i style="background:#ff1fa8"></i><i style="background:#00f0ff"></i><i style="background:#8a3cff"></i><i style="background:#c6ff1f"></i></div></a>
-  <a class="c" style="--bg:#1d1711;--b:#c9a45c;--fg:#efe2c8;--f:'Bebas Neue',Impact,sans-serif;letter-spacing:.06em" href="v2.html"><span class="n">V2 · STUDIO</span><span class="go">→</span><b>Studio Gear</b><p>Warm analog hardware. A spinning turntable with a working pitch fader, VFD readouts, needle meters, and the shows logged on tape-box labels.</p><div class="sw"><i style="background:#ffa51f"></i><i style="background:#ff3b25"></i><i style="background:#efe2c8"></i><i style="background:#2a2118"></i></div></a>
-  <a class="c" style="--bg:#08090a;--b:#d4ff00;--fg:#f1f1ee;--f:system-ui" href="v3.html"><span class="n">V3 · HUD</span><span class="go">→</span><b>Library HUD</b><p>Monochrome plus one acid accent. The library is the page, the shows are logged like readouts, the deck docks and slides up.</p><div class="sw"><i style="background:#f1f1ee"></i><i style="background:#7c8288"></i><i style="background:#d4ff00"></i><i style="background:#08090a"></i></div></a>
+  <div class="hero"><video src="videos/web/iiipoints.mp4" poster="videos/web/iiipoints.jpg" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
+  <h1>RARA 🌋 · Miami · Machina Records</h1>
+  <h2>Black dance music is <b>back</b> in Miami.</h2></div>
+  <p class="grp" style="margin-top:0">Pick a version</p>
+  <a class="c" style="--bg:#05010c;--b:#ff1fa8;--fg:#fff;--f:Impact,'Arial Narrow',sans-serif" href="v1.html"><video src="videos/web/circuit.mp4" poster="videos/web/circuit.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="n">V1 · CLUB</span><span class="go">→</span><b>Club Install</b><p>Neon on black. A full-screen LED wall with lasers and tunnel rings that fire on the real kick drum.</p><div class="sw"><i style="background:#ff1fa8"></i><i style="background:#00f0ff"></i><i style="background:#8a3cff"></i><i style="background:#c6ff1f"></i></div></a>
+  <a class="c" style="--bg:#1d1711;--b:#c9a45c;--fg:#efe2c8;--f:'Bebas Neue',Impact,sans-serif;letter-spacing:.06em" href="v2.html"><video src="videos/web/talent.mp4" poster="videos/web/talent.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="n">V2 · STUDIO</span><span class="go">→</span><b>Studio Gear</b><p>Warm analog hardware. A spinning turntable with a working pitch fader, VFD readouts, needle meters, and the shows logged on tape-box labels.</p><div class="sw"><i style="background:#ffa51f"></i><i style="background:#ff3b25"></i><i style="background:#efe2c8"></i><i style="background:#2a2118"></i></div></a>
+  <a class="c" style="--bg:#08090a;--b:#d4ff00;--fg:#f1f1ee;--f:system-ui" href="v3.html"><video src="videos/web/ready.mp4" poster="videos/web/ready.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="n">V3 · HUD</span><span class="go">→</span><b>Library HUD</b><p>Monochrome plus one acid accent. The library is the page, the shows are logged like readouts, the deck docks and slides up.</p><div class="sw"><i style="background:#f1f1ee"></i><i style="background:#7c8288"></i><i style="background:#d4ff00"></i><i style="background:#08090a"></i></div></a>
   <p class="grp">Round 2 · real tracks, real shows</p>
-  <a class="c" style="--bg:#000;--b:#ff1a00;--fg:#fff;--f:Anton,Impact,'Arial Narrow',sans-serif" href="v4.html"><span class="n">V4 · STROBE</span><span class="go">→</span><b>STROBE</b><p>Black and one violent red. The page flashes on the real kick drum, heard live from the audio. Flash toggle up top.</p><div class="sw"><i style="background:#000"></i><i style="background:#ff1a00"></i><i style="background:#fff"></i></div></a>
-  <a class="c" style="--bg:#fff;--b:#fff;--fg:#000;--f:'Helvetica Neue',Helvetica,Arial,sans-serif" href="v5.html"><span class="n">V5 · TRACKLIST</span><span class="go">→</span><b style="letter-spacing:-.06em">Tracklist.</b><p>No pictures, no effects. Raw type. Each track is a waveform set like a paragraph. Tap a word to jump there.</p><div class="sw"><i style="background:#fff;border-color:#000"></i><i style="background:#000"></i><i style="background:#ff3b00"></i></div></a>
-  <a class="c" style="--bg:#0a0203;--b:#ff5a14;--fg:#fff1c9;--f:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif" href="v6.html"><span class="n">V6 · ERUPTION</span><span class="go">→</span><b>ERUPTION</b><p>RARA is a volcano. Press ignite and the real kick drum throws lava out of the crater behind the page. Every show is a layer of rock.</p><div class="sw"><i style="background:#ff2d00"></i><i style="background:#ff7a00"></i><i style="background:#ffc247"></i><i style="background:#060304"></i></div></a>
-  <a class="c" style="--bg:#2230ff;--b:#ff5a14;--fg:#fff;--f:'Barlow Condensed','Arial Narrow',Impact,sans-serif" href="v7.html"><span class="n">V7 · ALL ACCESS</span><span class="go">→</span><b>ADMIT ONE</b><p>Wristbands, a lanyard badge and perforated tickets. Tracks tear off the stub and punch out as they play.</p><div class="sw"><i style="background:#2230ff"></i><i style="background:#ff5a14"></i><i style="background:#f3efe6"></i></div></a>
+  <a class="c" style="--bg:#000;--b:#ff1a00;--fg:#fff;--f:Anton,Impact,'Arial Narrow',sans-serif" href="v4.html"><video src="videos/web/iiipoints.mp4" poster="videos/web/iiipoints.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="n">V4 · STROBE</span><span class="go">→</span><b>STROBE</b><p>Black and one violent red. The page flashes on the real kick drum, heard live from the audio. Flash toggle up top.</p><div class="sw"><i style="background:#000"></i><i style="background:#ff1a00"></i><i style="background:#fff"></i></div></a>
+  <a class="c" style="--bg:#fff;--b:#fff;--fg:#000;--f:'Helvetica Neue',Helvetica,Arial,sans-serif" href="v5.html"><video src="videos/web/ready.mp4" poster="videos/web/ready.jpg" muted loop playsinline preload="none" aria-hidden="true" style="--vm:multiply;opacity:.25"></video><span class="n">V5 · TRACKLIST</span><span class="go">→</span><b style="letter-spacing:-.06em">Tracklist.</b><p>Raw type, one grainy clip, no effects. Each track is a waveform set like a paragraph. Tap a word to jump there.</p><div class="sw"><i style="background:#fff;border-color:#000"></i><i style="background:#000"></i><i style="background:#ff3b00"></i></div></a>
+  <a class="c" style="--bg:#0a0405;--b:#ff2a1a;--fg:#ffe9e0;--f:Archivo,Impact,'Arial Narrow',sans-serif" href="v6.html"><video src="videos/web/iiipoints.mp4" poster="videos/web/iiipoints.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="n">V6 · SWEAT</span><span class="go">→</span><b>SWEAT</b><p>3 AM, packed room, condensation running down the glass. Real footage graded sodium-red, one scene per night, and the kick drum shoves the type.</p><div class="sw"><i style="background:#ff2d00"></i><i style="background:#ff7a00"></i><i style="background:#ffc247"></i><i style="background:#060304"></i></div></a>
+  <a class="c" style="--bg:#2230ff;--b:#ff5a14;--fg:#fff;--f:'Barlow Condensed','Arial Narrow',Impact,sans-serif" href="v7.html"><video src="videos/web/circuit.mp4" poster="videos/web/circuit.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="n">V7 · ALL ACCESS</span><span class="go">→</span><b>ADMIT ONE</b><p>Wristbands, a lanyard badge and perforated tickets. Tracks tear off the stub and punch out as they play.</p><div class="sw"><i style="background:#2230ff"></i><i style="background:#ff5a14"></i><i style="background:#f3efe6"></i></div></a>
+  
   <a class="c old" href="os.html"><span class="n">PREVIOUS</span><span class="go">→</span><b>RARA/OS 10.2</b><p>The build you reviewed, unchanged, for side-by-side.</p></a>
-  <small>On any version, the 1–7 · ⌂ buttons in the corner flip between them (arrow keys work on desktop). Every version plays the real Jet Fuel (Batida Edit) and Beastie: hit play on the deck (V1–V3) or tap a track (V4–V7). The speaker button on V1–V3 mutes. Shows, dates and quotes are straight from RARA’s Instagram.</small>
+  <small>On any version, the 1–7 · ⌂ buttons in the corner flip between them (arrow keys work on desktop). Every version has RARA’s real Instagram clips playing muted on loop, and plays the real Jet Fuel (Batida Edit) and Beastie: hit play on the deck (V1–V3) or tap a track (V4–V7). The speaker button on V1–V3 mutes. Shows, dates and quotes are straight from RARA’s Instagram.</small>
 </main>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?e.target.play().catch(()=>{}):e.target.pause()),{threshold:.1});
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.querySelectorAll('video').forEach(v=>{v.muted=true;io.observe(v)});
+</script>
 </body>
 </html>

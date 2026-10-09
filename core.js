@@ -192,7 +192,7 @@ function drag(el, { down, move, up }) {
 }
 /* version switcher: fills #vs with links, arrow keys flip between versions */
 function switcher(cur) {
-  const pages = [['v1', 'club'], ['v2', 'studio'], ['v3', 'hud'], ['v4', 'strobe'], ['v5', 'tracklist'], ['v6', 'apex'], ['v7', 'all-access']], host = $('#vs');
+  const pages = [['v1', 'club'], ['v2', 'studio'], ['v3', 'hud'], ['v4', 'strobe'], ['v5', 'tracklist'], ['v6', 'sweat'], ['v7', 'all-access']], host = $('#vs');
   if (host) host.innerHTML = pages.map(([p, n], i) => `<a href="${p}.html" ${p === cur ? 'aria-current="page"' : ''} aria-label="Version ${i + 1}, ${n}">${i + 1}</a>`).join('') + '<a href="./" aria-label="All versions" class="all">⌂</a>';
   addEventListener('keydown', e => {
     const i = pages.findIndex(p => p[0] === cur), d = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
