@@ -37,6 +37,9 @@ main{max-width:520px;margin:0 auto;padding:0 14px calc(50px + env(safe-area-inse
 .badge h1{font:800 clamp(150px,52vw,270px)/.72 var(--hd);letter-spacing:-.02em;margin:18px 0 6px -.02em;text-transform:uppercase}
 .badge .r{display:flex;justify-content:space-between;align-items:end;font:700 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-top:12px;gap:12px}
 .badge .r b{font:800 28px/.95 var(--hd);letter-spacing:.04em}
+.badge .ph{position:relative;margin:16px 0 0;border:3px solid var(--ink);background:var(--blue);isolation:isolate}.badge .ph video{filter:grayscale(1) contrast(1.3);mix-blend-mode:screen}.badge .ph .no{position:absolute;right:6px;top:6px;background:var(--ink);color:var(--paper);font:700 9px var(--mono);letter-spacing:.14em;padding:3px 5px}.badge .slg{font:800 clamp(26px,8vw,36px)/.92 var(--hd);text-transform:uppercase;letter-spacing:.01em;margin-top:14px}
+.reel .rf{margin-right:2px}.reel .rf .mvw{border:3px solid var(--paper);border-radius:10px;background:var(--blue)}.reel .rf video{filter:grayscale(1) contrast(1.25);mix-blend-mode:screen}.reel figcaption{color:#8a8a90;font-family:var(--mono)}
+.badge .glue{font:700 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-top:12px;opacity:.75}
 .badge svg.bc{display:block;width:100%;height:46px;margin-top:14px}
 .holo{position:absolute;inset:0;pointer-events:none;mix-blend-mode:color-dodge;opacity:.38;background:linear-gradient(115deg,transparent 20%,#ff5ad0aa 35%,#5afff0aa 45%,#fff95aaa 55%,#8a5aff99 65%,transparent 80%);background-size:260% 100%;background-position:calc(var(--s) * 1% + 10%) 0}
 /* section label */
@@ -83,6 +86,19 @@ h2{display:flex;justify-content:space-between;font:700 11px var(--mono);letter-s
 .ps .ar{position:absolute;right:12px;top:9px;font:800 22px var(--hd)}
 .ps:active .c{background:#fff}.ps:active{transform:scale(.985)}
 /* booking pass */
+.ps .fz{margin:9px 0 2px;border:2px solid var(--ink);overflow:hidden;position:relative;background:#000}
+.ps .fz img,.ps .fz video{display:block;width:100%;object-fit:cover}.ps .fz .cl{color:#fff}
+.ps .q{display:block;margin-top:9px;font:800 clamp(21px,6.6vw,30px)/.98 var(--hd);letter-spacing:.01em;text-transform:uppercase}
+.ps .ln{display:block;margin-top:7px;font:500 12px/1.4 var(--mono)}
+.ps .wh{display:block;margin-top:6px;font:700 11px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.ps.fest .l{background:#fff;color:var(--blue)}
+.ps.fest .c{background:var(--blue);color:#fff}
+.ps.fest .c::before,.ps.fest .c::after{box-shadow:none}
+.ps.fest .t{font-size:clamp(44px,14.5vw,70px);line-height:.86}
+.ps.fest .fz{border-color:#fff}
+.ps.fest .q{color:var(--or);font-size:clamp(26px,8.6vw,40px)}
+.ps.fest:active .c{background:#3a48ff}
+.ps .c .st{position:absolute;right:12px;bottom:34px;font:800 17px/1 var(--hd);letter-spacing:.1em;border:3px double currentColor;padding:3px 7px 1px;transform:rotate(-8deg);opacity:.9}
 .bk{position:relative;background:var(--or);color:#000;border-radius:18px;padding:18px 16px 16px;margin-top:6px;filter:drop-shadow(0 14px 22px rgba(0,0,0,.5));overflow:hidden}
 .bk::before,.bk::after{content:"";position:absolute;top:96px;width:26px;height:26px;border-radius:50%;background:var(--bg)}
 .bk::before{left:-13px}.bk::after{right:-13px}
@@ -116,6 +132,9 @@ h2{display:flex;justify-content:space-between;font:700 11px var(--mono);letter-s
     <span class="chip">ALL ACCESS · ALL AREAS</span>
     <h1>Rara</h1>
     <div class="r"><span>Producer / DJ<br>Miami</span><b>Machina<br>Records</b></div>
+    <div class="ph" id="bphoto"></div>
+    <p class="slg">Black dance music is back in Miami.</p>
+    <p class="glue">“The Glue”: drummer for @mrfloydlarry</p>
     <div id="bcb"></div>
     <div class="holo"></div>
   </section>
@@ -123,7 +142,13 @@ h2{display:flex;justify-content:space-between;font:700 11px var(--mono);letter-s
   <h2><span>Now admitting</span><span>2 tickets · tap the stub</span></h2>
   <div id="tix"></div>
 
-  <h2><span>More passes</span><span>8</span></h2>
+  <h2><span>Also out</span><span>EP · singles · Bandcamp</span></h2>
+  <div id="nub"></div>
+
+  <h2><span>Photo pit</span><span>Swipe · muted · looped</span></h2>
+  <div id="pit"></div>
+
+  <h2><span>Backstage passes</span><span>6 rooms · newest first</span></h2>
   <div id="pass"></div>
 
   <h2><span>Booking</span><span>Open</span></h2>
@@ -164,8 +189,8 @@ $('#bcb').innerHTML = code39('RARA MACHINA');
 $('#bcbk').innerHTML = code39('RARA BOOKING');
 
 /* wristband text: real names only */
-const m1 = ['RARA', 'ALL ACCESS', 'MACHINA RECORDS', 'MIAMI', 'NOT TRANSFERABLE'].map(s => `<span>${s}</span><span>✦</span>`).join('');
-const m2 = ['JOLENE 3-HOUR SET', 'CIRCUIT × DJ MARFOX', 'TALENT SHOW', 'IN MY OWN WORLD', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'PERREO DEL FUTURO'].map(s => `<span>${s}</span><span>/</span>`).join('');
+const m1 = ['BLACK DANCE MUSIC IS BACK IN MIAMI', 'ALL ACCESS', 'MACHINA RECORDS', 'MIAMI', 'NOT TRANSFERABLE'].map(s => `<span>${s}</span><span>✦</span>`).join('');
+const m2 = ['CIRCUIT: DJ MARFOX · OCT 3', 'JOLENE SOUND ROOM · OCT 1', 'III POINTS · B2B V1FRO', 'IN MY OWN WORLD EP', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'JET FUEL', 'BEASTIE'].map(s => `<span>${s}</span><span>/</span>`).join('');
 $('#m1').innerHTML = m1.repeat(4); $('#m2').innerHTML = m2 + m2;
 
 /* ---------- tickets ---------- */
@@ -226,7 +251,15 @@ R.on('state', paint); R.on('blocked', () => toast('TAP PLAY AGAIN'));
 paint();
 
 /* ---------- catalog passes ---------- */
-$('#pass').innerHTML = R.RELEASES.map((r, i) => `<a class="ps" href="${r.href}" target="_blank" rel="noopener" aria-label="${r.title}, ${r.type}. Opens ${r.cta}"><div class="l">${String(i + 1).padStart(2, '0')}</div><div class="c"><div class="ar">↗</div><div class="t">${r.title}</div><div class="m"><span>${r.type} · ${r.note}</span><span>${r.cta}</span></div>${code39(r.title)}</div></a>`).join('');
+const N0 = R.NUBETTER;
+$('#nub').innerHTML = R.RELS.map((r, k) => `<a class="ps" href="${r.href}" target="_blank" rel="noopener" aria-label="${r.title}, ${r.type}. Opens ${r.cta}"><div class="l">${String(3 + k).padStart(2, '0')}</div><div class="c"><div class="ar">↗</div><div class="t">${r.title}</div><div class="m"><span>${r.type} · ${r.note}</span><span>${r.cta}</span></div>${code39(r.title)}</div></a>`).join('');
+$('#bphoto').innerHTML = R.mvw('talent', '16/9') + '<span class="no">CAM 1 · LIVE</span>';
+$('#pit').innerHTML = R.reel(['ready', 'circuit', 'iiipoints']);
+$('#pass').innerHTML = R.EVENTS.map((e, i) => `<a class="ps ${e.id === 'iiipoints' ? 'fest' : ''}" href="${e.href}" target="_blank" rel="noopener" aria-label="${e.title}, ${e.kind}. Opens ${e.cta}"><div class="l">${String(i + 1).padStart(2, '0')}</div><div class="c"><div class="ar">↗</div>
+  <div class="m" style="margin:0 0 6px"><span>${e.kind}</span><span>${e.date || ''}</span></div><div class="t">${e.title}</div>${e.who ? `<span class="wh">${e.who}</span>` : ''}
+  ${e.flyer ? `<div class="fz">${R.media(e)}</div>` : ''}
+  ${e.quote ? `<span class="q">“${e.quote}”</span>` : ''}${e.line ? `<span class="ln">${e.line}</span>` : ''}
+  <div class="m"><span>${[e.time, e.venue].filter(Boolean).join(' · ')}</span><span>${e.cta}</span></div>${code39(e.title)}</div></a>`).join('');
 $('#cp').onclick = () => R.copyEmail(ok => toast(ok ? 'EMAIL COPIED' : 'HOLD THE EMAIL TO COPY'));
 
 /* ---------- loop: holo follows scroll, stub dots get punched as the track plays ---------- */

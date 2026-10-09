@@ -33,7 +33,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 0 calc(
 .warn button{border:1px solid #333;padding:7px 10px;font-weight:700;letter-spacing:.14em;color:#fff;font-size:10px}
 .warn button[aria-pressed=true]{background:#fff;color:#000}
 /* hero */
-.hero{padding:8px 6px 0;line-height:.8;user-select:none}
+.hero{position:relative;isolation:isolate;display:flex;align-items:flex-end;min-height:58svh;padding:8px 6px 0;line-height:.8;user-select:none;overflow:hidden}.hero .w{flex:1}
+.hv{position:absolute;inset:0;z-index:-1;background:var(--r)}.hv video{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.5) brightness(.9);mix-blend-mode:multiply;opacity:calc(.55 + var(--k) * .45)}.hv::after{content:"";position:absolute;inset:0;background:linear-gradient(#000 0,transparent 30%,transparent 55%,#000)}
+.slo{padding:0 14px 6px;font:400 clamp(26px,8.4vw,54px)/.95 var(--hd);text-transform:uppercase;letter-spacing:.005em}.slo b{color:var(--r);font-weight:400}
+.reel .rf{border-left:2px solid var(--r)}.reel{padding:0 14px}.reel .rf video{filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply}.reel .mvw{background:var(--r);isolation:isolate}.reel figcaption{color:var(--dim)}
 .hero .w{display:flex;justify-content:space-between;font:400 clamp(130px,46vw,290px)/.82 var(--hd);letter-spacing:-.01em;text-transform:uppercase;transform:scaleY(calc(1 + var(--k) * .07));transform-origin:50% 100%}
 .hero .w span{color:transparent;-webkit-text-stroke:2px #fff;transition:color .05s}
 .hero .w span.on{color:var(--r);-webkit-text-stroke-color:var(--r)}
@@ -61,6 +64,17 @@ h2.lab{padding:30px 14px 10px;font:700 11px var(--mono);letter-spacing:.22em;col
 .rel{display:block;position:relative;border-top:1px solid #222;padding:12px 14px 12px;transition:background .06s}
 .rel .t{display:block;font:400 clamp(44px,14.5vw,92px)/.92 var(--hd);text-transform:uppercase;color:transparent;-webkit-text-stroke:1.5px #fff;word-break:break-word}
 .rel .m{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;color:var(--dim);margin-top:6px;font-weight:700}
+.rel .k{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;color:var(--dim);font-weight:700;margin-bottom:4px}
+.rel .who{display:block;margin-top:6px;font:700 12px var(--mono);letter-spacing:.14em;color:#fff;text-transform:uppercase}
+.rel .fw{position:relative;margin-top:12px;background:var(--r);overflow:hidden}
+.rel .fw img,.rel .fw video{display:block;width:100%;object-fit:cover;filter:grayscale(1) contrast(1.25);mix-blend-mode:multiply}.rel .fw .mvw{background:#ff1a00;isolation:isolate}.rel .fw .cl{color:#fff;mix-blend-mode:normal}
+.rel .fw::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
+.rel q{display:block;margin-top:12px;font:400 clamp(24px,7.4vw,40px)/1 var(--hd);text-transform:uppercase;letter-spacing:.005em;quotes:"“" "”"}
+.rel .ln{display:block;margin-top:10px;font:500 13px/1.45 var(--mono);color:#cfcfcf}
+.rel.feat{border-top:2px solid var(--r);border-bottom:2px solid var(--r);padding-top:18px;padding-bottom:18px}
+.rel.feat .t{color:#fff;-webkit-text-stroke:0;font-size:clamp(70px,24vw,150px);line-height:.86}
+.rel.feat q{color:var(--r);font-size:clamp(30px,10vw,60px)}
+.rel.lit .fw{background:#000}.rel.lit q,.rel.lit .ln,.rel.lit .who,.rel.lit .k{color:#000}.rel.lit .t{color:#000}
 .rel.lit{background:var(--r)}
 .rel.lit .t{-webkit-text-stroke-color:#000;color:#000}
 .rel.lit .m{color:#000}
@@ -89,19 +103,23 @@ h2.lab{padding:30px 14px 10px;font:700 11px var(--mono);letter-spacing:.22em;col
   <div class="top"><span class="id"><i></i>RARA/STROBE</span><nav id="vs" aria-label="Versions"></nav></div>
   <div class="warn"><span>⚠ FLASHING LIGHTS WHEN SOUND IS ON</span><button id="fl" aria-pressed="true">FLASH ON</button></div>
 
-  <section class="hero" aria-label="RARA"><div class="w" id="hero"><span>R</span><span>A</span><span>R</span><span>A</span></div></section>
-  <div class="sub"><span>MIAMI <b>●</b> MACHINA RECORDS</span><span id="clk">--:--:--</span></div>
+  <section class="hero" aria-label="RARA"><div class="hv" aria-hidden="true"></div><div class="w" id="hero"><span>R</span><span>A</span><span>R</span><span>A</span></div></section>
+  <p class="slo">Black dance music is <b>back</b> in Miami.</p>
+  <div class="sub"><span>MIAMI <b>●</b> MACHINA RECORDS · PRODUCER/DJ</span><span id="clk">--:--:--</span></div>
   <div class="tick" aria-hidden="true"><div id="tk"></div></div>
 
   <h2 class="lab"><span>ARM A TRACK</span><span id="st">STANDBY</span></h2>
   <div id="tracks"></div>
 
-  <h2 class="lab"><span>THE REST OF THE CATALOG</span><span>↗</span></h2>
+  <h2 class="lab"><span>THE ROOMS</span><span>REAL SETS ↗</span></h2>
   <div id="rels"></div>
+
+  <h2 class="lab"><span>FROM THE FEED</span><span>SWIPE →</span></h2>
+  <div id="reel"></div>
 
   <a class="book" id="bk" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B"><span class="a">BOOKINGS OPEN</span><b>BOOK</b><span class="e"><span>omnisoundslabel@gmail.com</span><span>→</span></span></a>
   <div class="acts"><button id="cp">COPY EMAIL</button><a href="https://instagram.com/raravulcain" target="_blank" rel="noopener">@RARAVULCAIN ↗</a></div>
-  <div class="foot"><a href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener">MACHINA RECORDS ↗</a><a href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener">OMNISOUND ↗</a></div>
+  <div class="foot"><a href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener">MACHINA RECORDS ↗</a><span>“THE GLUE” · DRUMMER FOR @MRFLOYDLARRY</span><a href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener">OMNISOUND ↗</a></div>
 </main>
 <div id="toast" role="status"></div>
 <script src="real.js"></script>
@@ -113,7 +131,8 @@ R.switcher('v4');
 const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1600); };
 
 /* marquee of real names */
-const names = ['JOLENE 3-HOUR SET', 'CIRCUIT × DJ MARFOX', 'TALENT SHOW', 'IN MY OWN WORLD', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'PERREO DEL FUTURO', 'MACHINA RECORDS'];
+$('.hv').innerHTML = R.clipHtml('talent'); R.armClips();
+const names = ['BLACK DANCE MUSIC IS BACK IN MIAMI', 'CIRCUIT: DJ MARFOX · OCT 3', 'JOLENE SOUND ROOM · 3 HOURS', 'III POINTS B2B V1FRO', 'IN MY OWN WORLD EP', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'JET FUEL', 'BEASTIE', 'MACHINA RECORDS'];
 const strip = names.map(n => `<span>${n}</span><span>✕</span>`).join('');
 $('#tk').innerHTML = strip + strip;
 
@@ -124,8 +143,9 @@ $('#tracks').innerHTML = R.TRACKS.map((t, i) => `
     <span class="t">${t.title.replace(/ \(/, '<small>(').replace(/\)$/, ')</small>')}${t.title.includes('(') ? '' : '<small>RARA</small>'}</span>
     <div class="row"><button class="go" aria-label="Play ${t.title}"><span class="ic">▶</span><span class="lb">PLAY</span></button><span class="tm">0:00 / –:––</span></div>
     <div class="sk" role="slider" aria-label="Seek ${t.title}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></div>
-  </div>`).join('');
-const trk = [...document.querySelectorAll('.trk')];
+  </div>`).join('') + R.RELS.map((r, k) => `
+  <a class="trk" href="${r.href}" target="_blank" rel="noopener"><span class="n">0${3 + k} / ${r.type.toUpperCase()}</span><span class="t">${r.title}<small>${r.note.toUpperCase()}</small></span><div class="row"><span class="go">${r.cta.toUpperCase()} ↗</span><span class="tm">NOT ON THIS PAGE</span></div></a>`).join('');
+const trk = [...document.querySelectorAll('.trk[data-i]')];
 trk.forEach((el, i) => {
   el.querySelector('.go').addEventListener('click', () => R.toggle(i));
   el.addEventListener('click', e => { if (!e.target.closest('.sk,.go')) R.toggle(i); });
@@ -138,7 +158,13 @@ trk.forEach((el, i) => {
 });
 
 /* releases */
-$('#rels').innerHTML = R.RELEASES.map(r => `<a class="rel" href="${r.href}" target="_blank" rel="noopener"><span class="t">${r.title}</span><span class="m"><span>${r.type.toUpperCase()} · ${r.note.toUpperCase()}</span><span>${r.cta.toUpperCase()} ↗</span></span></a>`).join('');
+$('#rels').innerHTML = R.EVENTS.map(e => `<a class="rel ${e.id === 'iiipoints' ? 'feat' : ''}" href="${e.href}" target="_blank" rel="noopener">
+  <span class="k"><span>${e.kind.toUpperCase()}</span><span>${(e.date || '').toUpperCase()}</span></span>
+  <span class="t">${e.title}</span>${e.who ? `<span class="who">${e.who}</span>` : ''}
+  ${e.flyer ? `<div class="fw">${R.media(e)}</div>` : ''}
+  ${e.quote ? `<q>${e.quote}</q>` : ''}${e.line ? `<span class="ln">${e.line}</span>` : ''}
+  <span class="m"><span>${[e.time, e.venue].filter(Boolean).join(' · ').toUpperCase()}</span><span>${e.cta.toUpperCase()} ↗</span></span></a>`).join('');
+$('#reel').innerHTML = R.reel(['ready', 'talent']);
 R.fitText($('.book b'), () => $('.book').clientWidth - 28);
 R.fitText($('#hero'), () => $('.hero').clientWidth - 14);
 const rels = [...document.querySelectorAll('.rel')], hero = [...document.querySelectorAll('#hero span')];

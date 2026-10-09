@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>RARA 🌋 — Miami · V1 Club</title>
-<meta name="description" content="RARA 🌋 — Miami producer/DJ. Afro-diasporic club music: kuduro, batida, perreo. Machina Records, Omnisound. Bookings: omnisoundslabel@gmail.com">
+<meta name="description" content="RARA 🌋 — Miami producer/DJ. Afro-leaning dance music. Machina Records. Drummer for Mr. Floyd Larry. Bookings: omnisoundslabel@gmail.com">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +38,9 @@ canvas{display:block;width:100%}
 
 /* ---- hero: LED wall ---- */
 .hero{position:relative;height:min(92svh,780px);min-height:560px;overflow:hidden;border-bottom:1px solid var(--ln)}
-#wall{position:absolute;inset:0;height:100%}
+#wall{position:absolute;inset:0;height:100%;z-index:1;mix-blend-mode:screen}
+.led{position:absolute;inset:0;z-index:0;overflow:hidden;isolation:isolate;background:#05010c}.led video{width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:grayscale(1) contrast(1.6) brightness(1.9);opacity:calc(.85 + var(--k) * .15)}.led::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(160deg,#ff1fa8,#8a3cff 50%,#00f0ff);mix-blend-mode:multiply}.led::after{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(circle at center,transparent 0 1.4px,#05010c 2px);background-size:4px 4px;opacity:.7}
+.rel.n3{border-top:1px solid var(--ln)}.reel{padding:0 12px}.reel .rf .mvw{border:1.5px solid var(--mg);border-radius:12px;box-shadow:0 0 22px rgba(255,31,168,.3)}.reel .rf video{filter:saturate(1.2) contrast(1.1)}.reel .cl{color:var(--cy)}.reel figcaption{color:var(--dim)}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:
   radial-gradient(120% 70% at 50% 40%,transparent 40%,#000 100%),
   repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)}
@@ -51,8 +53,8 @@ canvas{display:block;width:100%}
 .mark p{margin-top:16px;font:700 11px var(--mono);letter-spacing:.32em;color:var(--cy);text-shadow:0 0 12px var(--cy)}
 .np{position:absolute;z-index:4;left:14px;right:14px;bottom:16px}
 .np .tl{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-.bpm{font:400 76px/.8 var(--disp);color:var(--tx);text-shadow:0 0 22px rgba(255,31,168,.8);font-variant-numeric:tabular-nums}
-.bpm small{font:700 11px var(--mono);color:var(--mg);letter-spacing:.2em;margin-left:8px;text-shadow:none}
+.bpm{font:400 54px/.86 var(--disp);color:var(--tx);text-shadow:0 0 22px rgba(255,31,168,.8);font-variant-numeric:tabular-nums}
+.bpm small{display:block;margin-top:8px;font:700 11px var(--mono);color:var(--mg);letter-spacing:.2em;text-shadow:none}
 .beats{display:flex;gap:5px;margin-bottom:8px}
 .beats i{width:26px;height:8px;border-radius:2px;background:#1b1230;transition:background .05s,box-shadow .05s}
 .beats i.on{background:var(--mg);box-shadow:0 0 12px var(--mg)}
@@ -133,6 +135,29 @@ canvas{display:block;width:100%}
 .acts .nb{font-size:14px;height:46px}
 .acts .go{--c:var(--mg);background:var(--mg);color:#14000c}
 
+/* ---- the run: real events ---- */
+.evs{display:grid;gap:14px;padding:0 12px}
+.ev{display:block;position:relative;border-radius:16px;overflow:hidden;border:1.5px solid var(--c);background:#07030f;box-shadow:0 0 22px color-mix(in srgb,var(--c) 22%,transparent)}
+.ev img,.ev video{display:block;width:100%;object-fit:cover;background:#000}.ev .mvw{border-block:1px solid var(--c)}.ev .cl{color:var(--c)}.ev .cl i{background:var(--c);box-shadow:0 0 8px var(--c)}
+.ev .eb{position:relative;padding:14px 16px 16px}
+.ev .eb .tag{color:var(--c)}
+.ev b{display:block;margin-top:8px;font:400 40px/.95 var(--disp);color:var(--c);text-transform:uppercase;text-shadow:0 0 22px color-mix(in srgb,var(--c) 55%,transparent)}
+.ev em{display:block;margin-top:6px;font:700 12px var(--mono);font-style:normal;letter-spacing:.1em;color:#fff;text-transform:uppercase}
+.ev q{display:block;margin-top:12px;font:600 19px/1.22 var(--ui);color:#fff;quotes:"“" "”"}
+.ev p{margin-top:10px;font:500 16px/1.25 var(--ui);color:#b9afd6}
+.ev .mt{margin-top:12px;font:700 10px/1.5 var(--mono);letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+.ev .go{display:inline-block;margin-top:12px;font:700 10px var(--mono);letter-spacing:.14em;color:var(--c)}
+.ev:active{transform:scale(.985)}
+.ev.feat{border-width:2px;box-shadow:0 0 40px color-mix(in srgb,var(--c) 45%,transparent);animation:glow2 2.6s ease-in-out infinite}
+.ev.feat b{font-size:64px}
+.ev.feat .badge{position:absolute;left:12px;top:12px;z-index:2;font:700 10px var(--mono);letter-spacing:.16em;background:var(--c);color:#14000c;padding:6px 8px;border-radius:5px}
+@keyframes glow2{50%{box-shadow:0 0 70px color-mix(in srgb,var(--c) 70%,transparent)}}
+.ev.nf{padding-top:0}
+.rel{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px;border-top:1px solid var(--ln)}
+.rel b{font:400 28px/1 var(--disp);text-transform:uppercase}
+.rel s{display:block;text-decoration:none;margin-top:6px;font:700 10px var(--mono);letter-spacing:.14em;color:var(--dim)}
+.rel .go{font:700 10px var(--mono);letter-spacing:.14em;color:var(--mg);white-space:nowrap}
+
 /* ---- levels ---- */
 .lv{margin:0 12px;border:1px solid var(--ln);border-radius:16px;background:linear-gradient(180deg,#0a0614,#05020b);padding:12px;position:relative}
 #spec{height:120px}
@@ -176,12 +201,13 @@ canvas{display:block;width:100%}
 <main class="app" id="app">
 
   <section class="hero" id="hero">
+    <div class="led" aria-hidden="true"></div>
     <canvas id="wall" aria-hidden="true"></canvas>
     <div class="top"><span class="id"><i></i>RARA/OS · CLUB</span><nav id="vs" aria-label="Versions"></nav></div>
-    <div class="mark"><h1 id="wm">RARA</h1><span class="em">🌋</span><p>MIAMI · KUDURO / BATIDA / PERREO</p></div>
+    <div class="mark"><h1 id="wm">RARA</h1><span class="em">🌋</span><p>BLACK DANCE MUSIC IS BACK IN MIAMI</p></div>
     <div class="np">
       <div class="tl">
-        <div class="bpm"><span id="bpm">134</span><small>BPM</small></div>
+        <div class="bpm"><span id="bpm">JET FUEL</span><small id="bsub">BATIDA EDIT</small></div>
         <div class="beats" id="beats"><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="mq"><div id="mq"></div></div>
@@ -208,22 +234,28 @@ canvas{display:block;width:100%}
     </a>
     <a class="tile" style="--c:#ff1fa8;--d:-.3s" href="https://instagram.com/raravulcain" target="_blank" rel="noopener"><span class="tag">SOCIAL</span><i></i><b>Insta</b><s>@raravulcain</s></a>
     <a class="tile" style="--c:#00f0ff;--d:-1.2s" href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener"><span class="tag">LABEL</span><i></i><b>Machina</b><s>Records · Bandcamp</s></a>
-    <a class="tile wide" style="--c:#c6ff1f;--d:-2s" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="tag">LABEL · PARTY</span><i></i><b>Omnisound</b><s>@omnisoundspace</s></a>
+    <a class="tile wide" style="--c:#c6ff1f;--d:-2s" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="tag">PRODUCER/DJ @</span><i></i><b>Omnisound</b><s>@omnisoundspace</s></a>
   </nav>
 
-  <div class="sh rv"><h2>The <b>Setlist</b></h2><span class="tag" id="cnt">08 tracks · tap</span></div>
+  <div class="sh rv"><h2>The <b>Setlist</b></h2><span class="tag" id="cnt">2 play · 4 more</span></div>
   <section class="set rv" id="lib"></section>
+
+  <div class="sh rv"><h2>The <b>Run</b></h2><span class="tag">real sets · real rooms</span></div>
+  <section class="evs rv" id="ev"></section>
+
+  <div class="sh rv"><h2>The <b>Feed</b></h2><span class="tag">muted · looped</span></div>
+  <div id="reel" class="rv"></div>
 
   <div class="sh rv"><h2>Levels</h2><span class="tag">master · eq</span></div>
   <section class="lv rv">
     <canvas id="spec" aria-label="Spectrum analyzer"></canvas>
     <div class="faders" id="faders"></div>
-    <button id="mon" aria-pressed="false"><i></i><span>MONITOR · SYNTH TEST LOOP</span></button>
+    <button id="mon" aria-pressed="true"><i></i><span>SPEAKER · TAP TO MUTE</span></button>
   </section>
 
   <div class="sh rv"><h2>The <b>Labels</b></h2><span class="tag">ch 1–2</span></div>
-  <a class="lab rv" style="--c:#00f0ff" href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener"><span class="ghost">MACHINA</span><span class="tag" style="color:var(--c)">● LIVE · CH 1</span><b style="margin-top:12px">Machina<br>Records</b><p>Label head. Afro-diasporic club music out of Miami.</p><span class="go">BANDCAMP ↗</span></a>
-  <a class="lab rv" style="--c:#c6ff1f" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="ghost">OMNI</span><span class="tag" style="color:var(--c)">● LIVE · CH 2</span><b style="margin-top:12px">Omnisound</b><p>Label, bookings desk and the party space.</p><span class="go">@OMNISOUNDSPACE ↗</span></a>
+  <a class="lab rv" style="--c:#00f0ff" href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener"><span class="ghost">MACHINA</span><span class="tag" style="color:var(--c)">● LIVE · CH 1</span><b style="margin-top:12px">Machina<br>Records</b><p>Label head. Afro-leaning dance music out of Miami. Black dance music is back in Miami. Out now: IN MY OWN WORLD EP, F.R.E.A.K.Y and BACK 2 DA FRONT with MC Katriz, Jet Fuel (Batida Edit), Beastie, NUBETTER.</p><span class="go">BANDCAMP ↗</span></a>
+  <a class="lab rv" style="--c:#c6ff1f" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="ghost">OMNI</span><span class="tag" style="color:var(--c)">● LIVE · CH 2</span><b style="margin-top:12px">Omnisound</b><p>The booking line: omnisoundslabel@gmail.com.</p><span class="go">@OMNISOUNDSPACE ↗</span></a>
 
   <section class="fin rv">
     <span class="tag">Booking line</span>
@@ -238,12 +270,15 @@ canvas{display:block;width:100%}
 </main>
 <div class="toast" id="toast"></div>
 
+<script src="real.js"></script>
 <script src="core.js"></script>
 <script>
 (() => {
-const R = RARA, { $, $$, S, TRACKS, clamp, pad, fmt, hash } = R;
+const R = RARA, { $, $$, S, TRACKS, clamp, pad, fmt, hash } = R, L = R.REAL.L;
 R.switcher('v1');
-const KC = t => `hsl(${(t.kn - 1) * 30} 100% 62%)`;
+const KCS = ['#ff1fa8', '#00f0ff'], KC = t => KCS[t.i];
+$('.led').innerHTML = R.clipHtml('circuit'); $('#reel').innerHTML = R.reel(['ready', 'talent']);
+const EC = { circuit: '#ff1fa8', rinse: '#00f0ff', redhouse: '#ff5a1f', perreo: '#c6ff1f', iiipoints: '#ff1fa8', jolene: '#8a3cff' };
 const CUEC = ['#ff1fa8', '#00f0ff', '#c6ff1f', '#ffb21f'];
 
 /* ---------- setlist ---------- */
@@ -253,14 +288,14 @@ lib.innerHTML = TRACKS.map((t, i) => `
     <button class="rm" aria-expanded="false" aria-controls="b${i}">
       <span class="n">${pad(i + 1)}</span>
       <span class="t"><b>${t.title}</b><s>${t.type} · ${t.sub}</s></span>
-      <span class="r"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>${t.bpm}<br><em>${t.key}</em></span>
+      <span class="r"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>${t.date.toUpperCase()}<br><em>BANDCAMP</em></span>
     </button>
     <div class="rb" id="b${i}"><div><div class="inner">
       <canvas aria-label="Waveform for ${t.title}. Tap to load at that point."></canvas>
       <p>${t.desc}</p>
-      <div class="acts"><button class="nb" style="--c:#00f0ff" data-load="${i}">LOAD TO WALL</button><a class="nb go" href="${t.href}" target="_blank" rel="noopener">${t.cta.toUpperCase()} ↗</a></div>
+      <div class="acts"><button class="nb" style="--c:#00f0ff" data-load="${i}">LOAD TO DECK</button><a class="nb go" href="${t.href}" target="_blank" rel="noopener">${t.cta.toUpperCase()} ↗</a></div>
     </div></div></div>
-  </article>`).join('');
+  </article>`).join('') + R.RELS.map(r => `<a class="rel n3" href="${r.href}" target="_blank" rel="noopener"><span><b>${r.title}</b><s>${r.type} · ${r.note}</s></span><span class="go">${r.cta.toUpperCase()} ↗</span></a>`).join('');
 const rows = $$('.row', lib);
 function drawBig(row) {
   const t = TRACKS[row.dataset.i], { x, w, h } = R.fit($('canvas', row)), a = R.overviewAmps(t, Math.floor(w / 3)), cy = h / 2;
@@ -285,18 +320,21 @@ rows.forEach(row => {
   $('[data-load]', row).addEventListener('click', () => { R.load(i); $('#hero').scrollIntoView({ behavior: R.REDUCE ? 'auto' : 'smooth' }); });
 });
 
+/* ---------- the run: real events ---------- */
+$('#ev').innerHTML = R.EVENTS.map(e => `
+  <a class="ev ${e.id === 'iiipoints' ? 'feat' : ''}" style="--c:${EC[e.id]}" href="${e.href}" target="_blank" rel="noopener">
+    ${R.media(e)}
+    ${e.id === 'iiipoints' ? '<span class="badge">FESTIVAL · B2B</span>' : ''}
+    <div class="eb"><span class="tag">${e.kind}${e.date ? ' · ' + e.date : ''}</span><b>${e.title}</b>
+      ${e.who ? `<em>${e.who}</em>` : ''}${e.quote ? `<q>${e.quote}</q>` : ''}${e.line ? `<p>${e.line}</p>` : ''}
+      <div class="mt">${[e.time, e.venue].filter(Boolean).join(' · ')}</div><span class="go">${e.cta.toUpperCase()} ↗</span></div>
+  </a>`).join('');
+
 /* ---------- load / transport ---------- */
 const ICO = { play: '<path d="M7 4.5v15l13-7.5z"/>', pause: '<path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/>' };
-let bpmShown = TRACKS[0].bpm;
-function tween(to) {
-  const from = bpmShown, t0 = performance.now(), el = $('#bpm');
-  const step = ts => { const k = clamp((ts - t0) / 600, 0, 1); bpmShown = from + (to - from) * (1 - Math.pow(1 - k, 3)); el.textContent = Math.round(bpmShown); if (k < 1) requestAnimationFrame(step); };
-  requestAnimationFrame(step);
-}
 R.onLoad((t, quiet) => {
-  const label = t.title.toUpperCase() + ' · ' + t.type.toUpperCase() + ' · ' + t.bpm + ' BPM · ' + t.key;
-  $('#mq').innerHTML = `<span>${label}</span>`.repeat(4);
-  tween(t.bpm);
+  $('#mq').innerHTML = `<span>${t.title.toUpperCase()} · ${t.date.toUpperCase()} · MACHINA RECORDS</span>`.repeat(4);
+  $('#bpm').textContent = t.short.toUpperCase(); $('#bsub').textContent = t.sub.split(' · ')[0].toUpperCase();
   rows.forEach(r => r.classList.toggle('cur', +r.dataset.i === t.i));
 });
 R.onPlay(p => { $('#play').setAttribute('aria-pressed', p); $('#ico').innerHTML = p ? ICO.pause : ICO.play; });
@@ -335,8 +373,10 @@ R.CTRL.forEach(n => {
 const fitMark = () => { const h = $('#wm'); h.style.fontSize = '100px'; h.style.fontSize = Math.min(230, 100 * (innerWidth > 520 ? 480 : innerWidth - 36) / h.scrollWidth) + 'px'; };
 addEventListener('resize', fitMark); if (document.fonts) document.fonts.ready.then(fitMark);
 const wall = $('#wall'), wsp = R.makeSpectrum(32);
+let kickAt = 0, kn = 0;
 function drawWall(pos, tt) {
-  const { x, w, h } = R.fit(wall), k = S.playing ? R.kickEnv() : 0, f = pos - Math.floor(pos), cx = w / 2, cy = h * .38;
+  if (L.beats !== kn) { kn = L.beats; kickAt = performance.now(); }
+  const { x, w, h } = R.fit(wall), k = S.playing ? R.kickEnv() : 0, f = S.playing ? clamp((performance.now() - kickAt) / 520, 0, .999) : 0, cx = w / 2, cy = h * .38, pb = L.beats;
   x.globalCompositeOperation = 'source-over';
   const g = x.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#07010f'); g.addColorStop(.6, '#12031f'); g.addColorStop(1, '#000'); x.fillStyle = g; x.fillRect(0, 0, w, h);
   x.globalCompositeOperation = 'lighter';
@@ -351,7 +391,7 @@ function drawWall(pos, tt) {
   const maxR = Math.hypot(w, h) * .62;
   for (let r = 0; r < 7; r++) {
     const age = r + f, p = age / 7, rad = Math.pow(p, 1.7) * maxR + 10, a = (1 - p) * (r === 0 ? .5 + k * .5 : .7);
-    x.strokeStyle = (Math.floor(pos) - r) % 4 === 0 ? `rgba(0,240,255,${a})` : `rgba(255,31,168,${a})`; x.lineWidth = 1 + (1 - p) * (2 + k * 4);
+    x.strokeStyle = (pb - r) % 4 === 0 ? `rgba(0,240,255,${a})` : `rgba(255,31,168,${a})`; x.lineWidth = 1 + (1 - p) * (2 + k * 4);
     const rw = rad * 1.5, rh = rad * .86, rr = rad * .18; x.beginPath(); x.roundRect(cx - rw / 2, cy - rh / 2, rw, rh, rr); x.stroke();
   }
   /* floor grid: lines rush toward the camera on the beat */
@@ -387,16 +427,16 @@ function drawWave(pos) {
   const reveal = R.REDUCE ? 1 : clamp((performance.now() - S.boot - 300) / 900, 0, 1);
   x.save(); x.beginPath(); x.rect(0, 0, w * (1 - Math.pow(1 - reveal, 3)), h); x.clip();
   const b0 = Math.floor(pos - cx / ppb) - 1, b1 = Math.ceil(pos + cx / ppb) + 1;
-  for (let b = b0; b <= b1; b++) { const gx = cx + (b - pos) * ppb, bar = ((b % 4) + 4) % 4 === 0; x.fillStyle = bar ? 'rgba(255,255,255,.3)' : 'rgba(255,255,255,.08)'; x.fillRect(Math.round(gx), 0, 1, h); }
+  for (let b = b0; b <= b1; b++) { if (b % 2) continue; const gx = cx + (b - pos) * ppb, bar = b % 20 === 0; x.fillStyle = bar ? 'rgba(255,255,255,.3)' : 'rgba(255,255,255,.08)'; x.fillRect(Math.round(gx), 0, 1, h); }
   const col = 3, n = Math.ceil(w / col) + 1;
   for (let i = 0; i < n; i++) {
-    const [lo, mid, hi] = R.wave(t, R.wrap(pos + (i * col - cx) / ppb)), px = i * col; x.globalAlpha = px < cx ? .4 : 1;
+    const [lo, mid, hi] = R.wave(t, pos + (i * col - cx) / ppb), px = i * col; x.globalAlpha = px < cx ? .4 : 1;
     x.fillStyle = '#ff1fa8'; x.fillRect(px, cy - lo * cy * .94, col - 1, lo * cy * 1.88);
     x.fillStyle = '#00f0ff'; x.fillRect(px, cy - mid * cy * .62, col - 1, mid * cy * 1.24);
     x.fillStyle = '#fff'; x.fillRect(px, cy - hi * cy * .34, col - 1, hi * cy * .68);
   }
   x.globalAlpha = 1;
-  t.cues.forEach((c, i) => { for (const k of [-1, 0, 1]) { const d = c + k * t.beats - pos; if (Math.abs(d) > cx / ppb + .5) continue; const gx = cx + d * ppb; x.fillStyle = CUEC[i]; x.fillRect(gx - 1, 0, 2, h); x.fillRect(gx, h - 14, 14, 14); x.fillStyle = '#000'; x.font = '700 10px Space Mono, monospace'; x.fillText('ABCD'[i], gx + 3.5, h - 3.5); } });
+  t.cues.forEach((c, i) => { for (const k of [0]) { const d = c + k * t.beats - pos; if (Math.abs(d) > cx / ppb + .5) continue; const gx = cx + d * ppb; x.fillStyle = CUEC[i]; x.fillRect(gx - 1, 0, 2, h); x.fillRect(gx, h - 14, 14, 14); x.fillStyle = '#000'; x.font = '700 10px Space Mono, monospace'; x.fillText('ABCD'[i], gx + 3.5, h - 3.5); } });
   x.restore();
   x.shadowColor = '#fff'; x.shadowBlur = 12; x.fillStyle = '#fff'; x.fillRect(cx - 1, 0, 2, h); x.shadowBlur = 0;
 }
@@ -409,14 +449,14 @@ const vis = new Map(), io2 = new IntersectionObserver(es => es.forEach(e => vis.
 let lastBeat = -1;
 R.ready(() => {
   fitMark();
-  R.load(0, null, true); $('#bpm').textContent = TRACKS[0].bpm;
+  R.load(0, null, true);
   R.run((ts, pos, tt, frame) => {
     if (vis.get($('#hero'))) { drawWall(pos, tt); $('#hero').style.setProperty('--k', S.playing ? R.kickEnv().toFixed(2) : 0); }
     if (vis.get($('#deck'))) {
       drawWave(pos);
-      if (frame % 3 === 0) { const sec = pos * 60 / S.bpm, tot = S.tr.beats * 60 / S.bpm; $('#tel').textContent = fmt(sec); $('#trm').textContent = '-' + fmt(tot - sec); }
+      if (frame % 3 === 0) { const sec = pos / 2, tot = S.tr.beats / 2; $('#tel').textContent = fmt(sec); $('#trm').textContent = '-' + fmt(tot - sec); }
     }
-    const bi = Math.floor(pos);
+    const bi = L.beats;
     if (bi !== lastBeat) { lastBeat = bi; $$('#beats i').forEach((d, k) => d.classList.toggle('on', k === bi % 4)); }
     if (vis.get($('.lv'))) drawSpec(pos, tt);
     if (openRow && frame % 3 === 0) drawBig(openRow);

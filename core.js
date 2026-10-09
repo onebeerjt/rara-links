@@ -1,5 +1,5 @@
-/* RARA/OS shared engine: tracks, synthetic waveforms, transport clock, opt-in synth monitor.
-   Each version (v1/v2/v3) owns its own markup, styling and drawing; this file owns the "music". */
+/* RARA/OS shared engine for v1–v3: a DJ-deck skin over the two real mp3s (real.js owns the audio).
+   Waveforms are decoded from the real files, meters/spectrum/kick come from the live analyser. */
 window.RARA = (() => {
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
@@ -11,134 +11,107 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const pad = (n, l = 2) => String(Math.floor(n)).padStart(l, '0');
 const fmt = (sec, tenth = true) => { const s = Math.abs(sec), hh = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60; return (hh ? pad(hh) + ':' : '') + pad(m) + ':' + (tenth ? pad(ss) + '.' + Math.floor(ss % 1 * 10) : pad(ss)); };
 
-/* ---------- content (real links, real names) ---------- */
-const EMAIL = 'omnisoundslabel@gmail.com';
-const MAILTO = 'mailto:' + EMAIL + '?subject=Booking%20RARA%20%F0%9F%8C%8B';
-const BC = 'https://machinarecords.bandcamp.com', YT = 'https://www.youtube.com/watch?v=Cv6b3C2QPJo';
-const IG_RARA = 'https://instagram.com/raravulcain', IG_OMNI = 'https://instagram.com/omnisoundspace';
-const TRACKS = [
-  { title: 'Jolene 3-Hour Set', type: 'Set', sub: 'Live · 3 hrs', bpm: 134, key: '8A', min: 180, seed: 11, len: '3:00:00',
-    desc: 'The full three-hour Jolene set. No skips, no filler. Afro-diasporic club music front to back.', href: IG_RARA, cta: 'Watch on IG', src: 'IG' },
-  { title: 'CIRCUIT × DJ Marfox', type: 'Collab', sub: 'w/ DJ Marfox', bpm: 136, key: '5A', min: 4, seed: 23,
-    desc: 'CIRCUIT with Lisbon batida pioneer DJ Marfox. Two continents, one low end.', href: IG_RARA, cta: 'Watch on IG', src: 'IG' },
-  { title: 'Talent Show', type: 'Single', sub: 'w/ Blayd', bpm: 140, key: '10A', min: 3, seed: 37,
-    desc: 'RARA × Blayd. Club weapon. Turn it up.', href: BC, cta: 'Bandcamp', src: 'BNDCMP' },
-  { title: 'In My Own World', type: 'EP', sub: 'Machina Records', bpm: 132, key: '3A', min: 14, seed: 41,
-    desc: 'The EP, out now on Machina Records.', href: BC, cta: 'Bandcamp', src: 'BNDCMP' },
-  { title: 'F.R.E.A.K.Y', type: 'Single', sub: 'Club', bpm: 142, key: '11B', min: 3, seed: 53,
-    desc: 'Hard-hitting club sounds.', href: YT, cta: 'Watch', src: 'YT' },
-  { title: 'Back 2 Da Front', type: 'Single', sub: 'w/ MC Katriz', bpm: 138, key: '6A', min: 3, seed: 67,
-    desc: 'RARA × MC Katriz. Perreo pressure.', href: YT, cta: 'Watch', src: 'YT' },
-  { title: 'Rinse France', type: 'Radio', sub: 'Guest mix', bpm: 135, key: '9A', min: 60, seed: 79,
-    desc: 'Guest appearance on Rinse France.', href: IG_RARA, cta: 'Watch on IG', src: 'IG' },
-  { title: 'Perreo del Futuro', type: 'Live', sub: 'Perreo', bpm: 130, key: '1A', min: 60, seed: 83,
-    desc: 'Perreo for what comes next.', href: IG_RARA, cta: 'Watch on IG', src: 'IG' },
-];
-TRACKS.forEach((t, i) => {
-  t.i = i;
-  t.beats = Math.max(64, Math.round(t.min * t.bpm / 16) * 16);          // multiple of 16 beats keeps the loop on-grid
-  t.cues = [0.08, 0.3, 0.55, 0.78].map(f => Math.round(t.beats * f / 32) * 32);
-  t.kn = parseInt(t.key);
+/* ---------- content: the two real tracks (everything else lives in real.js) ---------- */
+const EMAIL = REAL.EMAIL, MAILTO = REAL.MAILTO, BC = REAL.BC, IG_RARA = REAL.IG, IG_OMNI = REAL.IG_OMNI, YT = '';
+/* the deck counts in "beats" of an internal 2-per-second grid (never shown): 1 beat = 0.5s of the real mp3 */
+const BPS = 2;
+const TRACKS = REAL.TRACKS.map((r, i) => ({
+  i, title: r.title, short: r.short, type: i ? 'Single' : 'Edit', sub: r.tag + ' · ' + r.date, date: r.date, bpm: 120, beats: 64, aud: i,
+  desc: i ? 'Out on Bandcamp, March 2026. Press play.' : 'Batida edit, out on Bandcamp, March 2026. Press play.', href: REAL.BC, cta: 'Bandcamp',
+}));
+TRACKS.forEach(t => { t.cues = [0.08, 0.3, 0.55, 0.78].map(f => Math.round(t.beats * f)); });
+/* real 3-band envelopes, decoded from the mp3 (20 windows/sec). Until decoded: a quiet flat line. */
+const WPS = 20, bands = [], waveHooks = [];
+const onWave = fn => waveHooks.push(fn);
+TRACKS.forEach(t => {
+  const load = () => {
+    const el = REAL.els[t.aud], go = () => { t.beats = Math.max(8, el.duration * BPS); t.cues = [0.08, 0.3, 0.55, 0.78].map(f => Math.round(t.beats * f)); decode(t); };
+    el.duration > 0 ? go() : el.addEventListener('loadedmetadata', go, { once: true });
+  };
+  load();
 });
-
-/* ---------- synthetic 3-band waveform: lo = kick/bass, mid = claps/vocal, hi = hats ---------- */
-const CLAP = new Set([3, 6, 11, 14]);
-const energy = (t, b) => {
-  const r = hash(Math.floor(b / 32) * 7.13 + t.seed);
-  return (Math.floor(b / 16) % 2 === 1 && r < .35) ? .3 : .62 + .38 * r;
-};
+function decode(t) {
+  fetch(REAL.TRACKS[t.aud].src).then(r => r.arrayBuffer()).then(buf => {
+    const AC = window.AudioContext || window.webkitAudioContext, c = new AC();
+    return new Promise((ok, no) => c.decodeAudioData(buf, a => { c.close && c.close(); ok(a); }, no));
+  }).then(ab => {
+    const d = ab.getChannelData(0), win = Math.floor(ab.sampleRate / WPS), n = Math.floor(d.length / win), a = new Float32Array(n * 3);
+    const lpA = 1 - Math.exp(-2 * Math.PI * 180 / ab.sampleRate), hpA = 1 - Math.exp(-2 * Math.PI * 3000 / ab.sampleRate);
+    let lp = 0, lp2 = 0;
+    for (let w = 0; w < n; w++) {
+      let l = 0, m = 0, h = 0;
+      for (let k = 0; k < win; k += 2) {
+        const v = d[w * win + k]; lp += (v - lp) * lpA * 2; lp2 += (v - lp2) * hpA * 2;
+        const hi = v - lp2, lo = lp, mid = v - lo - hi; l += lo * lo; m += mid * mid; h += hi * hi;
+      }
+      const q = win / 2; a[w * 3] = Math.sqrt(l / q); a[w * 3 + 1] = Math.sqrt(m / q); a[w * 3 + 2] = Math.sqrt(h / q);
+    }
+    let mx = [1e-6, 1e-6, 1e-6]; for (let i = 0; i < a.length; i++) mx[i % 3] = Math.max(mx[i % 3], a[i]);
+    const all = Math.max(...mx) ;
+    for (let i = 0; i < a.length; i++) a[i] = Math.pow(a[i] / (i % 3 === 0 ? mx[0] : (i % 3 === 1 ? mx[1] * .8 : mx[2] * .7)), .8);
+    bands[t.i] = { a, n }; ovMemo.clear(); waveHooks.forEach(f => f(t));
+  }).catch(() => {});
+}
+/* [lo, mid, hi] at beat b (looks up the real envelope; flat until it's decoded) */
 const wave = (t, b) => {
-  const e = energy(t, b), br = e < .35;
-  const f = b - Math.floor(b), q = b * 4, s = Math.floor(q) % 16, sf = q - Math.floor(q);
-  let lo = br ? .1 : Math.exp(-f * 5.5) * .95 + .16;
-  if (!br && s % 4 === 2) lo += Math.exp(-sf * 3) * .22;
-  const nz = hash(Math.floor(b * 8) + t.seed * 3);
-  const mid = (CLAP.has(s) ? Math.exp(-sf * 3.2) * .85 * e : 0) + .12 + .22 * nz * (br ? 1.6 : 1);
-  const hi = ((s % 2) ? .7 : .32) * Math.exp(-sf * 4.5) * (br ? .7 : 1) + .08 * hash(Math.floor(b * 16) + t.seed);
-  return [clamp(lo * (br ? 1 : e * 1.08), 0, 1), clamp(mid, 0, 1), clamp(hi, 0, 1)];
+  const B = bands[t.i]; if (!B) return [.05, .05, .05];
+  if (b < 0 || b >= t.beats) return [0, 0, 0];
+  const k = clamp(Math.floor(b / BPS * WPS), 0, B.n - 1) * 3; return [clamp(B.a[k], 0, 1), clamp(B.a[k + 1], 0, 1), clamp(B.a[k + 2], 0, 1)];
 };
+const energy = (t, b) => { const w = wave(t, b); return w[0] * .6 + w[1] * .3 + w[2] * .1; };
 /* whole-track overview amplitudes for n columns (cached) */
 const ovMemo = new Map();
 const overviewAmps = (t, n) => {
   const k = t.i + ':' + n; if (ovMemo.has(k)) return ovMemo.get(k);
-  const a = [];
+  const B = bands[t.i], a = [];
   for (let px = 0; px < n; px++) {
-    const e = energy(t, px / n * t.beats), n1 = hash(px * .37 + t.seed), n2 = hash(px * .91 + t.seed * 2);
-    a.push([clamp(e * (.55 + .45 * n1), 0, 1), clamp(e * (.25 + .5 * n2), 0, 1), clamp(e * .3 * n2, 0, 1)]);
+    if (!B) { a.push([.06, .04, .02]); continue; }
+    const s = Math.floor(px / n * B.n), e = Math.max(s + 1, Math.floor((px + 1) / n * B.n)); let m = [0, 0, 0];
+    for (let w = s; w < e; w++) for (let q = 0; q < 3; q++) m[q] = Math.max(m[q], B.a[w * 3 + q]);
+    a.push(m);
   }
-  ovMemo.set(k, a); return a;
+  if (B) ovMemo.set(k, a); return a;
 };
+const CLAP = new Set();
 
-/* ---------- transport state / clock ---------- */
-const S = { tr: TRACKS[0], bpm: TRACKS[0].bpm, playing: !REDUCE, held: false, aB: 0, aT: 0, boot: performance.now() };
-const AU = { ctx: null, on: false, nextStep: 0, timer: 0 };
+/* ---------- transport: a thin skin over the two real <audio> elements (real.js) ---------- */
 const EQ = { lo: 0, mid: 0, hi: 0, gain: .8 };
-const now = () => AU.on ? AU.ctx.currentTime : performance.now() / 1000;
+const S = { tr: TRACKS[0], bpm: 120, rate: 1, held: false, boot: performance.now() };
+Object.defineProperty(S, 'playing', { get: () => REAL.isPlaying(S.tr.aud) });
+const AU = { get on() { return !REAL.muted; } };
+const now = () => performance.now() / 1000;
+const aud = () => REAL.els[S.tr.aud];
 const wrap = b => ((b % S.tr.beats) + S.tr.beats) % S.tr.beats;
-const curPos = () => wrap((S.playing && !S.held) ? S.aB + (now() - S.aT) * S.bpm / 60 : S.aB);
-const resync = () => { if (AU.on) AU.nextStep = Math.ceil(S.aB * 4 - 1e-6); };
-const setPos = b => { S.aB = wrap(b); S.aT = now(); resync(); };
-const kickEnv = () => { const b = curPos(), f = b - Math.floor(b); return Math.exp(-f * 5) * (energy(S.tr, b) > .35 ? 1 : .2); };
+const curPos = () => aud().currentTime * BPS;
+const setPos = b => { const el = aud(); if (el.duration > 0) el.currentTime = clamp(b / BPS, 0, el.duration - .05); };
 const loadHooks = [], playHooks = [];
 const onLoad = fn => loadHooks.push(fn), onPlay = fn => playHooks.push(fn);
 function load(i, frac, quiet) {
-  const t = TRACKS[i];
-  S.tr = t; S.bpm = t.bpm; S.rate = 1;
-  S.aB = frac != null ? t.beats * frac : Math.max(0, t.cues[0] - 16); S.aT = now(); S.playing = !REDUCE || S.playing; S.held = false; resync();
+  const t = TRACKS[i], was = S.playing;
+  S.tr = t; S.rate = 1; REAL.rate(1); S.held = false;
+  if (was) { REAL.play(i); } else REAL.els.forEach(a => a.pause());
+  const el = REAL.els[i], go = () => { el.currentTime = frac != null && el.duration > 0 ? frac * el.duration : 0; };
+  if (frac != null && !(el.duration > 0)) el.addEventListener('loadedmetadata', go, { once: true }); else go();
   loadHooks.forEach(f => f(t, quiet)); playHooks.forEach(f => f(S.playing));
   if (!quiet) toast('LOADED › ' + t.title.toUpperCase());
 }
-function togglePlay() {
-  if (S.playing) { S.aB = curPos(); S.playing = false; } else { S.aT = now(); S.playing = true; resync(); }
-  playHooks.forEach(f => f(S.playing));
-}
-const cue = n => setPos(S.tr.cues[n || 0]);
-/* pitch: rate 0.92..1.08 around the track's native BPM; keeps position continuous */
-function setRate(r) { S.aB = curPos(); S.aT = now(); S.rate = clamp(r, .92, 1.08); S.bpm = S.tr.bpm * S.rate; resync(); }
-/* drag-scrub helper: call grab/move(deltaBeats)/release */
-const scrub = { grab() { S.aB = curPos(); S.held = true; }, move(db) { S.aB = wrap(S.aB + db); }, release() { S.held = false; S.aT = now(); resync(); } };
-
-/* ---------- opt-in synth monitor (browser never makes sound unless the user taps) ---------- */
-function initAudio() {
-  const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return false;
-  const c = AU.ctx = new Ctx();
-  const mk = (type, f, g, q) => { const n = c.createBiquadFilter(); n.type = type; n.frequency.value = f; n.gain.value = g; if (q) n.Q.value = q; return n; };
-  AU.bus = c.createGain(); AU.bus.gain.value = .9;
-  AU.lo = mk('lowshelf', 200, EQ.lo); AU.mid = mk('peaking', 1000, EQ.mid, .8); AU.hi = mk('highshelf', 4000, EQ.hi);
-  AU.master = c.createGain(); AU.master.gain.value = EQ.gain * .6;
-  AU.an = c.createAnalyser(); AU.an.fftSize = 1024; AU.an.smoothingTimeConstant = .6;
-  AU.bus.connect(AU.lo); AU.lo.connect(AU.mid); AU.mid.connect(AU.hi); AU.hi.connect(AU.master); AU.master.connect(AU.an); AU.an.connect(c.destination);
-  AU.fd = new Uint8Array(AU.an.frequencyBinCount); AU.td = new Uint8Array(AU.an.fftSize);
-  const nb = c.createBuffer(1, c.sampleRate * .5, c.sampleRate), d = nb.getChannelData(0);
-  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-  AU.noise = nb; return true;
-}
-function voice(step, t) {
-  const c = AU.ctx, g = (v, dur) => { const n = c.createGain(); n.gain.setValueAtTime(v, t); n.gain.exponentialRampToValueAtTime(.0001, t + dur); n.connect(AU.bus); return n; };
-  if (step % 4 === 0) { const o = c.createOscillator(); o.frequency.setValueAtTime(160, t); o.frequency.exponentialRampToValueAtTime(42, t + .12); o.connect(g(1, .38)); o.start(t); o.stop(t + .4); }
-  if (CLAP.has(step)) { const s = c.createBufferSource(), f = c.createBiquadFilter(); s.buffer = AU.noise; f.type = 'bandpass'; f.frequency.value = 1700; f.Q.value = .9; s.connect(f); f.connect(g(.6, .16)); s.start(t); s.stop(t + .2); }
-  if (step % 2 === 1) { const s = c.createBufferSource(), f = c.createBiquadFilter(); s.buffer = AU.noise; f.type = 'highpass'; f.frequency.value = 7500; s.connect(f); f.connect(g(step % 4 === 3 ? .22 : .12, .05)); s.start(t); s.stop(t + .08); }
-  if (step === 6 || step === 14 || step === 10) { const o = c.createOscillator(); o.type = 'sine'; o.frequency.value = 55; o.connect(g(.55, .28)); o.start(t); o.stop(t + .3); }
-}
-function tick() {
-  if (!AU.on || !S.playing || S.held) return;
-  const horizon = AU.ctx.currentTime + .15;
-  for (;;) {
-    const t = S.aT + (AU.nextStep / 4 - S.aB) * 60 / S.bpm;
-    if (t > horizon) break;
-    if (t >= AU.ctx.currentTime - .02) voice(((AU.nextStep % 16) + 16) % 16, t);
-    AU.nextStep++;
-  }
-}
+function togglePlay() { S.playing ? REAL.pause() : REAL.play(S.tr.aud); }
+const cue = n => { setPos(S.tr.cues[n || 0]); if (!S.playing) REAL.play(S.tr.aud); };
+/* pitch: real playbackRate 0.92..1.08 */
+function setRate(r) { S.rate = clamp(r, .92, 1.08); REAL.rate(S.rate); }
+/* drag-scrub helper: grab pauses the real audio, move(deltaBeats) seeks it, release resumes if it was playing */
+let scrubWas = false;
+const scrub = { grab() { scrubWas = S.playing; S.held = true; if (scrubWas) aud().pause(); },
+  move(db) { setPos(curPos() + db); },
+  release() { S.held = false; if (scrubWas) REAL.play(S.tr.aud); } };
+REAL.on('state', () => { if (!S.held) playHooks.forEach(f => f(S.playing)); });
+REAL.on('track', i => { if (S.tr !== TRACKS[i]) { S.tr = TRACKS[i]; S.rate = 1; loadHooks.forEach(f => f(S.tr, true)); } });
+REAL.on('blocked', () => toast('TAP PLAY AGAIN'));
+/* the speaker button is the mute switch (aria-pressed = sound on) */
 async function toggleAudio(btn) {
-  const flag = on => { if (btn) btn.setAttribute('aria-pressed', on); };
-  if (AU.on) { const p = curPos(); AU.on = false; clearInterval(AU.timer); AU.ctx.suspend(); S.aB = p; S.aT = now(); flag(false); return toast('MONITOR OFF'); }
-  if (!AU.ctx && !initAudio()) return toast('AUDIO NOT SUPPORTED');
-  const p = curPos(); await AU.ctx.resume(); AU.on = true;
-  S.aB = p; S.aT = now(); resync(); AU.timer = setInterval(tick, 25);
-  flag(true); toast('MONITOR ON · SYNTH TEST LOOP');
+  const m = REAL.mute(); if (btn) btn.setAttribute('aria-pressed', !m); toast(m ? 'MUTED' : 'SOUND ON');
 }
-/* knob/fader model: gain 0..1, lo/mid/hi -12..+12 dB */
+/* knob/fader model: gain 0..1, lo/mid/hi -12..+12 dB. These drive a real EQ on the real audio. */
 const CTRL = [
   { k: 'gain', label: 'Gain', min: 0, max: 1, def: .8, fmt: v => (v ? (20 * Math.log10(v)).toFixed(1) : '-∞') + 'dB' },
   { k: 'lo', label: 'Low', min: -12, max: 12, def: 0, fmt: v => (v > 0 ? '+' : '') + v.toFixed(1) },
@@ -146,19 +119,20 @@ const CTRL = [
   { k: 'hi', label: 'High', min: -12, max: 12, def: 0, fmt: v => (v > 0 ? '+' : '') + v.toFixed(1) },
 ];
 function setEQ(k, v) {
-  const n = CTRL.find(c => c.k === k); EQ[k] = clamp(v, n.min, n.max);
-  if (AU.ctx) { if (k === 'gain') AU.master.gain.value = EQ[k] * .6; else AU[k].gain.value = EQ[k]; }
+  const n = CTRL.find(c => c.k === k); EQ[k] = clamp(v, n.min, n.max); REAL.eq(k, k === 'gain' ? EQ[k] / .8 : EQ[k]);
   return EQ[k];
 }
+/* kick pulse: the real kick drum, heard live from the audio (falls back to the decoded bass envelope) */
+const kickEnv = () => REAL.live ? REAL.L.kick : (S.playing ? wave(S.tr, curPos())[0] * .5 : 0);
 
-/* ---------- metering ---------- */
+/* ---------- metering (real levels) ---------- */
 function levels(pos, tt) {
-  const [lo, mid, hi] = wave(S.tr, pos);
-  let l = (lo * .62 + mid * .3 + hi * .08), r = l * (.94 + .06 * Math.sin(tt * 2.3)) + .02 * Math.sin(tt * 5);
-  if (AU.on && S.playing) {
-    AU.an.getByteTimeDomainData(AU.td); let s = 0; for (let i = 0; i < AU.td.length; i++) { const v = (AU.td[i] - 128) / 128; s += v * v; }
-    l = r = clamp(Math.sqrt(s / AU.td.length) * 3.2, 0, 1);
-  } else l *= (.55 + EQ.gain * .55);
+  let l = 0, r = 0;
+  if (S.playing) {
+    const td = REAL.scope();
+    if (td) { let s = 0; for (let i = 0; i < td.length; i++) { const v = (td[i] - 128) / 128; s += v * v; } l = r = clamp(Math.sqrt(s / td.length) * 3.2, 0, 1); }
+    else { l = energy(S.tr, pos) * .9; r = l * (.96 + .04 * Math.sin(tt * 2.3)); }
+  }
   return [clamp(l * 1.05, 0, 1), clamp(r * 1.05, 0, 1)];
 }
 /* VU with ballistics + peak hold; returns {l,r,hl,hr} */
@@ -172,17 +146,16 @@ function stepVU(l, r) {
 const fOf = fx => 20 * Math.pow(1000, fx);
 const sig = v => 1 / (1 + Math.exp(-v));
 const eqDb = f => EQ.lo * sig(Math.log2(220 / f) * 2.2) + EQ.mid * Math.exp(-Math.pow(Math.log2(f / 1000), 2) / 1.3) + EQ.hi * sig(Math.log2(f / 3800) * 2.2);
-/* spectrum model: N smoothed bands + falling peaks */
+/* spectrum model: N smoothed bands + falling peaks, from the real analyser (flat when paused) */
 function makeSpectrum(N) {
   const sp = { N, v: new Float32Array(N), p: new Float32Array(N), ph: new Float32Array(N) };
   sp.step = (pos, tt) => {
-    const [lo, mid, hi] = wave(S.tr, pos), live = AU.on && S.playing;
-    if (live) AU.an.getByteFrequencyData(AU.fd);
+    const fd = S.playing ? REAL.spectrum() : null, nyq = REAL.sampleRate / 2;
     for (let k = 0; k < N; k++) {
-      const fx = k / (N - 1), f = fOf(fx); let tg;
-      if (live) { const bin = Math.min(AU.fd.length - 1, Math.round(f / (AU.ctx.sampleRate / 2) * AU.fd.length)); tg = Math.pow(AU.fd[bin] / 255, 1.4) * 1.1; }
-      else tg = (lo * Math.pow(1 - fx, 2.2) * 1.15 + mid * Math.exp(-Math.pow((fx - .45) / .17, 2)) * .85 + hi * Math.pow(fx, 1.5) * .8 + .05)
-        * (.78 + .22 * Math.sin(tt * 3.1 + k * 1.7)) * (1 - fx * .3) * Math.pow(10, eqDb(f) / 40) * (.4 + EQ.gain * .75) * (S.playing ? 1 : .08);
+      const f = fOf(k / (N - 1));
+      let tg = 0;
+      if (fd) { const bin = Math.min(fd.length - 1, Math.round(f / nyq * fd.length)); tg = Math.pow(fd[bin] / 255, 1.4) * 1.1; }
+      else if (S.playing) { const [lo, mid, hi] = wave(S.tr, pos), fx = k / (N - 1); tg = lo * Math.pow(1 - fx, 2) + mid * Math.exp(-Math.pow((fx - .45) / .2, 2)) + hi * fx * fx; }
       tg = clamp(tg, 0, 1);
       sp.v[k] += (tg - sp.v[k]) * (tg > sp.v[k] ? .6 : .14);
       if (sp.v[k] >= sp.p[k]) { sp.p[k] = sp.v[k]; sp.ph[k] = 22; } else if (--sp.ph[k] < 0) sp.p[k] = Math.max(0, sp.p[k] - .014);
@@ -219,7 +192,7 @@ function drag(el, { down, move, up }) {
 }
 /* version switcher: fills #vs with links, arrow keys flip between versions */
 function switcher(cur) {
-  const pages = [['v1', 'club'], ['v2', 'studio'], ['v3', 'hud'], ['v4', 'strobe'], ['v5', 'tracklist'], ['v6', 'cctv'], ['v7', 'all-access']], host = $('#vs');
+  const pages = [['v1', 'club'], ['v2', 'studio'], ['v3', 'hud'], ['v4', 'strobe'], ['v5', 'tracklist'], ['v6', 'apex'], ['v7', 'all-access']], host = $('#vs');
   if (host) host.innerHTML = pages.map(([p, n], i) => `<a href="${p}.html" ${p === cur ? 'aria-current="page"' : ''} aria-label="Version ${i + 1}, ${n}">${i + 1}</a>`).join('') + '<a href="./" aria-label="All versions" class="all">⌂</a>';
   addEventListener('keydown', e => {
     const i = pages.findIndex(p => p[0] === cur), d = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
@@ -229,13 +202,13 @@ function switcher(cur) {
 /* main loop: fn(ts, pos, tt) every frame */
 function run(fn) {
   let frame = 0;
-  const loop = ts => { requestAnimationFrame(loop); frame++; const pos = curPos(); fn(ts, pos, S.playing ? ts / 1000 : 0, frame); };
+  const loop = ts => { requestAnimationFrame(loop); frame++; REAL.analyse(ts); const pos = curPos(); fn(ts, pos, S.playing ? ts / 1000 : 0, frame); };
   S.boot = performance.now(); requestAnimationFrame(loop);
 }
 function ready(fn) {
   let done = false; const go = () => { if (done) return; done = true; fn(); };
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(go); setTimeout(go, 1500);
 }
-return { $, $$, DPR, REDUCE, hash, clamp, pad, fmt, EMAIL, MAILTO, IG: IG_RARA, IG_OMNI, BC, YT, TRACKS, CLAP, energy, wave, overviewAmps, S, AU, EQ, CTRL, now, wrap, curPos, setPos,
+return { $, $$, DPR, REDUCE, hash, clamp, pad, fmt, EMAIL, MAILTO, IG: IG_RARA, IG_OMNI, BC, YT, TRACKS, EVENTS: REAL.EVENTS, EV: REAL.EV, NUBETTER: REAL.NUBETTER, RELS: REAL.RELS, CLIPS: REAL.CLIPS, media: REAL.media, reel: REAL.reel, mvw: REAL.mvw, clipHtml: REAL.clipHtml, SLOGAN: REAL.SLOGAN, BIO: REAL.BIO, REAL, onWave, CLAP, energy, wave, overviewAmps, S, AU, EQ, CTRL, now, wrap, curPos, setPos,
   kickEnv, load, onLoad, onPlay, togglePlay, cue, setRate, scrub, toggleAudio, setEQ, levels, stepVU, VU, fOf, eqDb, makeSpectrum, fit, toast, copyEmail, miamiTime, drag, switcher, run, ready };
 })();

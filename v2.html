@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>RARA 🌋 — Miami · V2 Studio</title>
-<meta name="description" content="RARA 🌋 — Miami producer/DJ. Afro-diasporic club music: kuduro, batida, perreo. Machina Records, Omnisound. Bookings: omnisoundslabel@gmail.com">
+<meta name="description" content="RARA 🌋 — Miami producer/DJ. Afro-leaning dance music. Machina Records. Drummer for Mr. Floyd Larry. Bookings: omnisoundslabel@gmail.com">
 <meta name="theme-color" content="#14100c">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,8 @@ body::before{content:"";position:fixed;inset:0;background:var(--grain);opacity:.
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
 canvas{display:block;width:100%}
-.app{max-width:500px;margin:0 auto;padding:0 10px calc(26px + env(safe-area-inset-bottom))}
+.proj{position:fixed;inset:0;z-index:0;pointer-events:none;background:#000}.proj video{width:100%;height:100%;object-fit:cover;filter:sepia(.8) saturate(1.5) contrast(1.15) brightness(.8);opacity:.34}.proj::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 20%,transparent 20%,var(--bg) 100%)}
+.app{position:relative;z-index:1;max-width:500px;margin:0 auto;padding:0 10px calc(26px + env(safe-area-inset-bottom))}
 .eng{font:700 9px/1 var(--ui);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
 
 /* ---- hardware panel ---- */
@@ -46,7 +47,8 @@ canvas{display:block;width:100%}
 .plate h1{font:400 34px/.8 var(--disp);letter-spacing:.08em;text-shadow:0 1px 0 rgba(255,255,255,.5)}
 .plate small{display:block;font:700 8px var(--ui);letter-spacing:.24em;margin-top:5px;color:#4a3d28}
 .plate .sp{flex:1}
-#vs{display:flex;gap:5px}
+#vs{display:flex;gap:4px}
+@media(max-width:440px){.plate{flex-wrap:wrap;row-gap:8px}.plate .sp{display:none}.plate>div:first-child{flex:1 1 60%}.mon{order:2}#vs{order:3;flex:1 0 100%;justify-content:space-between}#vs a{flex:1;width:auto}}
 #vs a{width:28px;height:28px;border-radius:5px;display:grid;place-items:center;font:700 13px var(--vfd);color:#d9cdb2;background:linear-gradient(180deg,#3a3025,#17110b);border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,235,200,.2),0 2px 0 #000}
 #vs a[aria-current]{color:#1a0d00;background:linear-gradient(180deg,#ffbe55,#e98a10);box-shadow:inset 0 1px 0 #fff8,0 0 12px rgba(255,165,31,.7),0 2px 0 #000}
 .mon{width:34px;height:28px;border-radius:5px;display:grid;place-items:center;background:linear-gradient(180deg,#3a3025,#17110b);border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,235,200,.2),0 2px 0 #000;color:#d9cdb2;position:relative}
@@ -137,6 +139,28 @@ canvas{display:block;width:100%}
 .rm .t s{display:block;text-decoration:none;margin-top:3px;font:700 10px var(--ui);letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
 .rm .r{text-align:right;font:700 15px var(--vfd);color:#a2701f;line-height:1.2}
 .rm .r em{font-style:normal;display:block;font-size:12px;color:var(--c)}
+.rel{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 6px;border-top:1px solid #000;box-shadow:0 -1px 0 rgba(255,235,200,.07)}
+.rel b{display:block;font:400 25px/.95 var(--disp);letter-spacing:.07em;text-transform:uppercase;color:var(--cr)}
+.rel s{display:block;text-decoration:none;margin-top:3px;font:700 10px var(--ui);letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.rel .go{font:700 11px var(--vfd);color:var(--am);white-space:nowrap}
+/* session log: tape-box labels with the real flyers framed like monitor screens */
+.log{display:grid;gap:16px}
+.lg{display:block;position:relative;border-radius:10px;padding:12px 12px 14px;background:linear-gradient(180deg,#eadfc5,#d3c4a1);color:#1a130b;box-shadow:0 12px 26px #000b,inset 0 1px 0 #fff9,inset 0 -2px 0 #0003;overflow:hidden}
+.lg::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:repeating-linear-gradient(90deg,#8a1a0a 0 14px,#1a130b 14px 28px)}
+.lg .eng{display:flex;justify-content:space-between;gap:8px;margin-top:6px;color:#5a4a2c;font:700 10px var(--vfd);letter-spacing:.06em;text-shadow:none}
+.lg .eng em{font-style:normal;color:#8a1a0a}
+.lg .fl{margin-top:10px;border-radius:6px;overflow:hidden;background:#000;box-shadow:0 0 0 3px #17110b,0 0 0 4px #7a6a4a,inset 0 0 30px #000}
+.lg .fl img,.lg .fl video{display:block;width:100%;object-fit:cover}.lg .fl video{filter:sepia(.55) saturate(1.3) contrast(1.1) brightness(.92)}.lg .fl .mvw::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}.lg .fl .cl{color:#ffa51f;font-family:"Share Tech Mono",monospace}
+.crt{padding:16px 12px 14px}.crt .reel{gap:12px;padding:0 2px}.crt .rf .mvw{border-radius:18px / 14px;box-shadow:0 0 0 4px #17110b,0 0 0 5px #7a6a4a,inset 0 0 40px #000;background:#000}.crt .rf video{filter:sepia(.55) saturate(1.3) contrast(1.1)}.crt .rf .mvw::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0 1px,transparent 1px 3px),radial-gradient(120% 100% at 50% 50%,transparent 55%,#000a)}.crt .cl{color:#ffa51f;font-family:var(--vfd);z-index:2}.crt figcaption{font-family:var(--vfd);color:var(--dim);letter-spacing:.05em}
+.lg h3{margin-top:10px;font:400 clamp(34px,11vw,46px)/.9 var(--disp);letter-spacing:.06em;text-transform:uppercase;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.lg .who{margin-top:5px;font:700 12px var(--ui);letter-spacing:.1em;text-transform:uppercase;color:#3c3020}
+.lg q{display:block;margin-top:10px;padding-left:10px;border-left:3px solid #8a1a0a;font:600 17px/1.22 var(--ui);color:#1a130b;quotes:"“" "”"}
+.lg p{margin-top:8px;font:600 14px/1.25 var(--ui);color:#3c3020}
+.lg .mt{margin-top:10px;font:700 10px/1.5 var(--vfd);letter-spacing:.05em;color:#5a4a2c;text-transform:uppercase}
+.lg .go{display:inline-block;margin-top:8px;font:700 11px var(--vfd);color:#1a130b;border-bottom:2px solid #8a1a0a}
+.lg:active{transform:scale(.985)}
+.lg.feat h3{font-size:clamp(52px,17vw,70px)}
+.lg.feat{box-shadow:0 12px 26px #000b,0 0 0 2px var(--am),0 0 34px rgba(255,165,31,.35),inset 0 1px 0 #fff9}
 .row.cur .n{color:var(--am);text-shadow:0 0 8px var(--am)}
 .row.cur .t b{color:var(--am);text-shadow:0 0 12px rgba(255,165,31,.45)}
 .row.cur::before{content:"";position:absolute;left:-2px;top:12px;bottom:12px;width:3px;border-radius:2px;background:var(--am);box-shadow:0 0 10px var(--am)}
@@ -203,10 +227,11 @@ canvas{display:block;width:100%}
 <body>
 <main class="app" id="app">
 
+  <div class="proj" aria-hidden="true"></div>
   <header class="plate">
-    <div><h1>RARA 🌋</h1><small>MODEL 10.2 · STUDIO · MIAMI</small></div>
+    <div><h1>RARA 🌋</h1><small>STUDIO · MIAMI · BLACK DANCE MUSIC IS BACK</small></div>
     <span class="sp"></span>
-    <button class="mon" id="mon" aria-pressed="false" aria-label="Monitor audio (synth test tone loop)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+    <button class="mon" id="mon" aria-pressed="true" aria-label="Speaker. Tap to mute or unmute."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
     <nav id="vs" aria-label="Versions"></nav>
   </header>
 
@@ -227,8 +252,8 @@ canvas{display:block;width:100%}
     <div class="vfd">
       <div class="l1"><span class="eng">DECK A</span><div class="mq"><div id="mq"></div></div></div>
       <div class="l2">
-        <div><span class="eng" style="display:block;margin-bottom:3px">BPM</span><div class="big"><span id="bpm">134.00</span></div></div>
-        <div><span class="eng" style="display:block;margin-bottom:3px">KEY</span><div class="v2" id="key">8A</div></div>
+        <div><span class="eng" style="display:block;margin-bottom:3px">TRACK</span><div class="big" style="font-size:27px;line-height:1.05"><span id="bpm">JET FUEL</span></div></div>
+        <div><span class="eng" style="display:block;margin-bottom:3px">OUT</span><div class="v2" id="key">03/26</div></div>
         <div class="t"><span>EL</span> <b id="tel" style="font-weight:400">00:00.0</b><br><span>RM</span> <b id="trm" style="font-weight:400">-00:00.0</b></div>
       </div>
       <div class="seg" id="beats"><i></i><i></i><i></i><i></i></div>
@@ -255,8 +280,14 @@ canvas{display:block;width:100%}
     <a class="sw wide" style="--c:#8dff5c;--d:-2s" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="eng">IN 3</span><b>Omnisound</b><s>@omnisoundspace</s></a>
   </nav>
 
-  <div class="sec rv"><h2>CRATE</h2><i></i><span class="eng" id="cnt">08 records · tap to open</span></div>
+  <div class="sec rv"><h2>CRATE</h2><i></i><span class="eng" id="cnt">2 play · 4 more</span></div>
   <section class="hw rack rv" id="lib"><i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i></section>
+
+  <div class="sec rv"><h2>MONITORS</h2><i></i><span class="eng">muted · looped</span></div>
+  <section class="hw crt rv" id="crt"><i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i></section>
+
+  <div class="sec rv"><h2>SESSION LOG</h2><i></i><span class="eng">real sets · real rooms</span></div>
+  <section class="log rv" id="ev"></section>
 
   <div class="sec rv"><h2>CONSOLE</h2><i></i><span class="eng">master · eq</span></div>
   <section class="hw mix rv">
@@ -268,8 +299,8 @@ canvas{display:block;width:100%}
 
   <div class="sec rv"><h2>LABELS</h2><i></i><span class="eng">ch 1–2</span></div>
   <section class="chs rv">
-    <a class="al" href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener"><span class="eng">CH 1<em>● LIVE</em></span><h3>Machina<br>Records</h3><p>Label head. Afro-diasporic club music out of Miami.</p><span class="go">BANDCAMP ↗</span><div class="lv"><i></i><i></i><i></i><i></i><i></i></div></a>
-    <a class="al" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="eng">CH 2<em>● LIVE</em></span><h3>Omni-<br>sound</h3><p>Label, bookings desk and the party space.</p><span class="go">@OMNISOUNDSPACE ↗</span><div class="lv"><i></i><i></i><i></i><i></i><i></i></div></a>
+    <a class="al" href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener"><span class="eng">CH 1<em>● LIVE</em></span><h3>Machina<br>Records</h3><p>Label head. Afro-leaning dance music out of Miami. Black dance music is back.</p><span class="go">BANDCAMP ↗</span><div class="lv"><i></i><i></i><i></i><i></i><i></i></div></a>
+    <a class="al" href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener"><span class="eng">CH 2<em>● LIVE</em></span><h3>Omni-<br>sound</h3><p>The booking line: omnisoundslabel@gmail.com.</p><span class="go">@OMNISOUNDSPACE ↗</span><div class="lv"><i></i><i></i><i></i><i></i><i></i></div></a>
   </section>
 
   <section class="hw fin rv" style="margin-top:14px">
@@ -283,12 +314,14 @@ canvas{display:block;width:100%}
 </main>
 <div class="toast" id="toast"></div>
 
+<script src="real.js"></script>
 <script src="core.js"></script>
 <script>
 (() => {
 const R = RARA, { $, $$, S, TRACKS, clamp, pad, fmt } = R;
 R.switcher('v2');
-const CUEC = ['#ff6a1a', '#ffd23a', '#8dff5c', '#ff3b6a'], KC = t => `hsl(${28 + (t.kn - 1) * 8} 95% 62%)`;
+$('.proj').innerHTML = R.clipHtml('circuit'); $('#crt').insertAdjacentHTML('beforeend', R.reel(['ready', 'talent']));
+const CUEC = ['#ff6a1a', '#ffd23a', '#8dff5c', '#ff3b6a'], KC = t => ['#ff6a1a', '#ffd23a'][t.i];
 const AM = '#ffa51f';
 
 /* ---------- crate ---------- */
@@ -298,14 +331,14 @@ lib.insertAdjacentHTML('beforeend', TRACKS.map((t, i) => `
     <button class="rm" aria-expanded="false" aria-controls="b${i}">
       <span class="n">${pad(i + 1)}</span>
       <span class="t"><b>${t.title}</b><s>${t.type} · ${t.sub}</s></span>
-      <span class="r">${t.bpm}<em>${t.key}</em></span>
+      <span class="r">${t.date.toUpperCase()}<em>BANDCAMP</em></span>
     </button>
     <div class="rb" id="b${i}"><div><div class="inner">
       <canvas aria-label="Waveform for ${t.title}. Tap to load at that point."></canvas>
       <p>${t.desc}</p>
       <div class="acts"><button class="btn" data-load="${i}">Load to deck</button><a class="btn am" href="${t.href}" target="_blank" rel="noopener">${t.cta} ↗</a></div>
     </div></div></div>
-  </article>`).join(''));
+  </article>`).join('') + R.RELS.map(r => `<a class="rel" href="${r.href}" target="_blank" rel="noopener"><span><b>${r.title}</b><s>${r.type} · ${r.note}</s></span><span class="go">${r.cta.toUpperCase()} ↗</span></a>`).join(''));
 const rows = $$('.row', lib);
 function drawBig(row) {
   const t = TRACKS[row.dataset.i], { x, w, h } = R.fit($('canvas', row)), a = R.overviewAmps(t, Math.floor(w / 3)), cy = h / 2;
@@ -328,13 +361,18 @@ rows.forEach(row => {
 
 /* ---------- transport ---------- */
 const ICO = { play: '<path d="M7 4.5v15l13-7.5z"/>', pause: '<path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/>' };
-let bpmShown = TRACKS[0].bpm;
-const showBpm = v => { bpmShown = v; $('#bpm').textContent = v.toFixed(2).padStart(6, '0'); };
-function tween(to) { const from = bpmShown, t0 = performance.now(); const step = ts => { const k = clamp((ts - t0) / 600, 0, 1); showBpm(from + (to - from) * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
+$('#ev').innerHTML = R.EVENTS.map(e => `
+  <a class="lg ${e.id === 'iiipoints' ? 'feat' : ''}" href="${e.href}" target="_blank" rel="noopener">
+    <span class="eng"><span>${e.kind.toUpperCase()}</span><em>${e.date ? e.date.toUpperCase() : ''}</em></span>
+    ${e.flyer ? `<div class="fl">${R.media(e)}</div>` : ''}
+    <h3>${e.title}</h3>${e.who ? `<div class="who">${e.who}</div>` : ''}
+    ${e.quote ? `<q>${e.quote}</q>` : ''}${e.line ? `<p>${e.line}</p>` : ''}
+    <div class="mt">${[e.time, e.venue].filter(Boolean).join(' · ')}</div><span class="go">${e.cta.toUpperCase()} ↗</span>
+  </a>`).join('');
 R.onLoad(t => {
-  const label = t.title.toUpperCase() + ' — ' + t.type.toUpperCase();
+  const label = t.title.toUpperCase() + ' — MACHINA RECORDS — ' + t.date.toUpperCase();
   $('#mq').innerHTML = `<span>${label}</span>`.repeat(4);
-  $('#key').textContent = t.key; tween(t.bpm); setPitchUI(0);
+  $('#bpm').textContent = t.short.toUpperCase(); $('#key').textContent = ['03/26', '03/26'][t.i]; setPitchUI(0);
   rows.forEach(r => r.classList.toggle('cur', +r.dataset.i === t.i));
 });
 R.onPlay(p => { $('#play').setAttribute('aria-pressed', p); $('#ico').innerHTML = p ? ICO.pause : ICO.play; });
@@ -352,7 +390,7 @@ const plat = $('#plat'), wf = $('#wf'), ov = $('#ov');
   const ang = e => { const r = plat.getBoundingClientRect(); return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)); };
   R.drag(plat, {
     down: e => { last = ang(e); R.scrub.grab(); plat.style.cursor = 'grabbing'; },
-    move: (dx, dy, e) => { const a = ang(e); let d = a - last; if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI; last = a; R.scrub.move(d / (2 * Math.PI) * 4); },
+    move: (dx, dy, e) => { const a = ang(e); let d = a - last; if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI; last = a; R.scrub.move(d / (2 * Math.PI) * 3.6); },
     up: () => { R.scrub.release(); plat.style.cursor = 'grab'; } });
   R.drag(wf, { down: () => { R.scrub.grab(); wf.style.cursor = 'grabbing'; }, move: dx => R.scrub.move(-dx / (wf.getBoundingClientRect().width / 7)), up: () => { R.scrub.release(); wf.style.cursor = 'grab'; } });
   const seek = e => { const r = ov.getBoundingClientRect(); R.setPos(clamp((e.clientX - r.left) / r.width, 0, .999) * S.tr.beats); };
@@ -365,11 +403,11 @@ function setPitchUI(pct) { const f = .5 - pct / 16; pcap.style.top = (14 + f * (
 function pitchTo(e) {
   const r = pitch.getBoundingClientRect(), f = clamp((e.clientY - r.top - 14) / (r.height - 28), 0, 1); let pct = (.5 - f) * 16;
   if (Math.abs(pct) < .35) pct = 0;
-  R.setRate(1 + pct / 100); setPitchUI(pct); showBpm(S.bpm);
+  R.setRate(1 + pct / 100); setPitchUI(pct);
 }
 R.drag(pitch, { down: pitchTo, move: (dx, dy, e) => pitchTo(e) });
-pitch.addEventListener('dblclick', () => { R.setRate(1); setPitchUI(0); showBpm(S.bpm); });
-pitch.addEventListener('keydown', e => { const d = { ArrowUp: .5, ArrowDown: -.5 }[e.key]; if (d) { e.preventDefault(); const p = clamp((S.rate - 1) * 100 + d, -8, 8); R.setRate(1 + p / 100); setPitchUI(p); showBpm(S.bpm); } });
+pitch.addEventListener('dblclick', () => { R.setRate(1); setPitchUI(0); });
+pitch.addEventListener('keydown', e => { const d = { ArrowUp: .5, ArrowDown: -.5 }[e.key]; if (d) { e.preventDefault(); const p = clamp((S.rate - 1) * 100 + d, -8, 8); R.setRate(1 + p / 100); setPitchUI(p); } });
 
 /* ---------- knobs ---------- */
 const KCOL = { gain: '#8dff5c', lo: '#ff6a1a', mid: '#ffd23a', hi: '#ff3b6a' };
@@ -395,7 +433,7 @@ let vinylAng = 0;
 function drawPlatter(pos, tt) {
   const { x, w, h } = R.fit(plat), s = Math.min(w, h), cx = w / 2, cy = h / 2, Rr = s * .435, k = S.playing ? R.kickEnv() : 0;
   x.clearRect(0, 0, w, h);
-  const a = pos / 4 * Math.PI * 2;                 // 4 beats = 1.8s per rev at 133bpm ≈ 33⅓ rpm, locked to the beat
+  const a = pos / 3.6 * Math.PI * 2;               // 1.8s per rev = 33⅓ rpm, riding the real playback clock (so the pitch fader speeds it up)
   /* platter rim */
   let g = x.createRadialGradient(cx, cy, Rr * .9, cx, cy, Rr * 1.03); g.addColorStop(0, '#6e665a'); g.addColorStop(.5, '#d6ccb6'); g.addColorStop(1, '#4a443a');
   x.shadowColor = 'rgba(0,0,0,.8)'; x.shadowBlur = 24; x.shadowOffsetY = 10; x.fillStyle = g; x.beginPath(); x.arc(cx, cy, Rr * 1.03, 0, 7); x.fill(); x.shadowBlur = 0; x.shadowOffsetY = 0;
@@ -406,12 +444,12 @@ function drawPlatter(pos, tt) {
   g = x.createRadialGradient(0, 0, Rr * .3, 0, 0, Rr * .93); g.addColorStop(0, '#15110d'); g.addColorStop(1, '#070504'); x.fillStyle = g; x.beginPath(); x.arc(0, 0, Rr * .93, 0, 7); x.fill();
   x.lineWidth = .6;
   for (let r = Rr * .38; r < Rr * .9; r += 2.2) { x.strokeStyle = `rgba(255,255,255,${.025 + .035 * Math.abs(Math.sin(r * .9))})`; x.beginPath(); x.arc(0, 0, r, 0, 7); x.stroke(); }
-  for (let i = 0; i < 8; i++) { const r = Rr * (.42 + .1 * i + .03 * ((S.tr.seed + i) % 3)); x.strokeStyle = 'rgba(0,0,0,.75)'; x.lineWidth = 1.6; x.beginPath(); x.arc(0, 0, r, 0, 7); x.stroke(); }
+  for (let i = 0; i < 8; i++) { const r = Rr * (.42 + .1 * i + .03 * ((S.tr.i * 2 + i) % 3)); x.strokeStyle = 'rgba(0,0,0,.75)'; x.lineWidth = 1.6; x.beginPath(); x.arc(0, 0, r, 0, 7); x.stroke(); }
   /* label */
   const L = Rr * .34; g = x.createRadialGradient(0, -L * .3, 2, 0, 0, L); g.addColorStop(0, '#ffcf6a'); g.addColorStop(1, '#e8771a'); x.fillStyle = g; x.beginPath(); x.arc(0, 0, L, 0, 7); x.fill();
   x.strokeStyle = 'rgba(26,13,0,.35)'; x.lineWidth = 1; for (let i = 0; i < 3; i++) { x.beginPath(); x.arc(0, 0, L * (.55 + i * .2), 0, 7); x.stroke(); }
   x.fillStyle = '#1a0d00'; x.textAlign = 'center'; x.font = `400 ${L * .5}px "Bebas Neue", Impact, sans-serif`; x.fillText('RARA', 0, -L * .3);
-  x.font = `700 ${L * .13}px "Archivo Narrow", sans-serif`; x.fillText(S.tr.title.toUpperCase().slice(0, 22), 0, L * .22); x.font = `700 ${L * .11}px "Share Tech Mono", monospace`; x.fillText(`${S.tr.bpm} BPM · ${S.tr.key}`, 0, L * .42);
+  x.font = `700 ${L * .13}px "Archivo Narrow", sans-serif`; x.fillText(S.tr.title.toUpperCase().slice(0, 22), 0, L * .22); x.font = `700 ${L * .11}px "Share Tech Mono", monospace`; x.fillText(`MACHINA · ${S.tr.date.toUpperCase()}`, 0, L * .42);
   x.restore();
   /* sheen (fixed to light, not to the record) */
   if (x.createConicGradient) { const cg = x.createConicGradient(-.6, cx, cy); cg.addColorStop(0, 'rgba(255,240,210,.0)'); cg.addColorStop(.06, 'rgba(255,240,210,.16)'); cg.addColorStop(.12, 'rgba(255,240,210,0)'); cg.addColorStop(.5, 'rgba(255,240,210,0)'); cg.addColorStop(.56, 'rgba(255,240,210,.1)'); cg.addColorStop(.62, 'rgba(255,240,210,0)'); x.fillStyle = cg; x.beginPath(); x.arc(cx, cy, Rr * .93, 0, 7); x.arc(cx, cy, L0(Rr), 0, 7, true); x.fill(); }
@@ -447,13 +485,13 @@ function drawWave(pos) {
   for (let b = b0; b <= b1; b++) { const gx = cx + (b - pos) * ppb, bar = ((b % 4) + 4) % 4 === 0; x.fillStyle = bar ? 'rgba(255,200,120,.3)' : 'rgba(255,200,120,.09)'; x.fillRect(Math.round(gx), 0, 1, h); }
   const col = 2, n = Math.ceil(w / col) + 1;
   for (let i = 0; i < n; i++) {
-    const [lo, mid, hi] = R.wave(t, R.wrap(pos + (i * col - cx) / ppb)), px = i * col; x.globalAlpha = px < cx ? .4 : 1;
+    const [lo, mid, hi] = R.wave(t, pos + (i * col - cx) / ppb), px = i * col; x.globalAlpha = px < cx ? .4 : 1;
     x.fillStyle = '#ff6a1a'; x.fillRect(px, cy - lo * cy * .94, col - .6, lo * cy * 1.88);
     x.fillStyle = '#ffd88a'; x.fillRect(px, cy - mid * cy * .6, col - .6, mid * cy * 1.2);
     x.fillStyle = '#fff'; x.fillRect(px, cy - hi * cy * .3, col - .6, hi * cy * .6);
   }
   x.globalAlpha = 1;
-  t.cues.forEach((c, i) => { for (const k of [-1, 0, 1]) { const d = c + k * t.beats - pos; if (Math.abs(d) > cx / ppb + .5) continue; const gx = cx + d * ppb; x.fillStyle = CUEC[i]; x.fillRect(gx - 1, 0, 2, h); x.fillRect(gx, h - 13, 13, 13); x.fillStyle = '#0a0603'; x.font = '700 9px Share Tech Mono, monospace'; x.fillText('ABCD'[i], gx + 3.5, h - 3.5); } });
+  t.cues.forEach((c, i) => { for (const k of [0]) { const d = c + k * t.beats - pos; if (Math.abs(d) > cx / ppb + .5) continue; const gx = cx + d * ppb; x.fillStyle = CUEC[i]; x.fillRect(gx - 1, 0, 2, h); x.fillRect(gx, h - 13, 13, 13); x.fillStyle = '#0a0603'; x.font = '700 9px Share Tech Mono, monospace'; x.fillText('ABCD'[i], gx + 3.5, h - 3.5); } });
   x.restore();
   x.shadowColor = AM; x.shadowBlur = 10; x.fillStyle = '#fff'; x.fillRect(cx - 1, 0, 2, h); x.shadowBlur = 0;
 }
@@ -502,14 +540,14 @@ const vis = new Map(), io2 = new IntersectionObserver(es => es.forEach(e => vis.
 ['#deck', '.mix'].forEach(s => { vis.set($(s), true); io2.observe($(s)); });
 let lastBeat = -1;
 R.ready(() => {
-  R.load(0, null, true); showBpm(TRACKS[0].bpm); setPitchUI(0);
+  R.load(0, null, true); setPitchUI(0);
   R.run((ts, pos, tt, frame) => {
     const lv = R.levels(pos, tt), vu = R.stepVU(S.playing ? lv[0] : 0, S.playing ? lv[1] : 0);
     if (vis.get($('#deck'))) {
       drawPlatter(pos, tt); drawWave(pos); drawOverview(); drawVU(vu);
       $('#deck').style.setProperty('--k', S.playing ? R.kickEnv().toFixed(2) : 0);
-      if (frame % 3 === 0) { const sec = pos * 60 / S.bpm, tot = S.tr.beats * 60 / S.bpm; $('#tel').textContent = fmt(sec); $('#trm').textContent = '-' + fmt(tot - sec); }
-      const bi = Math.floor(pos); if (bi !== lastBeat) { lastBeat = bi; $$('#beats i').forEach((d, k) => d.classList.toggle('on', k === bi % 4)); }
+      if (frame % 3 === 0) { const sec = pos / 2, tot = S.tr.beats / 2; $('#tel').textContent = fmt(sec); $('#trm').textContent = '-' + fmt(tot - sec); }
+      const bi = R.REAL.L.beats; if (bi !== lastBeat) { lastBeat = bi; $$('#beats i').forEach((d, k) => d.classList.toggle('on', k === bi % 4)); }
     }
     if (vis.get($('.mix'))) { drawNeedle($('#nl'), vu.l, 'L'); drawNeedle($('#nr'), vu.r, 'R'); drawSpec(pos, tt); }
     if (openRow && frame % 3 === 0) drawBig(openRow);

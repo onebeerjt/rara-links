@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
 <style>
-/* No webfonts, no images, no effects. The type and the waveform are the design. */
+/* No webfonts, no effects. Type and waveforms are the design; the only pictures are the real flyers, in black and white. */
 :root{--k:#000;--w:#fff;--g:#c9c9c9;--d:#6b6b6b;--o:#ff3b00;--sans:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",system-ui,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 ::selection{background:var(--o);color:#000}
@@ -43,6 +43,18 @@ ol a:active{background:var(--k);color:var(--w)}
 ol .l1{display:flex;gap:10px;align-items:baseline}
 ol .nn{font:500 13px var(--mono);color:var(--d);min-width:2.2em}
 ol a:active .nn,ol a:active .l2{color:var(--g)}
+ol figure{margin:10px 0 0 calc(2.2em + 10px);border:2px solid var(--k)}
+figure.plate{margin:18px 0 0;border:2px solid var(--k)}.plate video{display:block;width:100%;filter:grayscale(1) contrast(1.35)}.plate figcaption{font:400 12px var(--mono);padding:8px 10px;border-top:2px solid var(--k)}.plate .cl{display:none}
+.reel{border-bottom:3px solid var(--k);padding-bottom:14px;margin-top:14px}.reel .rf video{filter:grayscale(1) contrast(1.35)}.reel .rf .mvw{border:2px solid var(--k)}.reel figcaption{font:400 12px/1.4 var(--mono);color:var(--k);letter-spacing:0;text-transform:none}.reel .cl{color:#fff;mix-blend-mode:difference}.reel .cl i{background:#fff}
+ol figure img,ol figure video{display:block;width:100%;object-fit:cover;filter:grayscale(1) contrast(1.35)}ol figure .cl{color:#fff;mix-blend-mode:difference}
+ol figcaption{font:400 11px var(--mono);padding:4px 6px;border-top:2px solid var(--k);color:var(--d)}
+ol .qq{font:700 clamp(20px,6vw,34px)/1.05 var(--sans);letter-spacing:-.035em;margin:10px 0 0 calc(2.2em + 10px)}
+ol .ln{font:400 14px/1.4 var(--sans);margin:8px 0 0 calc(2.2em + 10px);color:var(--k)}
+ol .who{font:700 14px var(--mono);margin:6px 0 0 calc(2.2em + 10px);text-transform:uppercase}
+ol .feat .tt{font-size:clamp(46px,16vw,110px);line-height:.88}
+ol .feat .qq{font-size:clamp(26px,8vw,46px);background:var(--k);color:var(--w);display:inline;padding:0 .1em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+ol .qw{margin:12px 0 0 calc(2.2em + 10px)}ol .qw .qq{margin:0}
+ol a:active .qq,ol a:active .ln{color:var(--g)}
 ol .tt{font:700 clamp(26px,8.2vw,54px)/.98 var(--sans);letter-spacing:-.045em;flex:1;word-break:break-word}
 ol .ar{font:700 22px var(--sans)}
 ol .l2{font:400 13px var(--mono);color:var(--d);margin:3px 0 0 calc(2.2em + 10px);display:flex;justify-content:space-between;gap:10px}
@@ -59,16 +71,20 @@ ol .l2{font:400 13px var(--mono);color:var(--d);margin:3px 0 0 calc(2.2em + 10px
 <body>
 <div class="bar"><span>RARA / TRACKLIST</span><nav id="vs" aria-label="Versions"></nav></div>
 <h1>Rara</h1>
-<p class="lede">Producer and DJ. Miami. Machina Records.</p>
-<p class="note">This page has no pictures. Two tracks are playable below. Tap anywhere on a waveform to jump there. Everything else is the catalog, in order.</p>
+<p class="lede">Black dance music is back in Miami.</p>
+<p class="note">RARA. Producer/DJ, Miami. Omnisound, Machina Records, Hoop Club Miami. “The Glue”, drummer for Mr. Floyd Larry. Two tracks play below; tap anywhere on a waveform to jump there. The only pictures are the real footage, in black and white, muted.</p>
+<figure class="plate" id="plate"></figure>
 
-<h2><span>A. Play</span><span>2 tracks</span></h2>
+<h2><span>A. Play</span><span>2 tracks + 4 links</span></h2>
 <div id="tracks"></div>
 
-<h2><span>B. Catalog</span><span>8 entries</span></h2>
+<h2><span>B. Rooms</span><span>6 entries</span></h2>
 <ol id="idx"></ol>
 
-<h2><span>C. Booking</span><span>Open</span></h2>
+<h2><span>C. Plates</span><span>Muted, looped</span></h2>
+<div id="reel"></div>
+
+<h2><span>D. Booking</span><span>Open</span></h2>
 <a class="bk" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B">omnisoundslabel@gmail.com</a>
 <div class="row"><button id="cp">Copy email</button><a href="https://instagram.com/raravulcain" target="_blank" rel="noopener">Instagram ↗</a><a href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener">Machina Records ↗</a><a href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener">Omnisound ↗</a></div>
 <p class="fine">RARA. Miami. Machina Records. <span id="clk"></span></p>
@@ -88,11 +104,18 @@ $('#tracks').innerHTML = R.TRACKS.map((t, i) => `
     <div class="ctl"><button class="pb" aria-label="Play ${t.title}">Play</button><span class="tm">0:00 / –:––</span></div>
     <canvas class="wv" role="slider" aria-label="Seek ${t.title}" tabindex="0"></canvas>
   </section>`).join('');
-$('#idx').innerHTML = R.RELEASES.map((r, i) => `<li><a href="${r.href}" target="_blank" rel="noopener"><div class="l1"><span class="nn">${String(i + 1).padStart(2, '0')}</span><span class="tt">${r.title}</span><span class="ar">↗</span></div><div class="l2"><span>${r.type}, ${r.note}</span><span>${r.cta}</span></div></a></li>`).join('');
+$('#tracks').insertAdjacentHTML('beforeend', R.RELS.map((r, k) => `<section class="tr nl"><div class="no">0${3 + k} — ${r.type}, ${r.note}</div><div class="tw"><h3 class="ti">“${r.title}”</h3></div><div class="ctl"><a href="${r.href}" target="_blank" rel="noopener" style="font:700 20px var(--mono)">${r.cta} ↗</a></div></section>`).join(''));
+$('#plate').innerHTML = R.mvw('iiipoints', '16/9') + `<figcaption>Fig. 0: ${R.CLIPS.iiipoints.name}. ${R.CLIPS.iiipoints.note}.</figcaption>`;
+$('#reel').innerHTML = R.reel(['ready', 'talent', 'circuit']);
+$('#idx').innerHTML = R.EVENTS.map((e, i) => `<li><a href="${e.href}" target="_blank" rel="noopener" class="${e.id === 'iiipoints' ? 'feat' : ''}"><div class="l1"><span class="nn">${String(i + 1).padStart(2, '0')}</span><span class="tt">${e.title}</span><span class="ar">↗</span></div>
+  ${e.who ? `<div class="who">${e.who}</div>` : ''}
+  ${e.flyer ? `<figure>${R.media(e)}<figcaption>Fig. ${i + 1}: ${e.clip ? R.CLIPS[e.clip].note : e.alt}</figcaption></figure>` : ''}
+  ${e.quote ? `<div class="qw"><span class="qq">“${e.quote}”</span></div>` : ''}${e.line ? `<div class="ln">${e.line}</div>` : ''}
+  <div class="l2"><span>${[e.kind, e.date, e.time, e.venue].filter(Boolean).join(', ')}</span><span>${e.cta}</span></div></a></li>`).join('');
 R.fitText($('h1'), () => document.body.clientWidth - 28);
 $('#cp').onclick = () => R.copyEmail(ok => toast(ok ? 'Copied: ' + R.EMAIL : 'Press and hold the email to copy'));
 
-const secs = [...document.querySelectorAll('.tr')];
+const secs = [...document.querySelectorAll('.tr:not(.nl)')];
 const V = secs.map((s, i) => ({ s, i, cv: s.querySelector('canvas'), pb: s.querySelector('.pb'), tm: s.querySelector('.tm'), pk: null, W: 0, H: 0 }));
 const LINES = 4, BAR = 3, GAP = 2, LH = 40;   // the track is set like a paragraph: 4 lines of 1px-spaced bars
 

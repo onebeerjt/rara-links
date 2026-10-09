@@ -1,27 +1,52 @@
-/* RARA real-audio engine for v4–v7.
+/* RARA real-audio engine + real content (events, releases, bio) for every version.
    Two real <audio> elements (Jet Fuel, Beastie), one transport, a live analyser (real kick detection,
    no invented BPM) and real waveform peaks decoded from the mp3s. Each page owns its own look. */
 window.REAL = (() => {
 'use strict';
 const TRACKS = [
-  { id: 'jet-fuel', title: 'Jet Fuel (Batida Edit)', short: 'Jet Fuel', tag: 'Batida Edit', src: 'audio/jet-fuel-batida-edit.mp3' },
-  { id: 'beastie', title: 'Beastie', short: 'Beastie', tag: 'Single', src: 'audio/beastie.mp3' },
+  { id: 'jet-fuel', title: 'Jet Fuel (Batida Edit)', short: 'Jet Fuel', tag: 'Batida Edit', date: 'Mar 2026', src: 'audio/jet-fuel-batida-edit.mp3' },
+  { id: 'beastie', title: 'Beastie', short: 'Beastie', tag: 'Single', date: 'Mar 2026', src: 'audio/beastie.mp3' },
 ];
 const EMAIL = 'omnisoundslabel@gmail.com';
 const MAILTO = 'mailto:' + EMAIL + '?subject=Booking%20RARA%20%F0%9F%8C%8B';
-const BC = 'https://machinarecords.bandcamp.com', YT = 'https://www.youtube.com/watch?v=Cv6b3C2QPJo';
-const IG = 'https://instagram.com/raravulcain', IG_OMNI = 'https://instagram.com/omnisoundspace';
-/* everything else RARA: real names, real links, no audio on this page */
-const RELEASES = [
-  { title: 'Jolene 3-Hour Set', type: 'Set', note: '3 hours, front to back', href: IG, cta: 'Instagram' },
-  { title: 'CIRCUIT', type: 'Collab', note: 'with DJ Marfox', href: IG, cta: 'Instagram' },
-  { title: 'TALENT SHOW', type: 'Single', note: 'with Blayd', href: BC, cta: 'Bandcamp' },
-  { title: 'IN MY OWN WORLD', type: 'EP', note: 'Machina Records', href: BC, cta: 'Bandcamp' },
-  { title: 'F.R.E.A.K.Y', type: 'Single', note: 'Club', href: YT, cta: 'YouTube' },
-  { title: 'BACK 2 DA FRONT', type: 'Single', note: 'with MC Katriz', href: YT, cta: 'YouTube' },
-  { title: 'Rinse France', type: 'Radio', note: 'Guest appearance', href: IG, cta: 'Instagram' },
-  { title: 'Perreo del Futuro', type: 'Live', note: 'Perreo', href: IG, cta: 'Instagram' },
+const BC = 'https://machinarecords.bandcamp.com';
+const IG = 'https://instagram.com/raravulcain', IG_OMNI = 'https://instagram.com/omnisoundspace', IG_MACHINA = 'https://instagram.com/machinarecs', IG_HOOP = 'https://instagram.com/hoopclubmia';
+const yt = q => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+const BIO = { line: 'Producer/DJ', crews: ['@omnisoundspace', '@machinarecs', '@hoopclubmia'], role: '“The Glue”, drummer for @mrfloydlarry' };
+/* third release: on Bandcamp, no audio file here, so it links out */
+const NUBETTER = { title: 'NUBETTER', type: 'Release', note: 'Machina Records', href: BC, cta: 'Bandcamp' };
+/* real events and appearances, newest first. Only facts RARA posted. quote = his own words. */
+const EVENTS = [
+  { id: 'circuit', title: 'CIRCUIT: DJ MARFOX', short: 'Circuit', kind: 'Direct support', date: 'Oct 3, 2026', venue: 'The Boombox Miami', clip: 'circuit',
+    line: 'Machina Records presents DJ Marfox, the Lisbon batida pioneer, live in Miami. RARA direct support.', flyer: 'flyers/circuit-marfox-1.jpg', fr: '4/5', fp: '50% 36%', alt: 'DJ Marfox feature graphic: “You need to know DJ Marfox”', href: IG, cta: 'Instagram' },
+  { id: 'jolene', title: 'JOLENE SOUND ROOM', short: 'Jolene', kind: '3-hour set', date: 'Oct 1, 2026', time: '10 PM–1 AM', venue: 'Jolene Sound Room, Miami', who: 'Opening for @berrakkita and @v1fro',
+    quote: 'Been itching for an extended set, expect a wide range of afro leaning dance music and a lot of original [music]', href: IG, cta: 'Instagram' },
+  { id: 'rinse', title: 'RINSE FRANCE', short: 'Rinse France', kind: 'Guest mix', date: 'July 2026', venue: 'Rinse France on YouTube', live: false,
+    line: 'A guest mix for Rinse France. Not a live show: it’s a mix.', href: yt('RARA Rinse France guest mix'), cta: 'YouTube' },
+  { id: 'redhouse', title: 'REDHOUSE', short: 'Redhouse', kind: 'Live set', date: 'Mar 9, 2026', venue: 'Miami',
+    quote: 'ONE OF THE BEST SETS OF MY LIFE', href: IG, cta: 'Instagram' },
+  { id: 'perreo', title: 'PERREO DEL FUTURO', short: 'Perreo del Futuro', kind: 'Anniversary party', date: 'Feb 28, 2026', venue: 'Miami',
+    line: 'Played their 4-year anniversary (Feb 28, 2026) and their 3-year anniversary (Feb 2025).', href: IG, cta: 'Instagram' },
+  { id: 'iiipoints', title: 'III POINTS', short: 'III Points', kind: 'Festival · B2B', date: 'Oct 17–18, 2025', venue: 'The Garden (Little River Cultural Garden), Miami', who: 'RARA B2B V1FRO', clip: 'iiipoints',
+    quote: 'We’ve been cooking up big ethnic chunes', line: 'Full set on YouTube via Masisi Radio.', flyer: 'flyers/iiipoints-b2b.jpg', fr: '16/9', fp: '50% 50%', alt: 'RARA B2B V1FRO at III Points, still from the Masisi Radio set video', href: yt('Masisi Radio RARA V1FRO III Points'), cta: 'Full set · YouTube' },
 ];
+/* releases that aren't playable on this page (no audio file here), newest first. Links go where RARA posted them. */
+const RELS = [
+  { id: 'imow', title: 'IN MY OWN WORLD', type: 'EP', note: 'Out Sept 4', href: IG, cta: 'Instagram' },
+  { id: 'freaky', title: 'F.R.E.A.K.Y', type: 'Single', note: 'with MC Katriz', href: IG, cta: 'Instagram' },
+  { id: 'b2df', title: 'BACK 2 DA FRONT', type: 'Single', note: 'with MC Katriz', href: IG, cta: 'Instagram' },
+  { id: 'nubetter', title: 'NUBETTER', type: 'Release', note: 'Machina Records', href: BC, cta: 'Bandcamp' },
+];
+/* the real clips from RARA’s Instagram, re-encoded silent + small (videos/web). kind = what it is, in his words. */
+const CLIPS = {
+  circuit: { src: 'videos/web/circuit.mp4', poster: 'videos/web/circuit.jpg', w: 540, h: 960, name: 'DJ MARFOX · CIRCUIT', note: 'DJ Marfox live in Miami for Circuit, Machina Records, The Boombox Miami. Oct 3', ev: 'circuit' },
+  iiipoints: { src: 'videos/web/iiipoints.mp4', poster: 'videos/web/iiipoints.jpg', w: 960, h: 540, name: 'ROAD TO III POINTS', note: 'Soundtracked by an unreleased KUJO × RARA × BLAYD two-track', ev: 'iiipoints' },
+  ready: { src: 'videos/web/ready.mp4', poster: 'videos/web/ready.jpg', w: 540, h: 960, name: 'ARE YA READY', note: 'AI AI AI AI ARE YA READY??????' },
+  talent: { src: 'videos/web/talent.mp4', poster: 'videos/web/talent.jpg', w: 960, h: 540, name: 'TALENT SHOW', note: 'BLAYD – Talent Show' },
+};
+const SLOGAN = 'black dance music is back in miami';
+const when = e => [e.date, e.time].filter(Boolean).join(' · ');
+const EV = Object.fromEntries(EVENTS.map(e => [e.id, e]));
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const pad = n => String(Math.floor(n)).padStart(2, '0');
 const fmt = s => (isFinite(s) && s >= 0) ? Math.floor(s / 60) + ':' + pad(s % 60) : '–:––';
@@ -29,6 +54,26 @@ const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const hooks = {};
 const on = (ev, fn) => ((hooks[ev] = hooks[ev] || []).push(fn), fn);
 const emit = (ev, a) => (hooks[ev] || []).forEach(f => f(a));
+
+/* ---------- clips: muted, looping, only playing while on screen ---------- */
+const clipHtml = (id, cls = '', extra = '') => { const c = CLIPS[id];
+  return `<video class="clip ${cls}" data-clip="${id}" src="${c.src}" poster="${c.poster}" width="${c.w}" height="${c.h}" muted loop playsinline preload="${REDUCE ? 'none' : 'metadata'}" aria-label="${c.note}" ${REDUCE ? '' : 'autoplay'} disablepictureinpicture ${extra}></video>`; };
+let clipIO = null;
+function armClips(root = document) {
+  if (REDUCE) return;
+  clipIO = clipIO || new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) { const p = v.play(); p && p.catch && p.catch(() => {}); } else v.pause(); }), { threshold: .12 });
+  root.querySelectorAll('video.clip').forEach(v => { if (v._armed) return; v._armed = true; v.muted = true; clipIO.observe(v); });
+}
+
+/* event media: the flyer, the clip, or (Circuit) both side by side. Pages style .mvw / .duo / video.clip to taste. */
+const mvw = (id, ar, pos) => `<div class="mvw"${ar ? ` style="aspect-ratio:${ar}"` : ''}>${clipHtml(id, '', pos ? `style="object-position:${pos}"` : '')}<span class="cl"><i></i>${CLIPS[id].name}</span></div>`;
+function evMedia(e) {
+  if (e.clip) return mvw(e.clip, e.fr, e.clip === 'circuit' ? '50% 42%' : '50% 50%');
+  return e.flyer ? `<img src="${e.flyer}" alt="${e.alt}" loading="lazy" style="aspect-ratio:${e.fr};object-position:${e.fp}">` : '';
+}
+/* a swipeable strip of clips with RARA's own captions */
+const reel = ids => `<div class="reel">${ids.map(id => { const c = CLIPS[id]; return `<figure class="rf"><div class="mvw" style="aspect-ratio:${c.w}/${c.h}">${clipHtml(id)}<span class="cl"><i></i>${c.name}</span></div><figcaption>${c.note}</figcaption></figure>`; }).join('')}</div>`;
+(() => { const st = document.createElement('style'); st.textContent = '.reel{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}.reel::-webkit-scrollbar{display:none}.reel .rf{flex:none;margin:0;scroll-snap-align:start;max-width:86vw}.reel .rf .mvw{height:min(340px,56vh)}.reel figcaption{padding:8px 0 0;font:700 10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;max-width:34ch}.mvw{position:relative;overflow:hidden;background:#000}.mvw video{display:block;width:100%;height:100%;object-fit:cover}.duo{display:grid;grid-template-columns:1fr 1fr;gap:2px}.duo>img,.duo>.mvw{width:100%;aspect-ratio:4/5;object-fit:cover;min-width:0}.cl{position:absolute;left:6px;bottom:6px;right:6px;display:flex;align-items:center;gap:6px;font:700 9px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#fff;text-shadow:0 1px 3px #000;pointer-events:none}.cl i{flex:none;width:6px;height:6px;border-radius:50%;background:#f33;animation:clb 1.4s steps(2) infinite}@keyframes clb{50%{opacity:0}}@media(prefers-reduced-motion:reduce){.cl i{animation:none}}'; document.head.appendChild(st); })();
 
 /* ---------- real <audio> elements ---------- */
 const els = TRACKS.map((t, i) => {
@@ -43,6 +88,7 @@ const els = TRACKS.map((t, i) => {
   if (document.body) document.body.appendChild(a);
   return a;
 });
+document.addEventListener('DOMContentLoaded', () => armClips());
 let cur = 0;
 const isPlaying = i => i == null ? els.some(a => !a.paused) : !els[i].paused;
 const dur = i => els[i].duration;
@@ -50,7 +96,8 @@ const time = i => els[i].currentTime;
 const prog = i => (els[i].duration > 0 ? els[i].currentTime / els[i].duration : 0);
 
 /* ---------- Web Audio analyser (only when same-origin over http; file:// would mute the tracks) ---------- */
-let ctx = null, an = null, fd = null, td = null, wired = false;
+let ctx = null, an = null, fd = null, td = null, wired = false, muted = false;
+const EQV = { lo: 0, mid: 0, hi: 0, gain: 1 }; let chain = null;
 const canWire = /^https?:$/.test(location.protocol);
 function wire() {
   if (wired || !canWire) return;
@@ -58,7 +105,11 @@ function wire() {
     const AC = window.AudioContext || window.webkitAudioContext; ctx = ctx || new AC();
     an = ctx.createAnalyser(); an.fftSize = 1024; an.smoothingTimeConstant = .55;
     fd = new Uint8Array(an.frequencyBinCount); td = new Uint8Array(an.fftSize);
-    els.forEach(a => ctx.createMediaElementSource(a).connect(an));
+    const bq = (type, f, g, q) => { const n = ctx.createBiquadFilter(); n.type = type; n.frequency.value = f; n.gain.value = g; if (q) n.Q.value = q; return n; };
+    chain = { lo: bq('lowshelf', 200, EQV.lo), mid: bq('peaking', 1000, EQV.mid, .8), hi: bq('highshelf', 4000, EQV.hi), gain: ctx.createGain() };
+    chain.gain.gain.value = muted ? 0 : EQV.gain;
+    chain.lo.connect(chain.mid); chain.mid.connect(chain.hi); chain.hi.connect(chain.gain); chain.gain.connect(an);
+    els.forEach(a => ctx.createMediaElementSource(a).connect(chain.lo));
     an.connect(ctx.destination); wired = true;
   } catch (e) { an = null; }
 }
@@ -71,6 +122,10 @@ function play(i) {
   if (changed) emit('track', i);
   media();
 }
+/* real EQ + mute on the live audio (only exists over http, where the analyser is wired) */
+function eq(k, v) { EQV[k] = v; if (chain) { if (k === 'gain') chain.gain.gain.value = muted ? 0 : v; else chain[k].gain.value = v; } }
+function mute() { muted = !muted; if (chain) chain.gain.gain.value = muted ? 0 : EQV.gain; else els.forEach(a => { a.muted = muted; }); return muted; }
+function rate(r) { els.forEach(a => { a.playbackRate = r; }); }
 function pause() { els.forEach(a => a.pause()); }
 function toggle(i) { if (i == null) i = cur; (i === cur && isPlaying(i)) ? pause() : play(i); }
 function next(d = 1) { play((cur + d + TRACKS.length) % TRACKS.length); }
@@ -142,6 +197,6 @@ function fitText(el, avail) {
 }
 const copyEmail = async cb => { try { await navigator.clipboard.writeText(EMAIL); cb && cb(true); } catch (e) { cb && cb(false); } };
 
-return { TRACKS, RELEASES, EMAIL, MAILTO, BC, YT, IG, IG_OMNI, REDUCE, els, on, play, pause, toggle, next, seek, isPlaying, dur, time, prog, fmt, pad, clamp,
-  analyse, scope, spectrum, peaks, L, switcher, fitText, copyEmail, get cur() { return cur; }, get live() { return !!an; } };
+return { when, TRACKS, EVENTS, EV, NUBETTER, RELS, CLIPS, clipHtml, armClips, media: evMedia, reel, mvw, SLOGAN, BIO, EMAIL, MAILTO, BC, IG, IG_OMNI, IG_MACHINA, IG_HOOP, yt, REDUCE, els, on, play, pause, toggle, next, seek, isPlaying, dur, time, prog, fmt, pad, clamp,
+  rate, eq, mute, get muted() { return muted; }, get sampleRate() { return ctx ? ctx.sampleRate : 48000; }, analyse, scope, spectrum, peaks, L, switcher, fitText, copyEmail, get cur() { return cur; }, get live() { return !!an; } };
 })();

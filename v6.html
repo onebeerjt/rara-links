@@ -3,263 +3,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>RARA 🌋 — CCTV</title>
-<meta name="theme-color" content="#050706">
+<title>RARA 🌋 — ERUPTION</title>
+<meta name="theme-color" content="#060304">
 <meta name="robots" content="noindex">
+<meta name="description" content="RARA 🌋 Miami producer/DJ, Machina Records. Jet Fuel (Batida Edit), Beastie, NUBETTER. Bookings: omnisoundslabel@gmail.com">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050706;--ph:#d5f5dc;--dim:#6f8a76;--ln:#1c2a21;--rec:#ff2b2b;--osd:"VT323","Share Tech Mono",ui-monospace,Menlo,monospace;--mono:"Share Tech Mono",ui-monospace,Menlo,monospace}
+/* ERUPTION. RARA is a volcano (🌋, @raravulcain), so the page is one. The two real tracks are vents:
+   press IGNITE and the real kick drum, heard live from the audio, throws lava out of the crater behind the page. */
+:root{--m1:#ff2d00;--m2:#ff7a00;--m3:#ffc247;--m4:#fff1c9;--bg:#060304;--tx:#f4ece6;--dim:#8d7f78;--ln:#2a1b19;--k:0;--sx:0px;--sy:0px;
+  --hd:"Big Shoulders Display",Impact,"Arial Narrow",sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;--lava:linear-gradient(100deg,var(--m1),var(--m2) 45%,var(--m3) 80%,var(--m4))}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{background:var(--bg)}
-body{background:var(--bg);color:var(--ph);font:400 14px/1.4 var(--mono);min-height:100dvh;padding:0 0 calc(40px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
-a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-main{max-width:640px;margin:0 auto}
-.os{font-family:var(--osd);font-size:21px;line-height:1;text-shadow:1px 0 #000,-1px 0 #000,0 1px #000,0 -1px #000,0 0 6px rgba(0,0,0,.8)}
-.top{display:flex;justify-content:space-between;align-items:center;padding:max(10px,env(safe-area-inset-top)) 12px 8px}
-.top .id{display:flex;align-items:center;gap:8px}
-.rec{width:11px;height:11px;border-radius:50%;background:var(--rec);animation:bl 1s steps(2) infinite}
-.paused .rec{animation:none;opacity:.35}
-@keyframes bl{50%{opacity:0}}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{background:transparent;color:var(--tx);font:500 14px/1.4 var(--mono);overflow-x:hidden;min-height:100dvh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;background:var(--bg)}
+main{position:relative;max-width:560px;margin:0 auto;padding:0 0 calc(40px + env(safe-area-inset-bottom));transform:translate(var(--sx),var(--sy))}
+.top{position:sticky;top:0;z-index:9;display:flex;justify-content:space-between;align-items:center;padding:max(10px,env(safe-area-inset-top)) 14px 10px;background:linear-gradient(rgba(6,3,4,.92) 55%,transparent)}
+.top .id{display:flex;align-items:center;gap:8px;font:700 11px var(--mono);letter-spacing:.2em}
+.top .id i{width:9px;height:9px;border-radius:50%;background:var(--m1);box-shadow:0 0 calc(6px + var(--k)*18px) var(--m2);animation:pulse 2.4s ease-in-out infinite}
+.live .top .id i{animation:none}
+@keyframes pulse{50%{opacity:.3}}
 #vs{display:flex;gap:3px}
-#vs a{min-width:24px;height:24px;display:grid;place-items:center;font:400 17px var(--osd);color:var(--dim);border:1px solid var(--ln)}
-#vs a[aria-current]{background:var(--ph);color:#000;border-color:var(--ph)}
-/* the monitor */
-.mon{position:relative;aspect-ratio:4/3;background:#000;overflow:hidden;border-block:1px solid var(--ln);cursor:pointer;touch-action:manipulation;user-select:none}
-.mon canvas{position:absolute;inset:0;width:100%;height:100%;display:block;filter:contrast(1.18) brightness(1.04)}
-.tint{position:absolute;inset:0;background:#b9ffcf;mix-blend-mode:multiply;pointer-events:none}
-.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,transparent 52%,rgba(0,0,0,.72) 100%)}
-.scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)}
-.ov{position:absolute;pointer-events:none;color:#fff}
-.tl{left:10px;top:8px}.tr{right:10px;top:8px;text-align:right}.bl{left:10px;bottom:8px}.br{right:10px;bottom:8px;text-align:right}
-.ov small{display:block;font-size:17px;opacity:.82;margin-top:3px}
-.mon .big{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
-.mon .big span{font:400 34px var(--osd);color:#fff;border:2px solid #fff;padding:6px 14px 4px;background:rgba(0,0,0,.45);letter-spacing:.08em;text-shadow:none}
-.mon.playing .big{display:none}
-.mon.flick{animation:fk .18s steps(2)}
-@keyframes fk{50%{transform:translateX(3px)}}
-/* NVR playback bar */
-.nvr{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--ln)}
-.nvr button{width:44px;height:38px;border:1px solid var(--dim);font:400 24px var(--osd);display:grid;place-items:center;padding-top:3px}
-.nvr button:active{background:var(--ph);color:#000}
-.tl2{flex:1;height:38px;position:relative;touch-action:none;cursor:pointer;border:1px solid var(--ln);background:repeating-linear-gradient(90deg,var(--ln) 0 1px,transparent 1px 10%)}
-.tl2 i{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(213,245,220,.2);border-right:2px solid var(--ph)}
-.tl2 em{position:absolute;right:6px;top:50%;transform:translateY(-52%);font:400 21px var(--osd);font-style:normal;color:var(--ph)}
-h2{font:400 22px var(--osd);letter-spacing:.12em;color:var(--dim);padding:22px 12px 8px;display:flex;justify-content:space-between}
-/* channel grid */
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 2px}
-.cam{position:relative;aspect-ratio:4/3;background:#000;overflow:hidden;display:block;border:1px solid var(--ln);color:#fff;text-align:left}
-.cam canvas{position:absolute;inset:0;width:100%;height:100%;display:block;filter:contrast(1.1)}
-.cam .tint,.cam .vig,.cam .scan{position:absolute}
-.cam .ov{font-size:18px}
-.cam .nm{left:6px;right:6px;bottom:6px;font-size:21px;line-height:.95}
-.cam .nm small{font-size:16px;color:#bde;opacity:.85;margin-top:4px}
-.cam .cn{left:6px;top:5px;font-size:18px}
-.cam .st{right:6px;top:5px;font-size:18px}
-.cam.sel{outline:2px solid var(--ph);outline-offset:-2px;z-index:1}
-.cam.off .st{color:#ffb74a}
-.cam:active{filter:brightness(1.4)}
-/* log + desk */
-.log{padding:0 12px;font:400 19px/1.25 var(--osd);color:var(--dim);min-height:5.8em}
-.log div:first-child{color:var(--ph)}
-.desk{margin:26px 12px 0;border:1px solid var(--dim);padding:14px;position:relative}
-.desk .k{font:400 20px var(--osd);color:var(--dim);letter-spacing:.12em}
-.desk b{display:block;font:400 clamp(42px,14vw,72px)/.9 var(--osd);color:var(--ph);margin:6px 0 10px;letter-spacing:.03em}
-.desk .e{display:block;font:400 clamp(14px,4.4vw,19px) var(--mono);word-break:break-all;border-top:1px solid var(--ln);padding-top:10px}
-.desk .a{display:flex;gap:8px;margin-top:12px}
-.desk .a a,.desk .a button{flex:1;text-align:center;border:1px solid var(--ph);padding:12px 6px 9px;font:400 22px var(--osd);letter-spacing:.08em}
-.desk .a .p{background:var(--ph);color:#000}
-.desk .a :active{opacity:.6}
-.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:20px 12px 0;font:400 19px var(--osd);color:var(--dim)}
-.foot a{border-bottom:1px solid var(--dim)}
-#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#000;border:1px solid var(--ph);padding:8px 14px 5px;font:400 21px var(--osd);opacity:0;transition:.15s;z-index:60;pointer-events:none}
-#toast.show{opacity:1}
-:focus-visible{outline:2px solid #fff;outline-offset:2px}
-@media (prefers-reduced-motion:reduce){.rec{animation:none}.mon.flick{animation:none}}
+#vs a{min-width:26px;height:26px;display:grid;place-items:center;font:700 11px var(--mono);color:var(--dim);border:1px solid var(--ln);background:rgba(6,3,4,.7)}
+#vs a[aria-current]{background:var(--m2);color:#000;border-color:var(--m2);box-shadow:0 0 14px var(--m1)}
+
+/* hero */
+.hero{padding:6px 14px 0;min-height:calc(100svh - 52px);display:flex;flex-direction:column}
+.obs{font:700 10px var(--mono);letter-spacing:.26em;color:var(--m3);display:flex;justify-content:space-between;gap:8px}
+h1{font:900 100px/.78 var(--hd);letter-spacing:-.01em;text-transform:uppercase;margin:14px 0 0 -.02em;white-space:nowrap;
+  background:var(--lava);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  animation:flow 6s linear infinite;filter:drop-shadow(0 0 calc(10px + var(--k)*34px) rgba(255,70,0,calc(.45 + var(--k)*.5)))}
+@keyframes flow{to{background-position:-200% 0}}
+.volc{display:block;font-size:44px;line-height:1;margin:10px 0 0;filter:drop-shadow(0 0 calc(8px + var(--k)*22px) var(--m1))}
+.sub{margin-top:12px;font:700 12px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;max-width:34ch}
+.sub b{color:var(--m3);font-weight:700}
+.spacer{flex:1;min-height:90px}
+#seis{display:block;width:100%;height:64px;border-block:1px solid var(--ln);background:linear-gradient(rgba(255,70,0,.05),rgba(255,70,0,0))}
+.rd{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;padding:8px 0 16px;font:700 10px var(--mono);letter-spacing:.14em;color:var(--dim)}
+.rd b{display:block;margin-top:4px;font:800 24px/1 var(--hd);letter-spacing:.04em;color:var(--tx);text-transform:uppercase;font-variant-numeric:tabular-nums}
+.live .rd #stat{color:var(--m3);text-shadow:0 0 14px var(--m1)}
+.tgl{margin:0 0 14px;display:flex;justify-content:space-between;align-items:center;font:700 10px var(--mono);letter-spacing:.14em;color:var(--dim)}
+.tgl button{border:1px solid var(--ln);padding:9px 11px;font:700 10px var(--mono);letter-spacing:.14em;color:var(--tx);background:rgba(6,3,4,.6)}
+.tgl button[aria-pressed=true]{background:var(--m2);color:#000;border-color:var(--m2)}
+
+/* sections sit on a smoked-basalt veil so the volcano burns through at the edges */
+.veil{background:linear-gradient(rgba(6,3,4,0),rgba(6,3,4,.86) 70px);padding-top:70px}
+.veil>*{position:relative}
+h2.lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:28px 14px 12px;font:700 11px var(--mono);letter-spacing:.22em;color:var(--m3)}
+h2.lab span:last-child{color:var(--dim)}
+
+/* vents */
+.vent{position:relative;margin:0 12px 14px;border:1px solid #3a221c;background:rgba(14,7,7,.9);overflow:hidden;isolation:isolate}
+.vent::before{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(var(--p,0) * 100%);z-index:-1;background:linear-gradient(0deg,rgba(255,45,0,.5),rgba(255,122,0,.16));border-top:2px solid var(--m3);box-shadow:0 -8px 24px rgba(255,90,0,.55)}
+.vent.on{border-color:var(--m2);box-shadow:0 0 calc(10px + var(--k)*34px) rgba(255,70,0,.45)}
+.vent .vh{display:flex;justify-content:space-between;gap:8px;padding:12px 14px 0;font:700 10px var(--mono);letter-spacing:.16em;color:var(--dim)}
+.vent h3{padding:6px 14px 0;font:900 clamp(64px,22vw,118px)/.82 var(--hd);letter-spacing:-.01em;text-transform:uppercase}
+.vent h3 small{display:block;margin-top:8px;font:700 12px var(--mono);letter-spacing:.2em;color:var(--m3)}
+.vent canvas{display:block;width:100%;height:70px;margin-top:14px;touch-action:none;cursor:pointer}
+.vent .vf{display:flex;align-items:stretch;gap:10px;padding:12px 14px 14px}
+.ig{flex:none;min-width:150px;min-height:56px;padding:0 18px;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--lava);color:#1a0500;font:900 24px var(--hd);letter-spacing:.1em;box-shadow:0 0 22px rgba(255,80,0,.5)}
+.ig:active{transform:scale(.97)}
+.vent.on .ig{background:#fff1c9;box-shadow:0 0 30px rgba(255,200,80,.7)}
+.vent .tm{align-self:center;font:700 13px var(--mono);letter-spacing:.08em;font-variant-numeric:tabular-nums;margin-left:auto}
+.vent.cold{display:block}
+.vent.cold .vh{padding-top:12px}
+.vent.cold .vf{padding-top:6px}
+.vent.cold .ig{background:transparent;border:2px solid var(--m2);color:var(--m3);box-shadow:none}
+
+/* strata: every real show, newest first, along one lava fissure */
+.strata{list-style:none;position:relative;margin:0 12px 0 22px;padding-left:20px}
+.strata::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:2px;background:linear-gradient(var(--m4),var(--m2) 30%,var(--m1) 70%,#3a0d05);box-shadow:0 0 calc(8px + var(--k)*24px) var(--m1)}
+.strata>li{position:relative;margin-bottom:18px}
+.strata>li::before{content:"";position:absolute;left:-26px;top:12px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:3px solid var(--m2);box-shadow:0 0 12px var(--m1)}
+.ev{display:block;position:relative;border:1px solid #3a221c;background:rgba(14,7,7,.92);overflow:hidden}
+.ev:active{transform:scale(.985)}
+.ev .eh{display:flex;justify-content:space-between;gap:8px;padding:12px 14px 0;font:700 10px var(--mono);letter-spacing:.16em;color:var(--m3);text-transform:uppercase}
+.ev .eh span:last-child{color:var(--dim)}
+.ev h3{padding:6px 14px 0;font:900 clamp(40px,13.5vw,64px)/.86 var(--hd);text-transform:uppercase;letter-spacing:-.005em}
+.ev .who{display:inline-block;margin:10px 14px 0;padding:5px 8px;background:var(--m2);color:#1a0500;font:700 11px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.ev .fw{position:relative;margin-top:12px;background:#000;border-block:1px solid #3a221c}
+.ev .fw img{display:block;width:100%;object-fit:cover}
+.ev .fw::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(transparent 55%,rgba(255,45,0,.28))}
+.ev q{display:block;padding:14px 14px 0;font:800 clamp(24px,7.6vw,34px)/1.02 var(--hd);text-transform:uppercase;letter-spacing:.01em;quotes:"“" "”"}
+.ev .ln{display:block;padding:10px 14px 0;font:500 13px/1.45 var(--mono);color:#d9ccc4}
+.ev .mt{padding:12px 14px 0;font:700 10px/1.6 var(--mono);letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+.ev .go{display:block;margin:12px 14px 14px;font:700 11px var(--mono);letter-spacing:.14em;color:var(--m3)}
+.ev.feat{border:2px solid var(--m2);box-shadow:0 0 calc(18px + var(--k)*40px) rgba(255,70,0,.5)}
+.ev.feat h3{font-size:clamp(72px,26vw,150px);line-height:.8;padding-top:12px;background:var(--lava);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:flow 6s linear infinite}
+.ev.feat q{font-size:clamp(30px,10.4vw,52px);line-height:.96;color:var(--m4)}
+.ev.feat .go{display:flex;justify-content:space-between;align-items:center;margin:14px;padding:16px;background:var(--lava);color:#1a0500;font:900 22px var(--hd);letter-spacing:.1em}
+.strata>li.f::before{width:21px;height:21px;left:-29px;top:10px;background:var(--m1);border-color:var(--m4);box-shadow:0 0 22px var(--m1),0 0 40px var(--m2)}
+
+/* booking */
+.book{display:block;margin:34px 12px 0;padding:18px 16px 16px;background:var(--lava);color:#1a0500;position:relative}
+.book .a{font:700 11px var(--mono);letter-spacing:.2em}
+.book b{display:block;font:900 100px/.78 var(--hd);margin:12px 0 14px;text-transform:uppercase;white-space:nowrap}
+.book .e{display:flex;justify-content:space-between;gap:10px;border-top:2px solid #1a0500;padding-top:10px;font:700 clamp(12px,3.8vw,16px) var(--mono);word-break:break-all}
+.acts{display:flex;margin:0 12px}
+.acts button,.acts a{flex:1;text-align:center;padding:16px 8px;border:1px solid #3a221c;border-top:0;font:700 12px var(--mono);letter-spacing:.14em;background:rgba(14,7,7,.9)}
+.acts a+*,.acts button+*{border-left:0}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin:18px 12px 0}
+.links a{border:1px solid #3a221c;padding:11px 14px;font:700 11px var(--mono);letter-spacing:.12em;background:rgba(14,7,7,.9)}
+.fine{margin:22px 14px 0;font:700 10px/1.7 var(--mono);letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translate(-50%,24px);background:var(--m4);color:#1a0500;padding:11px 16px;font:700 12px var(--mono);letter-spacing:.14em;opacity:0;transition:.2s;z-index:30;pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+:focus-visible{outline:3px solid var(--m3);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){h1,.ev.feat h3,.top .id i{animation:none}main{transform:none}}
 </style>
 </head>
-<body class="paused">
-<main>
-  <div class="top os"><span class="id"><i class="rec"></i>RARA/CCTV</span><nav id="vs" aria-label="Versions"></nav></div>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<main id="app">
+  <div class="top"><span class="id"><i></i>RARA/ERUPTION</span><nav id="vs" aria-label="Versions"></nav></div>
 
-  <section class="mon" id="mon" aria-label="Camera monitor. Tap to play or pause.">
-    <canvas id="main" width="320" height="240"></canvas>
-    <div class="tint"></div><div class="vig"></div><div class="scan"></div>
-    <div class="ov os tl"><span id="cn">CAM 01</span><small id="cs">JET FUEL (BATIDA EDIT)</small></div>
-    <div class="ov os tr"><span id="dt">----/--/--</span><small id="tz">--:--:--</small></div>
-    <div class="ov os bl"><span id="md">STANDBY</span></div>
-    <div class="ov os br"><span id="tc">0:00 / –:––</span></div>
-    <div class="big os"><span id="bg">▶ TAP TO PLAY</span></div>
+  <section class="hero">
+    <div class="obs"><span>VULCAIN OBSERVATORY</span><span>MIAMI</span></div>
+    <h1 id="h1">RARA</h1>
+    <span class="volc" aria-hidden="true">🌋</span>
+    <p class="sub"><b>Producer/DJ.</b> Machina Records. Omnisound. Hoop Club Miami. “The Glue”, drummer for Mr. Floyd Larry.</p>
+    <div class="spacer"></div>
+    <div class="tgl"><span>SOUND ON = THE CRATER ERUPTS</span><button id="sh" aria-pressed="true">SHAKE ON</button></div>
+    <canvas id="seis" role="img" aria-label="Live seismograph of the audio"></canvas>
+    <div class="rd"><div>STATUS<b id="stat">DORMANT</b></div><div>KICKS<b id="kc">000</b></div><div>MIAMI<b id="clk">--:--</b></div></div>
   </section>
-  <div class="nvr">
-    <button id="pv" class="os" aria-label="Previous camera">|◀</button>
-    <button id="pp" class="os" aria-label="Play">▶</button>
-    <button id="nx" class="os" aria-label="Next camera">▶|</button>
-    <div class="tl2" id="sk" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><i id="skf"></i><em id="skt"></em></div>
+
+  <div class="veil">
+    <h2 class="lab"><span>VENTS</span><span>2 LIVE · 1 DORMANT</span></h2>
+    <div id="vents"></div>
+
+    <h2 class="lab"><span>STRATA · THE ROOMS</span><span>NEWEST FIRST</span></h2>
+    <ol class="strata" id="ev"></ol>
+
+    <h2 class="lab"><span>REPORT AN ERUPTION</span><span>BOOKINGS OPEN</span></h2>
+    <a class="book" id="bk" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B"><span class="a">BOOKINGS</span><b>BOOK</b><span class="e"><span>omnisoundslabel@gmail.com</span><span>→</span></span></a>
+    <div class="acts"><button id="cp">COPY EMAIL</button><a href="https://instagram.com/raravulcain" target="_blank" rel="noopener">@RARAVULCAIN ↗</a></div>
+    <div class="links" id="lk"></div>
+    <p class="fine">RARA 🌋 Miami. Machina Records.</p>
   </div>
-
-  <h2><span>CHANNEL SELECT</span><span id="ct">10 CH</span></h2>
-  <div class="grid" id="grid"></div>
-
-  <h2><span>EVENT LOG</span><span>LOCAL</span></h2>
-  <div class="log" id="log"></div>
-
-  <section class="desk">
-    <div class="k">SECURITY DESK / BOOKINGS</div>
-    <b>REPORT<br>AN EVENT</b>
-    <a class="e" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B">omnisoundslabel@gmail.com</a>
-    <div class="a"><a class="p" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B">BOOK RARA</a><button id="cp">COPY</button></div>
-  </section>
-  <div class="foot"><a href="https://machinarecords.bandcamp.com" target="_blank" rel="noopener">MACHINA RECORDS ↗</a><a href="https://instagram.com/raravulcain" target="_blank" rel="noopener">@RARAVULCAIN ↗</a><a href="https://instagram.com/omnisoundspace" target="_blank" rel="noopener">OMNISOUND ↗</a></div>
 </main>
 <div id="toast" role="status"></div>
 <script src="real.js"></script>
 <script>
 (() => {
 'use strict';
-const R = REAL, $ = s => document.querySelector(s);
+const R = REAL, $ = s => document.querySelector(s), root = document.documentElement, L = R.L;
 R.switcher('v6');
-const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
-const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1500); };
-const tzf = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-const dtf = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' });
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1600); };
 
-/* ---------- channel grid: 2 live feeds (the real tracks), 8 archive feeds (the rest of the catalog, as links) ---------- */
-const CH = n => 'CAM ' + String(n).padStart(2, '0');
-const grid = $('#grid');
-grid.innerHTML = R.TRACKS.map((t, i) => `<button class="cam live" data-i="${i}" aria-label="${CH(i + 1)} ${t.title}"><canvas width="160" height="120"></canvas><div class="tint"></div><div class="vig"></div><div class="scan"></div><span class="ov os cn">${CH(i + 1)}</span><span class="ov os st">● LIVE</span><span class="ov os nm">${t.title.toUpperCase()}<small>${t.tag.toUpperCase()}</small></span></button>`).join('')
-  + R.RELEASES.map((r, j) => `<a class="cam off" href="${r.href}" target="_blank" rel="noopener" aria-label="${CH(j + 3)} archive: ${r.title}, opens ${r.cta}"><canvas width="160" height="120"></canvas><div class="tint"></div><div class="vig"></div><div class="scan"></div><span class="ov os cn">${CH(j + 3)}</span><span class="ov os st">ARCHIVE ↗</span><span class="ov os nm">${r.title.toUpperCase()}<small>${(r.type + ' · ' + r.note).toUpperCase()}</small></span></a>`).join('');
-const tiles = [...grid.children], live = tiles.slice(0, 2), arch = tiles.slice(2);
-$('#ct').textContent = (R.TRACKS.length + R.RELEASES.length) + ' CH';
+/* ---------- content ---------- */
+$('#vents').innerHTML = R.TRACKS.map((t, i) => {
+  const name = t.title.replace(/ \(.*\)$/, ''), sub = (t.title.match(/\((.*)\)/) || [])[1] || t.tag;
+  return `<article class="vent" data-i="${i}" aria-label="${t.title}">
+    <div class="vh"><span>VENT 0${i + 1} · BANDCAMP</span><span>${t.date.toUpperCase()}</span></div>
+    <h3>${name}<small>${sub.toUpperCase()}</small></h3>
+    <canvas role="slider" tabindex="0" aria-label="Seek ${t.title}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></canvas>
+    <div class="vf"><button class="ig" aria-label="Play ${t.title}"><span class="ic">▲</span><span class="lb">IGNITE</span></button><span class="tm">0:00 / –:––</span></div>
+  </article>`;
+}).join('') + `<a class="vent cold" href="${R.NUBETTER.href}" target="_blank" rel="noopener" style="display:block">
+    <div class="vh"><span>VENT 03 · BANDCAMP</span><span>NO AUDIO ON THIS PAGE</span></div>
+    <h3>${R.NUBETTER.title}<small>${R.NUBETTER.note.toUpperCase()}</small></h3>
+    <div class="vf"><span class="ig">HEAR IT ↗</span></div></a>`;
 
-/* ---------- procedural club footage (no images: it's drawn) ---------- */
-const noise = [0, 1, 2, 3].map(() => { const c = document.createElement('canvas'); c.width = 128; c.height = 96; const g = c.getContext('2d'), d = g.createImageData(128, 96); for (let k = 0; k < d.data.length; k += 4) { const v = Math.random() * 255; d.data[k] = d.data[k + 1] = d.data[k + 2] = v; d.data[k + 3] = 255; } g.putImageData(d, 0, 0); return c; });
-function scene(g, W, H, t, E, cam) {
-  const u = H / 120, hz = H * (cam ? .36 : .42), px = cam ? Math.sin(t * .16) * W * .05 : 0;
-  const lift = E.on ? .55 + E.k * .45 + E.lo * .3 : .28;
-  let bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#0b0b0b'); bg.addColorStop(.5, '#3b3b3b'); bg.addColorStop(1, '#090909');
-  g.globalCompositeOperation = 'source-over'; g.fillStyle = bg; g.fillRect(0, 0, W, H);
-  g.save(); g.translate(px, 0);
-  /* haze + beams */
-  g.globalCompositeOperation = 'lighter';
-  const rg = g.createRadialGradient(W * .5, hz - 10 * u, 2, W * .5, hz - 10 * u, W * .62); rg.addColorStop(0, `rgba(255,255,255,${.5 * lift})`); rg.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = rg; g.fillRect(-W * .1, 0, W * 1.2, H);
-  for (let b = 0; b < 4; b++) {
-    const ox = W * (.12 + b * .25 + (cam ? .04 : 0)), a = Math.sin(t * (.5 + b * .17) + b * 2.1 + (cam ? 1 : 0)) * W * .3, tx = ox + a, ty = H * .98;
-    const bgm = g.createLinearGradient(ox, 0, tx, ty); bgm.addColorStop(0, `rgba(255,255,255,${.34 * lift})`); bgm.addColorStop(1, 'rgba(255,255,255,0)');
-    g.fillStyle = bgm; g.beginPath(); g.moveTo(ox - 2 * u, 0); g.lineTo(ox + 2 * u, 0); g.lineTo(tx + 20 * u, ty); g.lineTo(tx - 20 * u, ty); g.fill();
-  }
-  g.globalCompositeOperation = 'source-over';
-  /* booth */
-  const bx = W * (cam ? .52 : .3), bw = W * (cam ? .34 : .4), by = hz - 3 * u;
-  g.fillStyle = '#d8d8d8'; g.globalAlpha = .55 + .4 * lift; g.fillRect(bx, by - 2 * u, bw, 1.6 * u); g.globalAlpha = 1;   // lit top edge
-  g.fillStyle = '#0a0a0a'; g.fillRect(bx, by - .4 * u, bw, 13 * u);
-  const led = Math.min(1, .25 + E.k + E.mid * .8); g.fillStyle = `rgba(255,255,255,${led})`;
-  for (let s = 0; s < 14; s++) g.fillRect(bx + (s + .5) * bw / 14 - .6 * u, by + 3 * u, 1.2 * u, (1 + hash(s + Math.floor(t * 8) * 3) * 3) * u * (E.on ? 1 : .35));
-  /* DJ */
-  const dx = bx + bw * .5, sway = Math.sin(t * 3.1) * .8 * u * (E.on ? 1 : .3) - E.k * 1.2 * u;
-  g.fillStyle = '#060606'; g.beginPath(); g.ellipse(dx + sway, by - 12 * u, 3.4 * u, 3.8 * u, 0, 0, 7); g.fill();
-  g.beginPath(); g.moveTo(dx - 7 * u + sway, by); g.lineTo(dx - 5 * u + sway, by - 8 * u); g.lineTo(dx + 5 * u + sway, by - 8 * u); g.lineTo(dx + 7 * u + sway, by); g.fill();
-  g.strokeStyle = '#060606'; g.lineWidth = 2.2 * u; g.beginPath();
-  g.moveTo(dx - 5 * u + sway, by - 7 * u); g.lineTo(dx - 11 * u, by - 1 * u + Math.sin(t * 5) * 1.5 * u * (E.on ? 1 : 0));
-  g.moveTo(dx + 5 * u + sway, by - 7 * u); g.lineTo(dx + 11 * u, by - 1 * u + Math.cos(t * 4.3) * 1.5 * u * (E.on ? 1 : 0)); g.stroke();
-  /* crowd, back row to front */
-  const rows = 6;
-  for (let r = 0; r < rows; r++) {
-    const f = r / (rows - 1), s = .55 + f * 1.05, y = hz + 9 * u + Math.pow(f, 1.25) * (H - hz - 5 * u), step = 15 * s * u, n = Math.ceil((W * 1.15) / step) + 1;
-    const shade = Math.round(48 - f * 44); g.fillStyle = `rgb(${shade},${shade},${shade})`; g.strokeStyle = g.fillStyle; g.lineWidth = 1.7 * s * u;
-    for (let i = 0; i < n; i++) {
-      const id = r * 100 + i, x = (i - .5) * step + hash(id) * step * .7 - W * .075, ph = hash(id + 9) * 6.28;
-      const bob = (E.on ? (E.k * 2.6 + E.lo * 2 + .7) : .5) * s * u * (.55 + .45 * Math.abs(Math.sin(t * 2.2 + ph)));
-      const yy = y - bob + Math.sin(t * 1.3 + ph) * .5 * u;
-      g.beginPath(); g.ellipse(x, yy + 8 * s * u, 7.4 * s * u, 8 * s * u, 0, 0, 7); g.fill();
-      g.beginPath(); g.arc(x, yy - 1 * s * u, 3.9 * s * u, 0, 7); g.fill();
-      if (E.on && hash(id + 3) < .26 + E.mid) {                                         // arms up
-        const w = Math.sin(t * 4 + ph) * 3 * s * u; g.beginPath();
-        g.moveTo(x - 5 * s * u, yy + 5 * s * u); g.lineTo(x - 8 * s * u + w, yy - 10 * s * u);
-        g.moveTo(x + 5 * s * u, yy + 5 * s * u); g.lineTo(x + 8 * s * u - w, yy - 10 * s * u); g.stroke();
-      }
-      if (hash(id + 5) < .035 && r > 1) { g.fillStyle = '#fff'; g.fillRect(x + 4 * s * u, yy - 6 * s * u, 1.7 * s * u, 2.6 * s * u); g.fillStyle = `rgb(${shade},${shade},${shade})`; }  // a phone
-    }
-  }
-  g.restore();
-  /* a strobe pop on the kick */
-  if (E.k > .05) { g.globalCompositeOperation = 'lighter'; g.fillStyle = `rgba(255,255,255,${E.k * .22})`; g.fillRect(0, 0, W, H); g.globalCompositeOperation = 'source-over'; }
-}
-function grain(g, W, H, a) { g.globalAlpha = a; g.globalCompositeOperation = 'overlay'; g.drawImage(noise[(Math.random() * 4) | 0], 0, 0, W, H); g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; }
+$('#ev').innerHTML = R.EVENTS.map(e => `<li class="${e.id === 'iiipoints' ? 'f' : ''}"><a class="ev ${e.id === 'iiipoints' ? 'feat' : ''}" href="${e.href}" target="_blank" rel="noopener">
+  <div class="eh"><span>${e.id === 'iiipoints' ? 'FESTIVAL · B2B' : e.kind}</span><span>${e.date || ''}</span></div>
+  <h3>${e.title}</h3>${e.who ? `<span class="who">${e.who}</span>` : ''}
+  ${e.flyer ? `<div class="fw"><img src="${e.flyer}" alt="${e.alt}" loading="lazy" style="aspect-ratio:${e.fr};object-position:${e.fp}"></div>` : ''}
+  ${e.quote ? `<q>${e.quote}</q>` : ''}${e.line ? `<span class="ln">${e.line}</span>` : ''}
+  <div class="mt">${[e.time, e.venue].filter(Boolean).join(' · ')}</div><span class="go">${e.id === 'iiipoints' ? `<span>WATCH THE FULL SET</span><span>YOUTUBE ↗</span>` : e.cta.toUpperCase() + ' ↗'}</span></a></li>`).join('');
 
-/* ---------- elements / state ---------- */
-const mon = $('#mon'), cv = $('#main'), cg = cv.getContext('2d'), logEl = $('#log');
-const tcs = live.map(t => t.querySelector('canvas')), tgs = tcs.map(c => c.getContext('2d')), ags = arch.map(a => a.querySelector('canvas').getContext('2d'));
-let glitch = { until: 0, y: 0, h: 0, dx: 0 }, nextGl = 4000, motion = 0, lastMain = 0, lastTile = 0, sel = R.cur;
-
-const LOG = [];
-const log = msg => { LOG.unshift(tzf.format(new Date()) + '  ' + msg); LOG.length = Math.min(LOG.length, 5); logEl.innerHTML = LOG.map(l => `<div>${l}</div>`).join(''); };
-log('CAM 01–02 ONLINE. 03–10 ARCHIVE'); log('SYSTEM ARMED');
-
-const paint = () => {
-  const playing = R.isPlaying(); sel = R.cur, t = R.TRACKS[sel];
-  document.body.classList.toggle('paused', !playing); mon.classList.toggle('playing', playing);
-  $('#cn').textContent = CH(sel + 1); $('#cs').textContent = t.title.toUpperCase();
-  $('#md').textContent = playing ? '▶ PLAYBACK' : (R.time(sel) > 0 ? '❚❚ PAUSED' : 'STANDBY');
-  $('#bg').textContent = R.time(sel) > 0 ? '▶ RESUME' : '▶ TAP TO PLAY';
-  $('#pp').textContent = playing ? '❚❚' : '▶'; $('#pp').setAttribute('aria-label', playing ? 'Pause' : 'Play');
-  live.forEach((el, i) => { el.classList.toggle('sel', i === sel); el.querySelector('.st').textContent = (i === sel && playing) ? '● ON AIR' : '● LIVE'; });
-  mon.setAttribute('aria-label', (playing ? 'Pause ' : 'Play ') + t.title);
-};
-let t;
-R.on('state', paint);
-R.on('play', i => { log(CH(i + 1) + ' PLAY ' + R.TRACKS[i].short.toUpperCase()); glitch = { until: performance.now() + 220, y: 30, h: 40, dx: 14 }; mon.classList.remove('flick'); void mon.offsetWidth; mon.classList.add('flick'); });
-R.on('pause', i => { if (!R.isPlaying()) log(CH(i + 1) + ' PAUSED'); });
-R.on('blocked', () => toast('TAP PLAY AGAIN'));
-
-mon.addEventListener('click', () => R.toggle(R.cur));
-live.forEach((el, i) => el.addEventListener('click', () => R.toggle(i)));
-$('#pp').onclick = () => R.toggle(R.cur);
-$('#pv').onclick = () => R.next(-1); $('#nx').onclick = () => R.next(1);
+$('#lk').innerHTML = [['MACHINA RECORDS', R.BC], ['@MACHINARECS', R.IG_MACHINA], ['OMNISOUND', R.IG_OMNI], ['HOOP CLUB MIA', R.IG_HOOP]].map(([n, h]) => `<a href="${h}" target="_blank" rel="noopener">${n} ↗</a>`).join('');
+R.fitText($('#h1'), () => $('.hero').clientWidth - 28);
+R.fitText($('.book b'), () => $('.book').clientWidth - 32);
 $('#cp').onclick = () => R.copyEmail(ok => toast(ok ? 'EMAIL COPIED' : 'HOLD THE EMAIL TO COPY'));
-const sk = $('#sk'); let dn = false;
-const at = e => { const r = sk.getBoundingClientRect(); R.seek(R.cur, (e.clientX - r.left) / r.width); };
-sk.addEventListener('pointerdown', e => { dn = true; sk.setPointerCapture(e.pointerId); at(e); }); sk.addEventListener('pointermove', e => dn && at(e));
-sk.addEventListener('pointerup', () => dn = false); sk.addEventListener('pointercancel', () => dn = false);
-sk.addEventListener('keydown', e => { if (e.key === 'ArrowRight') R.seek(R.cur, R.prog(R.cur) + .03); if (e.key === 'ArrowLeft') R.seek(R.cur, R.prog(R.cur) - .03); });
 
-/* ---------- loop ---------- */
-const loop = ts => {
-  requestAnimationFrame(loop);
-  const L = R.analyse(ts), T = ts / 1000, playing = R.isPlaying();
-  if (L.hit) motion = ts;
-  if (ts > nextGl) { glitch = { until: ts + 160 + Math.random() * 120, y: Math.random() * 200, h: 6 + Math.random() * 30, dx: (Math.random() - .5) * 26 }; nextGl = ts + 5000 + Math.random() * 6000; }
-  if (L.hit && Math.random() < .05) glitch = { until: ts + 120, y: Math.random() * 200, h: 10 + Math.random() * 20, dx: (Math.random() - .5) * 18 };
-  const Efor = i => (i === R.cur && playing) ? { on: true, k: R.live ? L.kick : 0, lo: R.live ? L.low : .25, mid: R.live ? L.mid : .25 } : { on: false, k: 0, lo: 0, mid: 0 };
-  const fb = tcs.map((_, i) => Efor(i));
-
-  if (ts - lastMain > 33) {                                   // main monitor ~30fps
-    lastMain = ts;
-    scene(cg, 320, 240, T + sel * 40, fb[sel], sel);
-    grain(cg, 320, 240, .22);
-    const y0 = ((ts / 38) % 330) - 60; cg.fillStyle = 'rgba(255,255,255,.07)'; cg.fillRect(0, y0, 320, 9);   // rolling tracking bar
-    if (ts < glitch.until) cg.drawImage(cv, 0, glitch.y, 320, glitch.h, glitch.dx, glitch.y, 320, glitch.h);
-    if (ts - motion < 320 && playing) {                       // NVR "motion" box on every real kick
-      const bw2 = sel ? .34 : .4, bxx = (sel ? .52 : .3) * 320, byy = (sel ? .36 : .42) * 240;
-      cg.strokeStyle = '#fff'; cg.lineWidth = 1.4; cg.setLineDash([5, 3]); cg.strokeRect(bxx - 4, byy - 50, bw2 * 320 + 8, 66); cg.setLineDash([]);
-      cg.fillStyle = '#fff'; cg.font = '12px monospace'; cg.fillText('MOTION', bxx - 3, byy - 53);
-    }
+/* ---------- vents: transport + real waveform (basalt columns that turn to lava as they play) ---------- */
+const V = [...document.querySelectorAll('.vent[data-i]')].map(el => ({ el, i: +el.dataset.i, cv: el.querySelector('canvas'), ig: el.querySelector('.ig'), ic: el.querySelector('.ic'), lb: el.querySelector('.lb'), tm: el.querySelector('.tm'), pk: null, W: 0, k: '' }));
+const BAR = 3, GAP = 2, WH = 70;
+function size(v) {
+  const d = Math.min(2, devicePixelRatio || 1), w = v.cv.clientWidth;
+  v.W = w; v.cols = Math.floor((w - 28 + GAP) / (BAR + GAP)); v.cv.width = w * d; v.cv.height = WH * d; v.cv.getContext('2d').setTransform(d, 0, 0, d, 0, 0); v.pk = null; v.k = '';
+  R.peaks(v.i, v.cols).then(p => { v.pk = p; v.k = ''; });
+}
+function draw(v) {
+  const x = v.cv.getContext('2d'), head = R.prog(v.i) * v.cols, g = x.createLinearGradient(0, WH, 0, 0), x0 = 14;
+  g.addColorStop(0, '#ff2d00'); g.addColorStop(.55, '#ff7a00'); g.addColorStop(1, '#fff1c9');
+  x.clearRect(0, 0, v.W, WH);
+  for (let c = 0; c < v.cols; c++) {
+    const a = v.pk ? Math.max(.06, v.pk[c]) : .06, h = Math.max(3, a * (WH - 4)), played = c < head;
+    x.fillStyle = played ? g : '#2d201d'; x.fillRect(x0 + c * (BAR + GAP), WH - h, BAR, h);
   }
-  if (ts - lastTile > 80) {                                   // tiles ~12fps
-    lastTile = ts;
-    tgs.forEach((g, i) => { scene(g, 160, 120, T + i * 40, fb[i], i); grain(g, 160, 120, .25); });
-    ags.forEach((g, i) => { g.drawImage(noise[((ts / 80) | 0) % 4], 0, 0, 160, 120); g.fillStyle = 'rgba(0,0,0,.5)'; g.fillRect(0, 0, 160, 120); });
-  }
-  const now = new Date();
-  $('#dt').textContent = dtf.format(now); $('#tz').textContent = tzf.format(now) + ' MIA';
-  $('#tc').textContent = R.fmt(R.time(sel)) + ' / ' + R.fmt(R.dur(sel));
-  const p = R.prog(sel); $('#skf').style.width = (p * 100).toFixed(2) + '%'; $('#skt').textContent = R.fmt(R.time(sel)); sk.setAttribute('aria-valuenow', Math.round(p * 100));
+  const hc = Math.floor(head);
+  if (head > 0 && head < v.cols) { x.fillStyle = '#fff'; x.shadowColor = '#ff7a00'; x.shadowBlur = 12; x.fillRect(x0 + hc * (BAR + GAP) - 1, 0, BAR + 2, WH); x.shadowBlur = 0; }
+}
+V.forEach(v => {
+  v.ig.onclick = () => R.toggle(v.i);
+  let dn = false; const at = e => { const r = v.cv.getBoundingClientRect(); R.seek(v.i, (e.clientX - r.left - 14) / (r.width - 28)); };
+  v.cv.addEventListener('pointerdown', e => { dn = true; v.cv.setPointerCapture(e.pointerId); if (!R.isPlaying(v.i)) R.play(v.i); at(e); });
+  v.cv.addEventListener('pointermove', e => dn && at(e));
+  v.cv.addEventListener('pointerup', () => dn = false); v.cv.addEventListener('pointercancel', () => dn = false);
+  v.cv.addEventListener('keydown', e => { if (e.key === 'ArrowRight') R.seek(v.i, R.prog(v.i) + .03); if (e.key === 'ArrowLeft') R.seek(v.i, R.prog(v.i) - .03); });
+  size(v);
+});
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => V.forEach(size), 150); });
+const paint = () => {
+  const playing = R.isPlaying();
+  root.classList.toggle('live', playing);
+  $('#stat').textContent = playing ? 'ERUPTING' : 'DORMANT';
+  V.forEach(v => {
+    const on = R.isPlaying(v.i), cur = on || (v.i === R.cur && R.time(v.i) > 0);
+    v.el.classList.toggle('on', on);
+    v.ic.textContent = on ? '❚❚' : '▲'; v.lb.textContent = on ? 'PAUSE' : (cur ? 'RESUME' : 'IGNITE');
+    v.ig.setAttribute('aria-label', (on ? 'Pause ' : 'Play ') + R.TRACKS[v.i].title);
+  });
 };
-requestAnimationFrame(loop);
+R.on('state', paint); R.on('blocked', () => toast('TAP IGNITE AGAIN'));
 paint();
+
+/* shake toggle: a few px of camera shake on the real kick. off by default for reduced-motion. */
+let shake = !R.REDUCE; const sh = $('#sh');
+const setSh = () => { sh.setAttribute('aria-pressed', shake); sh.textContent = shake ? 'SHAKE ON' : 'SHAKE OFF'; if (!shake) { root.style.setProperty('--sx', '0px'); root.style.setProperty('--sy', '0px'); } };
+sh.onclick = () => { shake = !shake; setSh(); }; setSh();
+
+/* ---------- the volcano (fixed canvas behind the page) ---------- */
+const bg = $('#bg'), bx = bg.getContext('2d');
+let BW = 0, BH = 0;
+const fitBg = () => { const d = Math.min(2, devicePixelRatio || 1); BW = innerWidth; BH = innerHeight; bg.width = BW * d; bg.height = BH * d; bx.setTransform(d, 0, 0, d, 0, 0); };
+fitBg(); addEventListener('resize', fitBg);
+const rnd = (a, b) => a + Math.random() * (b - a);
+const P = [], SMOKE = Array.from({ length: 26 }, () => ({ x: Math.random(), y: Math.random(), r: rnd(.05, .16), s: rnd(.006, .018), a: rnd(.03, .08) }));
+const MAXP = 360;
+function spawn(n, power) {
+  const cx = BW / 2, cy = BH * .6, sc = BH / 800;
+  for (let k = 0; k < n && P.length < MAXP; k++) {
+    const a = -Math.PI / 2 + rnd(-.55, .55) * (1 + power * .3), sp = rnd(260, 560 + power * 520) * sc;
+    P.push({ x: cx + rnd(-26, 26) * sc, y: cy, px: cx, py: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0, max: rnd(1.2, 2.6), sz: rnd(1.2, 3.6) });
+  }
+}
+function volcano(ts, dt, glow) {
+  const w = BW, h = BH, cx = w / 2, cy = h * .6, sc = h / 800, lw = Math.min(w * .62, 330 * (h / 800) + w * .18);
+  bx.globalCompositeOperation = 'source-over';
+  const sky = bx.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, '#040102'); sky.addColorStop(.55, `rgb(${Math.round(14 + glow * 60)},${Math.round(4 + glow * 8)},${Math.round(5 + glow * 4)})`); sky.addColorStop(1, `rgb(${Math.round(40 + glow * 90)},${Math.round(8 + glow * 18)},6)`);
+  bx.fillStyle = sky; bx.fillRect(0, 0, w, h);
+  /* smoke */
+  for (const s of SMOKE) {
+    s.y -= s.s * dt * (1 + glow * 3); if (s.y < -.2) { s.y = 1.05; s.x = .3 + Math.random() * .4; }
+    const sx = (cx + (s.x - .5) * w * (.4 + (1 - s.y) * .9)), sy = s.y * h, r = s.r * w * (1.4 - s.y * .6);
+    const g = bx.createRadialGradient(sx, sy, 0, sx, sy, r); g.addColorStop(0, `rgba(${60 + glow * 120},${20 + glow * 20},18,${s.a * (.5 + glow)})`); g.addColorStop(1, 'rgba(0,0,0,0)'); bx.fillStyle = g; bx.fillRect(sx - r, sy - r, r * 2, r * 2);
+  }
+  /* crater glow */
+  bx.globalCompositeOperation = 'lighter';
+  const gr = Math.max(w, h) * (.5 + glow * .3), cg = bx.createRadialGradient(cx, cy, 0, cx, cy, gr);
+  cg.addColorStop(0, `rgba(255,150,40,${.55 * glow + .08})`); cg.addColorStop(.25, `rgba(255,60,0,${.32 * glow + .04})`); cg.addColorStop(1, 'rgba(255,40,0,0)');
+  bx.fillStyle = cg; bx.fillRect(0, 0, w, h);
+  bx.globalCompositeOperation = 'source-over';
+  /* far ridges, then the cone */
+  const ridge = (col, pts) => { bx.fillStyle = col; bx.beginPath(); bx.moveTo(-10, h + 10); pts.forEach(([a, b]) => bx.lineTo(a * w, b * h)); bx.lineTo(w + 10, h + 10); bx.closePath(); bx.fill(); };
+  ridge('#120708', [[0, .74], [.12, .66], [.26, .72], [.38, .67], [.62, .67], [.76, .71], [.9, .65], [1, .72]]);
+  const rim = lw * .13, top = cy;
+  bx.fillStyle = '#080304'; bx.beginPath(); bx.moveTo(-10, h + 10); bx.lineTo(cx - lw, h * .93); bx.lineTo(cx - lw * .55, h * .76); bx.lineTo(cx - rim * 1.5, top + 4 * sc); bx.lineTo(cx - rim, top - 5 * sc);
+  bx.lineTo(cx - rim * .3, top + 8 * sc); bx.lineTo(cx + rim * .3, top + 8 * sc); bx.lineTo(cx + rim, top - 5 * sc); bx.lineTo(cx + rim * 1.5, top + 4 * sc); bx.lineTo(cx + lw * .5, h * .78); bx.lineTo(cx + lw, h * .94); bx.lineTo(w + 10, h + 10); bx.closePath(); bx.fill();
+  /* lava flows down the cone */
+  bx.globalCompositeOperation = 'lighter'; bx.lineCap = 'round';
+  const flows = [[-1, .30, .58, .86], [1, .22, .5, .84], [-1, .05, .26, .66], [1, .08, .34, .7]];
+  flows.forEach(([sd, a, b, c], n) => {
+    const x0 = cx + sd * rim * (.3 + n * .12), y0 = top + 7 * sc;
+    bx.beginPath(); bx.moveTo(x0, y0); bx.bezierCurveTo(x0 + sd * lw * a * .3, y0 + (h - y0) * .2, cx + sd * lw * b * .5, y0 + (h - y0) * .5, cx + sd * lw * (b + c * .3), h * (c * .55 + .5) + n * 4);
+    bx.setLineDash([26 * sc, 14 * sc, 6 * sc, 12 * sc]); bx.lineDashOffset = -ts / 40 * (1 + glow * 2);
+    bx.strokeStyle = `rgba(255,${90 + n * 30},10,${.25 + glow * .6})`; bx.lineWidth = (2.2 + glow * 3) * sc * (1 - n * .12); bx.shadowColor = '#ff4400'; bx.shadowBlur = 8 + glow * 18; bx.stroke();
+  });
+  bx.setLineDash([]); bx.shadowBlur = 0;
+  /* crater mouth */
+  const mg = bx.createRadialGradient(cx, top + 4 * sc, 0, cx, top + 4 * sc, rim * 1.4); mg.addColorStop(0, `rgba(255,240,180,${.35 + glow * .65})`); mg.addColorStop(.5, `rgba(255,90,0,${.3 + glow * .5})`); mg.addColorStop(1, 'rgba(255,40,0,0)');
+  bx.fillStyle = mg; bx.fillRect(cx - rim * 2, top - rim * 2, rim * 4, rim * 3);
+  /* embers */
+  const grav = 760 * sc;
+  for (let i = P.length - 1; i >= 0; i--) {
+    const p = P[i]; p.life += dt; if (p.life > p.max || p.y > h + 20) { P.splice(i, 1); continue; }
+    p.px = p.x; p.py = p.y; p.vy += grav * dt; p.vx *= .995; p.x += p.vx * dt; p.y += p.vy * dt;
+    const f = p.life / p.max, a = 1 - f;
+    bx.strokeStyle = f < .25 ? `rgba(255,241,201,${a})` : f < .6 ? `rgba(255,170,40,${a})` : `rgba(255,50,0,${a * .9})`;
+    bx.lineWidth = p.sz * (1 - f * .5); bx.beginPath(); bx.moveTo(p.px, p.py); bx.lineTo(p.x, p.y); bx.stroke();
+  }
+  bx.globalCompositeOperation = 'source-over';
+}
+
+/* ---------- seismograph: the real waveform, scrolling like paper ---------- */
+const sv = $('#seis'), sx = sv.getContext('2d'); let SW = 0, SH = 64, trace = [];
+const fitS = () => { const d = Math.min(2, devicePixelRatio || 1); SW = sv.clientWidth; sv.width = SW * d; sv.height = SH * d; sx.setTransform(d, 0, 0, d, 0, 0); trace = trace.slice(-Math.ceil(SW / 2)); };
+fitS(); addEventListener('resize', fitS);
+function seis(td) {
+  let lo = 0, hi = 0;
+  if (td) for (let i = 0; i < td.length; i++) { const v = (td[i] - 128) / 128; if (v < lo) lo = v; if (v > hi) hi = v; }
+  trace.push([lo, hi]); if (trace.length > SW / 2) trace.shift();
+  sx.clearRect(0, 0, SW, SH);
+  const mid = SH / 2; sx.fillStyle = 'rgba(255,255,255,.07)'; sx.fillRect(0, mid, SW, 1);
+  const g = sx.createLinearGradient(0, 0, SW, 0); g.addColorStop(0, 'rgba(255,45,0,.1)'); g.addColorStop(.7, '#ff7a00'); g.addColorStop(1, '#fff1c9');
+  sx.fillStyle = g; const off = SW - trace.length * 2;
+  trace.forEach(([a, b], n) => { const y0 = mid + a * mid * 1.7, y1 = mid + b * mid * 1.7; sx.fillRect(off + n * 2, Math.min(y0, y1 - 1), 1.5, Math.max(1.5, Math.abs(y1 - y0))); });
+}
+
+/* ---------- frame loop ---------- */
+const tzf = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour12: false, timeStyle: 'short' });
+let last = performance.now(), glow = .1, kc = -1, hidden = false;
+document.addEventListener('visibilitychange', () => { hidden = document.hidden; last = performance.now(); });
+const frame = ts => {
+  requestAnimationFrame(frame); if (hidden) return;
+  const dt = Math.min(.05, (ts - last) / 1000); last = ts;
+  R.analyse(ts);
+  const playing = R.isPlaying();
+  if (L.hit) spawn(Math.round(14 + L.low * 26), L.low);
+  if (playing && !L.live && Math.random() < dt * 8) spawn(2, .2);               // no analyser (file://): still show life
+  if (playing && L.live && Math.random() < dt * L.low * 36) spawn(1, L.low * .6);   // sub-bass rumble keeps a trickle going
+  if (!playing && Math.random() < dt * .9) spawn(1, 0);                           // dormant: an ember now and then
+  const tgt = playing ? .4 + L.low * .5 + L.kick * .45 : .14 + .05 * Math.sin(ts / 1400);
+  glow += (tgt - glow) * (tgt > glow ? .35 : .06);
+  volcano(ts, dt, Math.min(1, glow));
+  root.style.setProperty('--k', (playing ? L.kick : 0).toFixed(3));
+  if (shake && playing) { const m = L.kick * 3; root.style.setProperty('--sx', (rnd(-1, 1) * m).toFixed(2) + 'px'); root.style.setProperty('--sy', (rnd(-1, 1) * m).toFixed(2) + 'px'); }
+  seis(R.scope());
+  V.forEach(v => {
+    const p = R.prog(v.i); v.el.style.setProperty('--p', p.toFixed(4));
+    const s = R.fmt(R.time(v.i)) + ' / ' + R.fmt(R.dur(v.i)); if (v.tm.textContent !== s) v.tm.textContent = s;
+    const key = p.toFixed(4) + (v.pk ? 1 : 0) + v.W; if (v.k !== key) { v.k = key; draw(v); v.cv.setAttribute('aria-valuenow', Math.round(p * 100)); }
+  });
+  if (L.beats !== kc) { kc = L.beats; $('#kc').textContent = String(L.beats).padStart(3, '0'); }
+  if (ts - (frame.c || 0) > 1000) { frame.c = ts; $('#clk').textContent = tzf.format(new Date()); }
+};
+requestAnimationFrame(frame);
 })();
 </script>
 </body>
