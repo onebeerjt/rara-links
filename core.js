@@ -209,6 +209,6 @@ function ready(fn) {
   let done = false; const go = () => { if (done) return; done = true; fn(); };
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(go); setTimeout(go, 1500);
 }
-return { $, $$, DPR, REDUCE, hash, clamp, pad, fmt, EMAIL, MAILTO, IG: IG_RARA, IG_OMNI, BC, YT, TRACKS, EVENTS: REAL.EVENTS, EV: REAL.EV, NUBETTER: REAL.NUBETTER, RELS: REAL.RELS, CLIPS: REAL.CLIPS, media: REAL.media, reel: REAL.reel, mvw: REAL.mvw, clipHtml: REAL.clipHtml, SLOGAN: REAL.SLOGAN, BIO: REAL.BIO, REAL, onWave, CLAP, energy, wave, overviewAmps, S, AU, EQ, CTRL, now, wrap, curPos, setPos,
+return { $, $$, DPR, REDUCE, hash, clamp, pad, fmt, EMAIL, MAILTO, IG: IG_RARA, IG_OMNI, BC, YT, TRACKS, EVENTS: REAL.EVENTS, NEXT: REAL.NEXT, nextWhen: REAL.nextWhen, EV: REAL.EV, NUBETTER: REAL.NUBETTER, RELS: REAL.RELS, CLIPS: REAL.CLIPS, media: REAL.media, reel: REAL.reel, mvw: REAL.mvw, clipHtml: REAL.clipHtml, SLOGAN: REAL.SLOGAN, BIO: REAL.BIO, REAL, onWave, CLAP, energy, wave, overviewAmps, S, AU, EQ, CTRL, now, wrap, curPos, setPos,
   kickEnv, load, onLoad, onPlay, togglePlay, cue, setRate, scrub, toggleAudio, setEQ, levels, stepVU, VU, fOf, eqDb, makeSpectrum, fit, toast, copyEmail, miamiTime, drag, switcher, run, ready };
 })();

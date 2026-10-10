@@ -145,6 +145,14 @@ canvas{display:block;width:100%}
 .rel .go{font:700 11px var(--vfd);color:var(--am);white-space:nowrap}
 /* session log: tape-box labels with the real flyers framed like monitor screens */
 .log{display:grid;gap:16px}
+.nxv{margin-top:18px;padding:14px 14px 16px}
+.nxv .vf{position:relative;margin-top:8px;border-radius:6px;padding:12px 12px 14px;background:#0a0603;box-shadow:inset 0 0 0 2px #000,inset 0 0 24px #000,0 0 0 1px #5e5242;font-family:var(--vfd);color:var(--am);text-shadow:0 0 8px rgba(255,165,31,.6);text-transform:uppercase}
+.nxv .vf .a{display:flex;justify-content:space-between;gap:8px;font-size:12px;letter-spacing:.1em}
+.nxv .vf .a b{font-weight:400;color:#0a0603;background:var(--am);text-shadow:none;padding:2px 6px}
+.nxv .vf h3{margin-top:10px;font:400 clamp(44px,14vw,60px)/.9 var(--disp);letter-spacing:.06em}
+.nxv .vf .d{margin-top:8px;font-size:17px;letter-spacing:.06em;color:var(--cr);text-shadow:0 0 6px rgba(239,226,200,.35)}
+.nxv .vf p{margin-top:6px;font-size:13px;line-height:1.5;letter-spacing:.05em}
+.nxv .vf p em{font-style:normal;color:var(--rd);text-shadow:0 0 8px rgba(255,59,37,.6)}
 .lg{display:block;position:relative;border-radius:10px;padding:12px 12px 14px;background:linear-gradient(180deg,#eadfc5,#d3c4a1);color:#1a130b;box-shadow:0 12px 26px #000b,inset 0 1px 0 #fff9,inset 0 -2px 0 #0003;overflow:hidden}
 .lg::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:repeating-linear-gradient(90deg,#8a1a0a 0 14px,#1a130b 14px 28px)}
 .lg .eng{display:flex;justify-content:space-between;gap:8px;margin-top:6px;color:#5a4a2c;font:700 10px var(--vfd);letter-spacing:.06em;text-shadow:none}
@@ -271,6 +279,8 @@ canvas{display:block;width:100%}
     </div>
   </section>
 
+  <div id="nx"></div>
+
   <div class="sec rv"><h2>PATCH BAY</h2><i></i><span class="eng">links</span></div>
   <nav class="hw bay rv" aria-label="Links">
     <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
@@ -361,6 +371,11 @@ rows.forEach(row => {
 
 /* ---------- transport ---------- */
 const ICO = { play: '<path d="M7 4.5v15l13-7.5z"/>', pause: '<path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/>' };
+const N = R.NEXT, NXT = R.nextWhen() && N;
+if (NXT) $('#nx').innerHTML = `<section class="hw nxv rv"><i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
+  <span class="eng">Next session</span><div class="vf"><div class="a"><span>III POINTS FESTIVAL 2026</span><b>${R.nextWhen()}</b></div>
+  <h3>${N.who}</h3><div class="d">${N.day} ${N.date}</div>
+  <p><em>${N.stage}</em><br>${N.venue}<br>${N.time}</p></div></section>`;
 $('#ev').innerHTML = R.EVENTS.map(e => `
   <a class="lg ${e.id === 'iiipoints' ? 'feat' : ''}" href="${e.href}" target="_blank" rel="noopener">
     <span class="eng"><span>${e.kind.toUpperCase()}</span><em>${e.date ? e.date.toUpperCase() : ''}</em></span>
@@ -370,7 +385,7 @@ $('#ev').innerHTML = R.EVENTS.map(e => `
     <div class="mt">${[e.time, e.venue].filter(Boolean).join(' · ')}</div><span class="go">${e.cta.toUpperCase()} ↗</span>
   </a>`).join('');
 R.onLoad(t => {
-  const label = t.title.toUpperCase() + ' — MACHINA RECORDS — ' + t.date.toUpperCase();
+  const label = (NXT ? 'NEXT SHOW — ' + NXT.who.toUpperCase() + ' — SAT OCT 17 — III POINTS — MANA WYNWOOD — ' : '') + t.title.toUpperCase() + ' — MACHINA RECORDS — ' + t.date.toUpperCase();
   $('#mq').innerHTML = `<span>${label}</span>`.repeat(4);
   $('#bpm').textContent = t.short.toUpperCase(); $('#key').textContent = ['03/26', '03/26'][t.i]; setPitchUI(0);
   rows.forEach(r => r.classList.toggle('cur', +r.dataset.i === t.i));

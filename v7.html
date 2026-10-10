@@ -91,6 +91,11 @@ h2{display:flex;justify-content:space-between;font:700 11px var(--mono);letter-s
 .ps .q{display:block;margin-top:9px;font:800 clamp(21px,6.6vw,30px)/.98 var(--hd);letter-spacing:.01em;text-transform:uppercase}
 .ps .ln{display:block;margin-top:7px;font:500 12px/1.4 var(--mono)}
 .ps .wh{display:block;margin-top:6px;font:700 11px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.ps.nxp .l{background:var(--stamp);color:#fff}
+.ps.nxp .c{background:var(--paper)}
+.ps.nxp .t{font-size:clamp(44px,14.5vw,70px);line-height:.86}
+.ps.nxp .wh{color:var(--stamp)}
+.ps.nxp .m b{font-weight:800;background:var(--ink);color:var(--paper);padding:0 6px}
 .ps.fest .l{background:#fff;color:var(--blue)}
 .ps.fest .c{background:var(--blue);color:#fff}
 .ps.fest .c::before,.ps.fest .c::after{box-shadow:none}
@@ -138,6 +143,8 @@ h2{display:flex;justify-content:space-between;font:700 11px var(--mono);letter-s
     <div id="bcb"></div>
     <div class="holo"></div>
   </section>
+
+  <div id="nx"></div>
 
   <h2><span>Now admitting</span><span>2 tickets · tap the stub</span></h2>
   <div id="tix"></div>
@@ -189,9 +196,17 @@ $('#bcb').innerHTML = code39('RARA MACHINA');
 $('#bcbk').innerHTML = code39('RARA BOOKING');
 
 /* wristband text: real names only */
+const NX = R.nextWhen() && R.NEXT;
 const m1 = ['BLACK DANCE MUSIC IS BACK IN MIAMI', 'ALL ACCESS', 'MACHINA RECORDS', 'MIAMI', 'NOT TRANSFERABLE'].map(s => `<span>${s}</span><span>✦</span>`).join('');
-const m2 = ['CIRCUIT: DJ MARFOX · OCT 3', 'JOLENE SOUND ROOM · OCT 1', 'III POINTS · B2B V1FRO', 'IN MY OWN WORLD EP', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'JET FUEL', 'BEASTIE'].map(s => `<span>${s}</span><span>/</span>`).join('');
+const m2 = [...(NX ? ['NEXT: KUJO B2B RARA · SAT OCT 17 · III POINTS · MANA WYNWOOD'] : []), 'CIRCUIT: DJ MARFOX · OCT 3', 'JOLENE SOUND ROOM · OCT 1', 'III POINTS 2025 · B2B V1FRO', 'IN MY OWN WORLD EP', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'JET FUEL', 'BEASTIE'].map(s => `<span>${s}</span><span>/</span>`).join('');
 $('#m1').innerHTML = m1.repeat(4); $('#m2').innerHTML = m2 + m2;
+
+/* next show: a pass with no stub link (no ticket URL to point at), so it's a div, not a tap target */
+if (NX) $('#nx').innerHTML = `<h2><span>Next show</span><span>${R.nextWhen().toLowerCase()}</span></h2>
+  <div class="ps nxp" role="group" aria-label="Next show: ${NX.who}, ${NX.day} ${NX.date}, ${NX.stage}, ${NX.venue}"><div class="l">17<span>OCT</span></div><div class="c">
+  <div class="m" style="margin:0 0 6px"><span>III Points Festival 2026</span><span>${NX.day.slice(0, 3)} ${NX.date}</span></div><div class="t">${NX.who}</div>
+  <span class="wh">${NX.stage}</span>
+  <div class="m"><span>${NX.venue}</span><b>${NX.time}</b></div>${code39(NX.title)}</div></div>`;
 
 /* ---------- tickets ---------- */
 const N = 22, PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>', PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';

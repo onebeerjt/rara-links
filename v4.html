@@ -74,6 +74,11 @@ h2.lab{padding:30px 14px 10px;font:700 11px var(--mono);letter-spacing:.22em;col
 .rel.feat{border-top:2px solid var(--r);border-bottom:2px solid var(--r);padding-top:18px;padding-bottom:18px}
 .rel.feat .t{color:#fff;-webkit-text-stroke:0;font-size:clamp(70px,24vw,150px);line-height:.86}
 .rel.feat q{color:var(--r);font-size:clamp(30px,10vw,60px)}
+.rel.nxt .t{font-size:clamp(66px,22vw,140px)}
+.rel.nxt .cd{background:var(--r);color:#000;padding:1px 7px}
+.rel.nxt.lit .cd{background:#000;color:var(--r)}
+.rel.nxt .ln{font-size:14px;color:#fff}
+.rel.nxt.lit .ln{color:#000}
 .rel.lit .fw{background:#000}.rel.lit q,.rel.lit .ln,.rel.lit .who,.rel.lit .k{color:#000}.rel.lit .t{color:#000}
 .rel.lit{background:var(--r)}
 .rel.lit .t{-webkit-text-stroke-color:#000;color:#000}
@@ -108,6 +113,8 @@ h2.lab{padding:30px 14px 10px;font:700 11px var(--mono);letter-spacing:.22em;col
   <div class="sub"><span>MIAMI <b>●</b> MACHINA RECORDS · PRODUCER/DJ</span><span id="clk">--:--:--</span></div>
   <div class="tick" aria-hidden="true"><div id="tk"></div></div>
 
+  <div id="nx"></div>
+
   <h2 class="lab"><span>ARM A TRACK</span><span id="st">STANDBY</span></h2>
   <div id="tracks"></div>
 
@@ -132,9 +139,18 @@ const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('
 
 /* marquee of real names */
 $('.hv').innerHTML = R.clipHtml('talent'); R.armClips();
-const names = ['BLACK DANCE MUSIC IS BACK IN MIAMI', 'CIRCUIT: DJ MARFOX · OCT 3', 'JOLENE SOUND ROOM · 3 HOURS', 'III POINTS B2B V1FRO', 'IN MY OWN WORLD EP', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'JET FUEL', 'BEASTIE', 'MACHINA RECORDS'];
+const NX = R.nextWhen() && R.NEXT;
+const names = ['BLACK DANCE MUSIC IS BACK IN MIAMI', ...(NX ? ['NEXT: KUJO B2B RARA · SAT OCT 17 · III POINTS · MANA WYNWOOD'] : []), 'CIRCUIT: DJ MARFOX · OCT 3', 'JOLENE SOUND ROOM · 3 HOURS', 'III POINTS 2025 B2B V1FRO', 'IN MY OWN WORLD EP', 'F.R.E.A.K.Y', 'BACK 2 DA FRONT', 'RINSE FRANCE', 'JET FUEL', 'BEASTIE', 'MACHINA RECORDS'];
 const strip = names.map(n => `<span>${n}</span><span>✕</span>`).join('');
 $('#tk').innerHTML = strip + strip;
+
+/* next show: a .rel, so the strobe chase lights it with the rest */
+if (NX) $('#nx').innerHTML = `<div class="rel feat nxt">
+  <span class="k"><span>NEXT SHOW</span><span class="cd">${R.nextWhen()}</span></span>
+  <span class="t">${NX.who.replace(' b2b ', '<br>B2B ')}</span>
+  <span class="who">${NX.day}, ${NX.date}</span>
+  <span class="ln">III Points Festival 2026 · ${NX.stage}</span>
+  <span class="m"><span>${NX.venue.toUpperCase()}</span><span>${NX.time.toUpperCase()}</span></span></div>`;
 
 /* tracks */
 $('#tracks').innerHTML = R.TRACKS.map((t, i) => `

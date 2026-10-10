@@ -73,6 +73,10 @@ body::after{content:"";position:fixed;inset:-50%;z-index:21;pointer-events:none;
 .flyer{position:absolute;right:14px;top:calc(104px + env(safe-area-inset-top));width:34vw;max-width:170px;transform:rotate(5deg);box-shadow:0 10px 30px #000a;border:3px solid var(--sw);z-index:3}
 .flyer img{display:block;width:100%}
 .flyer::before{content:"";position:absolute;left:50%;top:-12px;width:46px;height:18px;margin-left:-23px;background:rgba(255,233,224,.55);transform:rotate(-3deg)}
+.nxn .bgv{background:radial-gradient(110% 70% at 50% 85%,#d8200f,#3a0907 55%,#0a0405 85%)}
+.nxn .bgv::before{display:none}
+.nxn .num b{color:var(--sw);-webkit-text-stroke:0}
+.nxn .cd{display:inline-block;margin-bottom:12px;padding:5px 9px;background:var(--red);color:#1a0300;font:700 11px var(--mono);letter-spacing:.2em;box-shadow:0 0 calc(8px + var(--k) * 26px) rgba(255,42,26,.8)}
 .jol .bgv{background:radial-gradient(90% 60% at 50% 70%,#7a1208,#1a0504 70%)}
 .jol .bgv::before{display:none}
 .hrs{position:absolute;left:0;right:0;top:50%;transform:translateY(-62%);text-align:center;z-index:-1;pointer-events:none}
@@ -232,7 +236,17 @@ const night = (e, bg, extra = '', cls = '') => { const d = dp(e); return `<secti
     <a class="cta" href="${e.href}" target="_blank" rel="noopener">${e.cta} ↗</a>
   </div></section>`; };
 const C = R.EV.circuit, J = R.EV.jolene, T = R.EV.iiipoints;
-$('#nights').innerHTML =
+const NX = R.nextWhen() && R.NEXT;
+const nextNight = () => `<section class="sc nxn" id="n-next" aria-label="Next show: ${NX.who}, ${NX.day} ${NX.date}">
+  <div class="bgv" aria-hidden="true"></div>
+  <div class="in"><span class="cd">NEXT SHOW · ${R.nextWhen()}</span>
+    <div class="num"><b class="hd">17</b><small>OCT<br>2026<br>${NX.day.slice(0, 3).toUpperCase()}</small></div>
+    <p class="kd"><b>III Points Festival 2026</b><span>${NX.venue}</span></p>
+    <h2 class="hd">Kujo<br><em>b2b</em> RARA</h2>
+    <span class="who">${NX.stage}</span>
+    <div class="mt">${NX.time}</div></div></section>`;
+if (NX) $('.hint span').textContent = '▼ NEXT: KUJO B2B RARA · OCT 17';
+$('#nights').innerHTML = (NX ? nextNight() : '') +
   night(C, R.clipHtml('circuit', '', 'style="object-position:50% 40%"') + `<span class="chip"><i></i>${R.CLIPS.circuit.name}</span>`) +
   night(J, '', '<div class="hrs" aria-hidden="true"><b class="hd">3HR</b><span>THE EXTENDED SET</span></div>', 'jol') +
   night(T, `<img src="${T.flyer}" alt="${T.alt}" loading="lazy">`, `<span class="chip"><i></i>Still from the Masisi Radio set</span>`);

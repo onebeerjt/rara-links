@@ -73,6 +73,13 @@ canvas{display:block;width:100%}
 .lh{display:flex;align-items:flex-end;justify-content:space-between;margin:30px 0 10px}
 .lh h2{font:800 28px/1 var(--ui);letter-spacing:-.03em}
 .aps{display:grid;gap:12px}
+.nxh{margin-top:22px;border:1px solid var(--ac);position:relative}
+.nxh .hd{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border-bottom:1px solid var(--ac);font:500 9px var(--mono);letter-spacing:.12em;color:var(--ac);text-transform:uppercase}
+.nxh .hd b{font-weight:500;background:var(--ac);color:#000;padding:1px 6px}
+.nxh .bd{padding:12px 12px 14px}
+.nxh h3{font:800 clamp(48px,15.5vw,68px)/.92 var(--ui);letter-spacing:-.045em;color:var(--ac)}
+.nxh .rw{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--ln);font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.nxh .rw:first-of-type{margin-top:12px}.nxh .rw span{color:var(--dim)}.nxh .rw b{font-weight:500;text-align:right}
 .slg{margin:14px 12px 0;font:800 clamp(26px,8.6vw,40px)/.95 var(--ui);letter-spacing:-.04em;text-transform:uppercase;max-width:14em}
 .feeds{display:grid;grid-template-columns:1.25fr 1fr;gap:6px;margin:16px 12px 0}
 .cam{position:relative;height:clamp(210px,60vw,320px);background:#000;overflow:hidden;border:1px solid var(--ln2)}.cam video{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.2) brightness(.9)}
@@ -235,6 +242,8 @@ body.sh .sheet{transform:none;visibility:visible;transition-delay:0s}body.sh .sc
   <p class="slg rv">Black dance music is back in Miami.</p>
   <section class="feeds rv" aria-label="Feeds"><div class="cam" id="c1"></div><div class="cam" id="c2"></div></section>
 
+  <div id="nx"></div>
+
   <nav class="routes brk rv" aria-label="Links">
     <a class="rt book" href="mailto:omnisoundslabel@gmail.com?subject=Booking%20RARA%20%F0%9F%8C%8B"><div><span class="lbl">Bookings open</span><b>BOOK RARA</b><s>omnisoundslabel@gmail.com</s></div><span class="ar">→</span></a>
     <a class="rt" href="https://instagram.com/raravulcain" target="_blank" rel="noopener"><span class="lbl">01 · Social</span><b>Insta</b><s>@raravulcain</s><span class="ar">↗</span></a>
@@ -357,6 +366,12 @@ rows.forEach(row => {
   bc.addEventListener('click', e => { const r = bc.getBoundingClientRect(); R.load(i, clamp((e.clientX - r.left) / r.width, 0, .999)); });
   $('[data-load]', row).addEventListener('click', () => { R.load(i); openSheet(); });
 });
+/* ---------- next show (hides itself once the night has passed) ---------- */
+const N = R.NEXT;
+if (R.nextWhen()) $('#nx').innerHTML = `<section class="nxh rv"><div class="hd"><span>00 · Next show</span><b>${R.nextWhen()}</b></div>
+  <div class="bd"><h3>${N.who}</h3>
+  <div class="rw"><span>Date</span><b>${N.day}, ${N.date}</b></div><div class="rw"><span>Event</span><b>III Points Festival 2026</b></div>
+  <div class="rw"><span>Stage</span><b>${N.stage}</b></div><div class="rw"><span>Venue</span><b>${N.venue}</b></div><div class="rw"><span>Set</span><b>${N.time}</b></div></div></section>`;
 /* ---------- appearances: real events ---------- */
 $('#ev').innerHTML = R.EVENTS.map((e, i) => `
   <a class="ap ${e.id === 'iiipoints' ? 'feat' : ''}" href="${e.href}" target="_blank" rel="noopener">

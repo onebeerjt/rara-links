@@ -30,6 +30,17 @@ const EVENTS = [
   { id: 'iiipoints', title: 'III POINTS', short: 'III Points', kind: 'Festival · B2B', date: 'Oct 17–18, 2025', venue: 'The Garden (Little River Cultural Garden), Miami', who: 'RARA B2B V1FRO', clip: 'iiipoints',
     quote: 'We’ve been cooking up big ethnic chunes', line: 'Full set on YouTube via Masisi Radio.', flyer: 'flyers/iiipoints-b2b.jpg', fr: '16/9', fp: '50% 50%', alt: 'RARA B2B V1FRO at III Points, still from the Masisi Radio set video', href: yt('Masisi Radio RARA V1FRO III Points'), cta: 'Full set · YouTube' },
 ];
+/* the next show. Verified on two sources. Set time is NOT confirmed, so there isn't one here. No ticket link on purpose.
+   Kept out of EVENTS (that list is past shows with outbound links); pages render it themselves. */
+const NEXT = { id: 'iiipoints26', title: 'III POINTS 2026', short: 'III Points', who: 'Kujo b2b RARA', day: 'Saturday', date: 'Oct 17, 2026', iso: '2026-10-17', stage: 'Red Bull Unforeseen stage', venue: 'Mana Wynwood, Miami', time: 'Set time TBA' };
+/* whole days from today (Miami time) to the show: 8, 1, 0 (show day), or null once it has passed */
+const nextIn = () => {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  const [y, m, d0] = NEXT.iso.split('-').map(Number);
+  const d = Math.round((Date.UTC(y, m - 1, d0) - Date.UTC(+p.year, p.month - 1, +p.day)) / 864e5);
+  return d >= 0 ? d : null;
+};
+const nextWhen = () => { const d = nextIn(); return d == null ? null : d === 0 ? 'TONIGHT' : d === 1 ? 'TOMORROW' : 'IN ' + d + ' DAYS'; };
 /* releases that aren't playable on this page (no audio file here), newest first. Links go where RARA posted them. */
 const RELS = [
   { id: 'imow', title: 'IN MY OWN WORLD', type: 'EP', note: 'Out Sept 4', href: IG, cta: 'Instagram' },
@@ -197,6 +208,6 @@ function fitText(el, avail) {
 }
 const copyEmail = async cb => { try { await navigator.clipboard.writeText(EMAIL); cb && cb(true); } catch (e) { cb && cb(false); } };
 
-return { when, TRACKS, EVENTS, EV, NUBETTER, RELS, CLIPS, clipHtml, armClips, media: evMedia, reel, mvw, SLOGAN, BIO, EMAIL, MAILTO, BC, IG, IG_OMNI, IG_MACHINA, IG_HOOP, yt, REDUCE, els, on, play, pause, toggle, next, seek, isPlaying, dur, time, prog, fmt, pad, clamp,
+return { when, NEXT, nextIn, nextWhen, TRACKS, EVENTS, EV, NUBETTER, RELS, CLIPS, clipHtml, armClips, media: evMedia, reel, mvw, SLOGAN, BIO, EMAIL, MAILTO, BC, IG, IG_OMNI, IG_MACHINA, IG_HOOP, yt, REDUCE, els, on, play, pause, toggle, next, seek, isPlaying, dur, time, prog, fmt, pad, clamp,
   rate, eq, mute, get muted() { return muted; }, get sampleRate() { return ctx ? ctx.sampleRate : 48000; }, analyse, scope, spectrum, peaks, L, switcher, fitText, copyEmail, get cur() { return cur; }, get live() { return !!an; } };
 })();

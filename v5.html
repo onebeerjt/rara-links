@@ -25,6 +25,12 @@ h1{font:700 clamp(120px,41vw,330px)/.74 var(--sans);letter-spacing:-.075em;margi
 .note{font:400 13px/1.45 var(--mono);color:var(--d);margin-top:14px;max-width:46ch}
 h2{font:500 13px var(--mono);text-transform:uppercase;letter-spacing:.04em;border-bottom:3px solid var(--k);padding:42px 0 6px;display:flex;justify-content:space-between}
 /* the two real tracks */
+.nxt{border-bottom:1px solid var(--k);padding:18px 0 20px}
+.nxt .no{display:flex;justify-content:space-between;font:500 13px var(--mono);color:var(--d)}.nxt .no b{font-weight:500;color:var(--o)}
+.nxt .ti{font:700 clamp(46px,15.4vw,118px)/.88 var(--sans);letter-spacing:-.06em;margin:8px 0 0;text-transform:uppercase}
+.nxt .ti u{text-decoration:none;color:var(--o)}
+.nxt dl{display:grid;grid-template-columns:7em 1fr;margin-top:14px;font:500 13px/1.45 var(--mono)}
+.nxt dt{color:var(--d);padding:5px 0;border-top:1px solid var(--k)}.nxt dd{padding:5px 0;border-top:1px solid var(--k)}
 .tr{border-bottom:1px solid var(--k);padding:18px 0 20px}
 .tr .no{font:500 13px var(--mono);color:var(--d)}
 .tr .ti{display:inline;font:700 clamp(38px,13.2vw,102px)/.92 var(--sans);letter-spacing:-.055em;margin:6px 0 0;word-break:break-word;box-decoration-break:clone;-webkit-box-decoration-break:clone}
@@ -75,6 +81,8 @@ ol .l2{font:400 13px var(--mono);color:var(--d);margin:3px 0 0 calc(2.2em + 10px
 <p class="note">RARA. Producer/DJ, Miami. Omnisound, Machina Records, Hoop Club Miami. “The Glue”, drummer for Mr. Floyd Larry. Two tracks play below; tap anywhere on a waveform to jump there. The only pictures are the real footage, in black and white, muted.</p>
 <figure class="plate" id="plate"></figure>
 
+<div id="nx"></div>
+
 <h2><span>A. Play</span><span>2 tracks + 4 links</span></h2>
 <div id="tracks"></div>
 
@@ -107,6 +115,10 @@ $('#tracks').innerHTML = R.TRACKS.map((t, i) => `
 $('#tracks').insertAdjacentHTML('beforeend', R.RELS.map((r, k) => `<section class="tr nl"><div class="no">0${3 + k} — ${r.type}, ${r.note}</div><div class="tw"><h3 class="ti">“${r.title}”</h3></div><div class="ctl"><a href="${r.href}" target="_blank" rel="noopener" style="font:700 20px var(--mono)">${r.cta} ↗</a></div></section>`).join(''));
 $('#plate').innerHTML = R.mvw('iiipoints', '16/9') + `<figcaption>Fig. 0: ${R.CLIPS.iiipoints.name}. ${R.CLIPS.iiipoints.note}.</figcaption>`;
 $('#reel').innerHTML = R.reel(['ready', 'talent', 'circuit']);
+if (R.nextWhen()) { const N = R.NEXT; $('#nx').innerHTML = `<h2><span>Next show</span><span>${R.nextWhen().toLowerCase()}</span></h2>
+  <div class="nxt"><div class="no"><span>${N.day}, ${N.date}</span><b>Up next</b></div>
+  <div class="ti">${N.who.replace(' b2b ', ' <u>b2b</u> ')}</div>
+  <dl><dt>Event</dt><dd>III Points Festival 2026</dd><dt>Stage</dt><dd>${N.stage}</dd><dt>Venue</dt><dd>${N.venue}</dd><dt>Set time</dt><dd>TBA</dd></dl></div>`; }
 $('#idx').innerHTML = R.EVENTS.map((e, i) => `<li><a href="${e.href}" target="_blank" rel="noopener" class="${e.id === 'iiipoints' ? 'feat' : ''}"><div class="l1"><span class="nn">${String(i + 1).padStart(2, '0')}</span><span class="tt">${e.title}</span><span class="ar">↗</span></div>
   ${e.who ? `<div class="who">${e.who}</div>` : ''}
   ${e.flyer ? `<figure>${R.media(e)}<figcaption>Fig. ${i + 1}: ${e.clip ? R.CLIPS[e.clip].note : e.alt}</figcaption></figure>` : ''}
